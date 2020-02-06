@@ -275,11 +275,11 @@ clear
 close all
 
 % parâmetros do circuito:
-R  = 5000;        % resistência [ohms]
+R  = 600;         % resistência [ohms]
 L  = 50e-3;       % indutância  [henrys]
 C  = 0.2e-6;      % capacitância [farads]
 V0 = 0;           % tensão inicial no capacitor [volts]
-I0 = 0;           % corrente inicial no indutor [ampère]
+I0 = 0;           % corrente inicial no indutor [ampères]
 fq = 500;         % frequência da onda quadrada [hertz]
 Vq = 15;          % amplitude da onda quadrada [volts]
 w0 = 1/sqrt(L*C); % frequência angular de ressonância [rad/segundo]
@@ -366,12 +366,12 @@ clear
 close all
 
 % parâmetros do circuito:
-R  = 50;          % resistência [ohms]
+R  = 500;          % resistência [ohms]
 L  = 50e-3;       % indutância  [henrys]
 C  = 0.2e-6;      % capacitância [farads]
 V0 = 0;           % tensão inicial no capacitor [volts]
 I0 = 0;           % corrente inicial no indutor [ampère]
-fq = 100;         % frequência da onda quadrada [hertz]
+fq = 500;         % frequência da onda quadrada [hertz]
 Vq = 15;          % amplitude da onda quadrada [volts]
 w0 = 1/sqrt(L*C); % frequência angular de ressonância [rad/segundo]
 
