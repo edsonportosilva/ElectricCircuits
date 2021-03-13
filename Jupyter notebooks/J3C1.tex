@@ -1,0 +1,43 @@
+\documentclass[border=16pt]{standalone}
+\usepackage{tikz}
+\usepackage[siunitx, RPvoltages]{circuitikz}
+
+\begin{document}
+
+\ctikzset{bipoles/length=1.5cm}
+\ctikzset{bipoles/thickness=3}
+\ctikzset{label/align = smart}
+
+\ctikzset{
+ amplifiers/fill=cyan,
+ sources/fill=cyan!30!white,
+ csources/fill=green!30!white,
+ diodes/fill=red,
+ resistors/fill=violet,
+ }
+
+
+\begin{circuitikz}[american, scale = 1.0]
+	\draw (0,0) to[V,l=$V_s$] (0,6) 	             
+	            -- (3,6) 
+	            to[R=10<\ohm>, *-*] (3,4)	      
+	            to[R=20<\ohm>, -*] (3,2)
+	            to[R=30<\ohm>, -*] (3,0)
+                 -- (0,0) ;	
+
+	\draw node[ocirc] (a) at (5,6){$\;a$}
+	      node[ocirc] (b) at (5,4){$\;b$}
+	      node[ocirc] (c) at (5,2){$\;c$}
+	      node[ocirc] (d) at (5,0){$\;0\;V$}
+	      (a) to[open,-] (b);
+	      \draw (3,6) -- (5,6);
+	      \draw (3,4) -- (5,4);
+	      \draw (3,2) -- (5,2);
+	      \draw (3,0) -- (5,0);
+	      
+	      \draw node[ground] (e) at (3,0){};
+	      
+\end{circuitikz}
+
+
+\end{document}
