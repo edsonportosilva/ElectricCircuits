@@ -1,0 +1,57 @@
+\documentclass[border=4pt]{standalone}
+\usepackage{tikz}
+\usepackage[siunitx, RPvoltages]{circuitikz}
+
+\begin{document}
+
+\ctikzset{bipoles/length=1.5cm}
+\ctikzset{bipoles/thickness=4}
+\ctikzset{label/align = smart}
+
+\ctikzset{
+ amplifiers/fill=cyan,
+ sources/fill=cyan!30!white,
+ csources/fill=green!30!white,
+ diodes/fill=red,
+ resistors/fill=violet,
+ }
+
+\begin{tabular}{ll}
+\begin{circuitikz}[american, scale = 1.0, cute inductors]]
+	\draw (0,0) to[V,l=$v_s(t)$, f=$i(t)$, -] (0,3)
+	            to[L, l=$L_1$, v=$v_1$] (3,3) 
+	            to[L, l=$L_2$, v=$v_2$] (3,0);          
+  
+	\draw (0,0)--(3,0);
+\end{circuitikz} & 
+\begin{circuitikz}[american, scale = 1.0, cute inductors]]
+	\draw (0,0) to[I,l=$i_s(t)$, -] (0,3)
+	            --                      (2,3)
+	            to[L, l=$L_1$, f=$i_1$,*-*] (2,0);          
+    \draw (2,3) -- (4,3)
+                to[L, l=$L_2$, f=$i_2$] (4,0); 
+	\draw (0,0)--(4,0);
+\end{circuitikz} 
+\\ 
+\begin{circuitikz}[american, scale = 1.0, cute inductors]]
+	\draw (0,0) to[V,l=$v_s(t)$, f=$i(t)$, -] (0,3)
+	            to[C, l=$C_1$, v=$v_1$] (3,3) 
+	            to[C, l=$C_2$, v=$v_2$] (3,0);          
+  
+	\draw (0,0)--(3,0);       
+\end{circuitikz} & 
+\begin{circuitikz}[american, scale = 1.0, cute inductors]]
+	\draw (0,0) to[I,l=$i_s(t)$, -] (0,3)
+	            --                      (2,3)
+	            to[C, l=$C_1$, f=$i_1$,*-*] (2,0);          
+    \draw (2,3) -- (4,3)
+                to[C, l=$C_2$, f=$i_2$] (4,0); 
+	\draw (0,0)--(4,0); 	      
+\end{circuitikz} \\ 
+\end{tabular}
+
+
+
+
+
+\end{document}

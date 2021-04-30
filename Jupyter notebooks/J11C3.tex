@@ -1,0 +1,35 @@
+\documentclass[border=4pt]{standalone}
+\usepackage{tikz}
+\usepackage[siunitx, RPvoltages]{circuitikz}
+
+\begin{document}
+
+\ctikzset{bipoles/length=1.5cm}
+\ctikzset{bipoles/thickness=4}
+\ctikzset{label/align = smart}
+
+\ctikzset{
+ amplifiers/fill=cyan,
+ sources/fill=cyan!30!white,
+ csources/fill=green!30!white,
+ diodes/fill=red,
+ resistors/fill=violet,
+ }
+
+
+\begin{circuitikz}[american, scale = 1.0, cute inductors]]
+	\draw (0,0) to[I,l=1A, -] (0,3);
+	\draw (2,3) to[R=10<\ohm>,v=$v_x$,*-*](2,0);
+	\draw (2,3) to[cV,l=$0.4v_x$,invert,-*](5,3)
+	            to[cspst = $0\;s$,-](7,3)
+	            to[C=100<\micro\farad>,v=$v_C$,-] (7,0);	           
+		              
+    \draw (2,0) to[R=5<\ohm>,-*] (5,0)
+                to[R=25<\ohm>,-*] (5,3);
+	\draw (0,3)--(2,3);	
+	\draw (0,0)--(2,0);
+	\draw (5,0)--(7,0);
+\end{circuitikz}
+
+
+\end{document}

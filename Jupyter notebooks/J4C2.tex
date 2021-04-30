@@ -1,0 +1,46 @@
+\documentclass[border=4pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,arrows}
+\usepackage[siunitx, RPvoltages]{circuitikz}
+
+\begin{document}
+
+\ctikzset{bipoles/length=1.5cm}
+\ctikzset{bipoles/thickness=4}
+\ctikzset{label/align = smart}
+
+\ctikzset{
+ amplifiers/fill=cyan,
+ sources/fill=cyan!30!white,
+ csources/fill=green!30!white,
+ diodes/fill=red,
+ resistors/fill=violet,
+ }
+
+
+\begin{circuitikz}[american, scale = 1.0, cute inductors]]
+	\draw (0,0) to[V=10<\volt>, f=$i_1$, -] (0,3)
+	            to[R=20<\ohm>, f=$i_2$, *-] (0,6)
+	            to[R=5<\ohm>, *-] (3,6)
+	            to[V=12<\volt>,invert, f=$i_3$, -*](6,6)
+	            to[R=15<\ohm>, *-*](6,3)
+	            to[cV,l=$2i_x$,invert, f>^=$i_5$, *-](6,0);
+	            
+	\draw (0,3) to[R=5<\ohm>,f=$i_x$, *-*](3,3)
+	            to[R=25<\ohm>, f=$i_4$, *-*](6,3);           
+	
+	            
+    \draw (3,0) to[R=5<\ohm>, f<=$i_6$, *-*] (3,3)
+                to[I,l=0.5$A$, *-*](3,6);              
+    	          
+    \draw (0,0) -- (6,0);
+    
+    \draw [blue, thin, <-, >= triangle 60] (1.5,1.5) node{$i_a$}  ++(30:.75) arc (30:270:.85);
+    \draw [blue, thin, <-, >= triangle 60] (4.5,1.5) node{$i_b$}  ++(30:.75) arc (30:270:.85);
+    \draw [blue, thin, <-, >= triangle 60] (4.5,4.5) node{$i_c$}  ++(30:.75) arc (30:270:.85);
+    \draw [blue, thin, <-, >= triangle 60] (1.5,4.5) node{$i_d$}  ++(30:.75) arc (30:270:.85);
+    
+\end{circuitikz}
+
+
+\end{document}

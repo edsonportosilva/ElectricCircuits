@@ -1,0 +1,59 @@
+\documentclass[border=4pt]{standalone}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,arrows}
+\usepackage[siunitx, RPvoltages]{circuitikz}
+
+\begin{document}
+
+\ctikzset{bipoles/length=1.5cm}
+\ctikzset{bipoles/thickness=4}
+\ctikzset{label/align = smart}
+
+\ctikzset{
+ amplifiers/fill=cyan,
+ sources/fill=cyan!30!white,
+ csources/fill=green!30!white,
+ diodes/fill=red,
+ resistors/fill=violet,
+ }
+
+
+\begin{circuitikz}[american, scale = 1.0, cute inductors]]
+
+    \draw (0,0) to[R=2<\ohm>, *-*] (-3,0)
+                to[I,l=$0.25$A, *-*](-3,3)
+                to[R=3<\ohm>, *-*] (0,6);
+                
+    \draw (-3,3)to[R=4<\ohm>, *-*] (0,3);
+                 
+	\draw (0,0) to[V=2<\volt>, -*] (0,3)
+	            to[I,l=$0.5$A,*-*] (3,3)
+	            to[R=2<\ohm>, *-*] (6,3);
+	\draw (0,3) to[R=3<\ohm>, *-*] (0,6)	            
+	            to[R=3<\ohm>, *-*] (3,3);           
+         	            
+	
+	\draw (3,3) to[R=1<\ohm>, *-*] (3,0);
+    
+    \draw (6,3) node[anchor=west]{a};
+    \draw (6,0) node[anchor=west]{b};
+    
+    \draw (-6,3) node[anchor=east]{c};
+    \draw (-6,0) node[anchor=east]{d};
+    
+    \draw node[ocirc] (a) at (6,3){}
+	      node[ocirc] (b) at (6,0){}
+	      (a) to[open,*-*] (b);   
+	      
+	\draw node[ocirc] (c) at (-6,3){}
+	      node[ocirc] (d) at (-6,0){}
+	      (c) to[open,*-*] (d); 
+	        
+	\draw (0,0)--(6,0);
+	\draw (-3,3) to[R=1<\ohm>, *-*](-6,3);
+	\draw (-3,0)--(-6,0);	
+	      	
+\end{circuitikz}
+
+
+\end{document}
