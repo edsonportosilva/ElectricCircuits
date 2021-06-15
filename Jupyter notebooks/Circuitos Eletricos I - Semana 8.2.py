@@ -339,7 +339,7 @@ p.show()
 # $$\begin{align}
 #    v_R + v_L + v_C &= v_s\\
 #    R i + L\frac{d i}{dt}+v_C &= v_s\nonumber\\
-#    R\left[C\frac{dv_C}{dt}\right] + L\frac{d}{dt}\left[C\frac{dv_C}{dt} \right] &= v_s\nonumber\\
+#    R\left[C\frac{dv_C}{dt}\right] + L\frac{d}{dt}\left[C\frac{dv_C}{dt} \right] + v_C &= v_s\nonumber\\
 #     \frac{d^{2} v_{\mathrm{C}}}{d t^{2}}+\frac{R}{L} \frac{d v_{\mathrm{C}}}{d t}+\frac{1}{L C}   v_{\mathrm{C}} &=\frac{v_{\mathrm{s}}}{LC}
 #    \end{align} 
 # $$
