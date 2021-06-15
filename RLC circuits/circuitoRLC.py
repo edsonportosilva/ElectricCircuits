@@ -23,9 +23,9 @@ fq = 80               # frequência da onda quadrada [hertz]
 Vq = 15               # amplitude da onda quadrada [volts]
 w0 = 1/np.sqrt(L*C)   # frequência angular de ressonância [rad/segundo]
 
-t = np.linspace(0,100,10e4)*2/w0       # discretização do intervalo de tempo [segundos]
+t = np.arange(0,100,0.001)*(2/w0)   # discretização do intervalo de tempo [segundos]
 
-Vs = Vq*signal.square(2*np.pi*fq*t)    # onda quadrada na entrada do circuito
+Vs = Vq*signal.square(2*np.pi*fq*t) # onda quadrada na entrada do circuito
 
 vC    = np.zeros(len(t))
 x     = np.zeros(len(t))
@@ -56,6 +56,7 @@ plt.grid(color='k', linestyle='--', linewidth=0.1)
 plt.ylabel('ampères (A)', fontsize = 14)
 plt.xlabel('tempo (s)', fontsize = 14)
 plt.title('Corrente no circuito RLC série', fontsize = 14)
+plt.show(block=False)
 
 plt.figure(2, figsize=(12, 9), dpi=80, facecolor='w', edgecolor='k')
 plt.plot(t, vC)
@@ -67,6 +68,7 @@ plt.grid(color='k', linestyle='--', linewidth=0.1)
 plt.ylabel('volts (V)', fontsize = 14)
 plt.xlabel('tempo (s)', fontsize = 14)
 plt.title('Tensões no circuito RLC série', fontsize = 14)
+plt.show(block=False)
 
 # cálculo das potências fornecidas e consumidas por cada elemento do circuito:
 pL = np.multiply(vL,i)  # indutor
@@ -84,6 +86,7 @@ plt.grid(color='k', linestyle='--', linewidth=0.1)
 plt.ylabel('watts (W)', fontsize = 14)
 plt.xlabel('tempo (s)', fontsize = 14)
 plt.title('Potências no circuito RLC série', fontsize = 14)
+plt.show(block=False)
 
 # cálculo das energias fornecidas e consumidas no circuito:
 energiaL     = integrate.cumtrapz(pL, t, initial = 0.5*L*i[0]**2)/1e-3  # energia total consumida pelo indutor em função do tempo em mJ
@@ -101,7 +104,7 @@ plt.grid(color='k', linestyle='--', linewidth=0.1)
 plt.ylabel('mili Joules (mJ)', fontsize = 14)
 plt.xlabel('tempo (s)', fontsize = 14)
 plt.title('Energia consumida ou fornecida por cada elemento até o instante t', fontsize = 14)
-
+plt.show(block=False)
 
 
 
