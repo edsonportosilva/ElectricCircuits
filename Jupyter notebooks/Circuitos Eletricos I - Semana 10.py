@@ -24,7 +24,7 @@
 #
 # a) Determine a tensão $v_0(t)$ sobre o indutor de $48\;mH$ para $t\geq0$.\
 # b) Determine a corrente $i_0(t)$ sobre o indutor de $48\;mH$ para $t\geq0$.\
-# c) Determine a energia comsumida pelo resistor de $2.5\;k\Omega$ no intervalo $0\leq t \leq\infty$.
+# c) Determine a energia consumida pelo resistor de $2.5\;k\Omega$ no intervalo $0\leq t \leq\infty$.
 #
 # Link para a simulação do circuito: https://tinyurl.com/yj69udn8
 
@@ -120,10 +120,10 @@ print('ΔE = %.2f μJ' %(ΔE/1e-6))
 # define tensão sobre o resistor vR(t)
 vR = R*i1 
 
-# potência comsumida pelo resistor
+# potência consumida pelo resistor
 p = vR*i1
 
-# energia comsumida pelo resistor
+# energia consumida pelo resistor
 E = sp.integrate(p, (t, 0, sp.oo))
 print('Energia consumida pelo resistor:')
 print('E = %.2f μJ' %(E/1e-6))
