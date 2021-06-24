@@ -119,9 +119,9 @@ import numpy as np
 i1, i2, v4 = sp.symbols('i1, i2, v4')
 
 # define os sistema de N equações
-eq1 = sp.Eq( 10*i1 + 50*i2, 10)             
-eq2 = sp.Eq(    i1 -    i2, -0.5)  
-eq3 = sp.Eq(-50*i2 +    v4, 10)
+eq1 = sp.Eq()             
+eq2 = sp.Eq()  
+eq3 = sp.Eq()
 
 # resolve o sistema
 soluc = sp.solve((eq1, eq2, eq3), dict=True)
@@ -138,16 +138,16 @@ print('Solução do sistema:\n\n i1 = %.2f A,\n i2 = %.2f A,\n i3 = %.2f A,\n v4
 
 # +
 # expressões para a Lei de Ohm (convenção passiva)
-v1 = 10*i1
-v2 = 50*i2
-v3 = 20*i3
+v1 = 
+v2 = 
+v3 = 
 
 # expressões para as potências (convenção passiva)
-p10V = -10*i1
-p1   =  v1*i1
-p2   =  v2*i2
-p3   =  v3*i3
-p4   =  v4*i3
+p10V = 
+p1   = 
+p2   = 
+p3   = 
+p4   = 
 
 print('Potências:\n\n p10V = %.2f W\n p1 = %.2f W,\n p2 = %.2f W,\n p3 = %.2f W,\n p4 = %.2f W\n' %(p10V, p1, p2, p3, p4))
 # -
@@ -164,9 +164,9 @@ Image("./figures/J1C2.png", width=500)
 i1, i2, v4 = sp.symbols('i1, i2, v4')
 
 # define os sistema de N equações
-eq1 = sp.Eq( 10*i1 - 50*i2, 10)             
-eq2 = sp.Eq(    i1 +    i2, -0.5)  
-eq3 = sp.Eq( 50*i2 +    v4, 10)
+eq1 = sp.Eq( )             
+eq2 = sp.Eq( )  
+eq3 = sp.Eq( )
 
 # resolve o sistema
 soluc = sp.solve((eq1, eq2, eq3), dict=True)
@@ -180,16 +180,16 @@ print('Solução do sistema:\n\n i1 = %.2f A,\n i2 = %.2f A,\n i3 = %.2f A,\n v4
 
 # +
 # expressões para a Lei de Ohm (convenção passiva)
-v1 = 10*i1
-v2 = -50*i2
-v3 = -20*i3
+v1 = 
+v2 = 
+v3 = 
 
 # expressões para as potências (convenção passiva)
-p10V = -10*i1
-p1   =  v1*i1
-p2   =  -v2*i2
-p3   =  -v3*i3
-p4   =  -v4*i3
+p10V = 
+p1   = 
+p2   =  
+p3   = 
+p4   = 
 
 print('Potências:\n\n p10V = %.2f W\n p1 = %.2f W,\n p2 = %.2f W,\n p3 = %.2f W,\n p4 = %.2f W\n' %(p10V, p1, p2, p3, p4))
 # -
