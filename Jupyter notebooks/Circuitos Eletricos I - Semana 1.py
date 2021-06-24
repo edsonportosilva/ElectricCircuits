@@ -14,20 +14,33 @@
 #     name: python3
 # ---
 
+from IPython.core.display import HTML
+from IPython.display import Image
+HTML("""
+<style>
+.output_png {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+</style>
+""")
+
 # # *Circuitos Elétricos I*
 
 # ## Semana 1 - Convenções para aplicação das Leis de Kirchhoff na análise de circuitos resistivos
 #
 # ### Caso 1
 
-from IPython.display import Image
 Image("./figures/J1C1.png", width=500)
 
 # #### Lei de Kirchhoff das tensões (LKT) 
 #
 # Em qualquer malha frechada do circuito $\sum_k v_k = 0$
 #
-# `Convenção arbitrária: ao percorrer a malha, escolha um sinal (+ ou -) para indicar aumentos de tensão e o sinal oposto para indicar quedas de tensão no somatório da LKT.`
+# `Convenção arbitrária (1): ao percorrer a malha, escolha um sinal (+ ou -) para indicar aumentos de tensão e o sinal oposto para indicar quedas de tensão no somatório da LKT.`
+#
+# Logo, atribuindo o sinal (-) para aumentos de tensão e o sinal (+) para quedas de tensão, ao aplicar a LKT no circuito mostrado acima, temos:
 #
 # $$ 
 # \begin{align}
@@ -40,7 +53,7 @@ Image("./figures/J1C1.png", width=500)
 #
 # Em qualquer nó do circuito $\sum_k i_k = 0$
 #
-# `Convenção arbitrária: para o nó em questão, escolha um sinal (+ ou -) para indicar correntes chegando ao nó e o sinal oposto para indicar correntes deixando o nó no somatório da LKT.`
+# `Convenção arbitrária (2): para o nó em questão, escolha um sinal (+ ou -) para indicar correntes chegando ao nó e o sinal oposto para indicar correntes deixando o nó no somatório da LKT.`
 #
 # ou, para evitar erros com troca de sinais, simplesmente faça
 #
@@ -53,7 +66,20 @@ Image("./figures/J1C1.png", width=500)
 # \end{align}
 # $$
 
-# #### Lei de Ohm (+convenção passiva):
+# #### Lei de Ohm (+convenção passiva)
+#
+# `Convenção passiva (3): qualquer expressão que relacione as grandezas de tensão e corrente num elemento ideal de dois terminais deve ser escrita de acordo com a convenção passiva.`
+#
+# A convenção passiva estabelece que:
+#
+# 1. Se o sentido de referência adotado para corrente coincide com a queda de tensão na polaridade de referência ($+ \rightarrow -$), *qualquer expressão envolvendo $v$ e $i$* para o elemento em questão deve ser escrita com **sinal positivo**.
+#
+#
+# 2. Se o sentido de referência adotado para corrente coincide com o aumento de tensão na polaridade de ref. ($+ \leftarrow -$), *qualquer expressão envolvendo $v$ e $i$* para o elemento em questão deve ser escrita com **sinal negativo**.
+#
+# A Lei de Ohm expressa a relação entre tensão, corrente e resistência num resistor ideal. Logo, as expressões da Lei de Ohm devem obedecer a convenção passiva. 
+#
+# Desse modo, podemos escrever as seguintes equações para o circuito acima. 
 #
 # $$ 
 # \begin{align}
@@ -171,5 +197,3 @@ print('Potências:\n\n p10V = %.2f W\n p1 = %.2f W,\n p2 = %.2f W,\n p3 = %.2f W
 # ### Caso 3
 
 Image("./figures/J1C3.png", width=500)
-
-
