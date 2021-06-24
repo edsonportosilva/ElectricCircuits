@@ -157,6 +157,8 @@ print('Potências:\n\n p10V = %.2f W\n p1 = %.2f W,\n p2 = %.2f W,\n p3 = %.2f W
 # calcula somatório das potências
 print('Somatório das potências : %.2f W\n' %(p10V+p1+p2+p3+p4))
 
+# Simulação do circuito: https://tinyurl.com/yfbwd4vz
+
 # ### Caso 2
 
 Image("./figures/J1C2.png", width=500)
