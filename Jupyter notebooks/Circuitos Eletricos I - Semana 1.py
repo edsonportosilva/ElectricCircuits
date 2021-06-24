@@ -28,7 +28,9 @@ HTML("""
 
 # # *Circuitos Elétricos I*
 
-# ## Semana 1 - Convenções para aplicação das Leis de Kirchhoff na análise de circuitos resistivos
+# ## Semana 1 - Convenções para aplicação das Leis de Kirchhoff na análise de circuitos
+#
+#
 #
 # ### Caso 1
 
@@ -75,7 +77,7 @@ Image("./figures/J1C1.png", width=500)
 # 1. Se o sentido de referência adotado para corrente coincide com a queda de tensão na polaridade de referência ($+ \rightarrow -$), *qualquer expressão envolvendo $v$ e $i$* para o elemento em questão deve ser escrita com **sinal positivo**.
 #
 #
-# 2. Se o sentido de referência adotado para corrente coincide com o aumento de tensão na polaridade de ref. ($+ \leftarrow -$), *qualquer expressão envolvendo $v$ e $i$* para o elemento em questão deve ser escrita com **sinal negativo**.
+# 2. Se o sentido de referência adotado para corrente coincide com o aumento de tensão na polaridade de referência ($+ \leftarrow -$), *qualquer expressão envolvendo $v$ e $i$* para o elemento em questão deve ser escrita com **sinal negativo**.
 #
 # A Lei de Ohm expressa a relação entre tensão, corrente e resistência num resistor ideal. Logo, as expressões da Lei de Ohm devem obedecer a convenção passiva. 
 #
