@@ -201,3 +201,37 @@ print('Potências:\n\n p10V = %.2f W\n p1 = %.2f W,\n p2 = %.2f W,\n p3 = %.2f W
 # ### Caso 3
 
 Image("./figures/J1C3.png", width=500)
+
+# +
+# define as N variáveis desconhecidas
+i1, i2, v4 = sp.symbols('i1, i2, v4')
+
+# define os sistema de N equações
+eq1 = sp.Eq( )             
+eq2 = sp.Eq( )  
+eq3 = sp.Eq( )
+
+# resolve o sistema
+soluc = sp.solve((eq1, eq2, eq3), dict=True)
+
+i1 = np.array([sol[i1] for sol in soluc])
+i2 = np.array([sol[i2] for sol in soluc]) 
+v4 = np.array([sol[v4] for sol in soluc]) 
+i3 = 0.5
+
+print('Solução do sistema:\n\n i1 = %.2f A,\n i2 = %.2f A,\n i3 = %.2f A,\n v4 = %.2f V.' %(i1, i2, i3, v4))
+
+# +
+# expressões para a Lei de Ohm (convenção passiva)
+v1 = 
+v2 = 
+v3 = 
+
+# expressões para as potências (convenção passiva)
+p10V = 
+p1   = 
+p2   =  
+p3   = 
+p4   = 
+
+print('Potências:\n\n p10V = %.2f W\n p1 = %.2f W,\n p2 = %.2f W,\n p3 = %.2f W,\n p4 = %.2f W\n' %(p10V, p1, p2, p3, p4))
