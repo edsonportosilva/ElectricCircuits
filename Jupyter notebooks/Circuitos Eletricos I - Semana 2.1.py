@@ -53,10 +53,10 @@ import numpy as np
 i1, i2, i3, i4 = sp.symbols('i1, i2, i3, i4')
 
 # define os sistema de N equações
-eq1 = sp.Eq(i1 - i2 + i3,    0)             
-eq2 = sp.Eq(i1 + i3 -i4,     3)  
-eq3 = sp.Eq(30*i2 + 10*i3, -11)
-eq4 = sp.Eq(20*i1 + 30*i2,  -5)
+eq1 = sp.Eq()             
+eq2 = sp.Eq()  
+eq3 = sp.Eq()
+eq4 = sp.Eq()
 
 # resolve o sistema
 soluc = sp.solve((eq1, eq2, eq3, eq4), dict=True)
@@ -75,11 +75,11 @@ print('Solução do sistema:\n\n i1 = %.3f A,\n i2 = %.3f A,\n i3 = %.3f A,\n i4
 
 # +
 # expressões para as potências associadas a cada corrente
-p1 = 20*i1**2
-p2 = 30*i2**2 -10*i2
-p3 = 10*i3**2 + 6*i3
-p4 = 15*i4
-px = 5*ix**2
+p1 = 
+p2 = 
+p3 = 
+p4 = 
+px = 
 
 print('Potências:\n\n p1 = %.2f W,\n p2 = %.2f W,\n p3 = %.2f W,\n p4 = %.2f W\n px = %.2f W'\
       %(p1, p2, p3, p4, px))
