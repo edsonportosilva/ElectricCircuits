@@ -74,18 +74,16 @@ print('Solução do sistema:\n\n i1 = %.3f A,\n i2 = %.3f A,\n i3 = %.3f A,\n i4
 # #### Cálculo das potências
 
 # +
-# expressões para as potências associadas a cada corrente
-p1 = 
-p2 = 
-p3 = 
-p4 = 
-px = 
+# expressões para as potências 
+pR = 
+p10v = 
+p15v = 
+p2ix = 
 
-print('Potências:\n\n p1 = %.2f W,\n p2 = %.2f W,\n p3 = %.2f W,\n p4 = %.2f W\n px = %.2f W'\
-      %(p1, p2, p3, p4, px))
+print('Potências:\n\n pR = %.2f W,\n p10v = %.2f W,\n p15v = %.2f W,\n p2ix = %.2f W'%(pR, p10v, p15v, p2ix))
 # -
 
 # calcula somatório das potências
-print('Somatório das potências : %.2f W\n' %(p1+p2+p3+p4+px))
+print('Somatório das potências : %.2f W\n' %(pR+p10v+p15v+p2ix))
 
 
