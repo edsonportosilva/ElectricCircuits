@@ -119,32 +119,3 @@ Image("./figures/J3C1.png", width=400)
 
 from IPython.display import Image
 Image("./figures/J3C2.png", width=600)
-
-
-# +
-def YΔ(R1,R2,R3):
-    
-    x = R1*R2+R2*R3+R3*R1
-    Ra = x/R1
-    Rb = x/R2
-    Rc = x/R3
-    
-    return Ra, Rb, Rc
-
-def ΔY(Ra,Rb,Rc):
-    
-    x = Ra+Rb+Rc
-    R1 = (Rb*Rc)/x
-    R2 = (Ra*Rc)/x
-    R3 = (Rb*Ra)/x
-    
-    return R1, R2, R3
-
-
-# -
-
-YΔ(3,1,2)
-
-ΔY(3.6666666666666,11,5.5)
-
-
