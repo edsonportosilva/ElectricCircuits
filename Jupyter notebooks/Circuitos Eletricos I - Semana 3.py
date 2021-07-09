@@ -65,10 +65,10 @@ import numpy as np
 va, vb, vc, vd = sp.symbols('va, vb, vc, vd')
 
 # define os sistema de N equações
-eq1 = sp.Eq(3*vb+5*vc-8*vd,-97.5)             
-eq2 = sp.Eq(-15*va-18*vb-8*vc+8*vd, 60)  
-eq3 = sp.Eq(vb-va,10)
-eq4 = sp.Eq(-5*va-2*vb+5*vc,0)
+eq1 = sp.Eq()             
+eq2 = sp.Eq()  
+eq3 = sp.Eq()
+eq4 = sp.Eq()
 
 # resolve o sistema
 soluc = sp.solve((eq1, eq2, eq3, eq4), dict=True)
@@ -84,13 +84,13 @@ print('Solução do sistema:\n\n va = %.2f V,\n vb = %.2f V,\n vc = %.2f V,\n vd
 # ### Cálculo das correntes
 
 # +
-i2 = (vb-vd)/25
-ix = vb/5
-i3 = (vd-12-vc)/15
-i4 = -vc/25
-i6 = -va/5
-i1 = i2 + ix
-i5 = i4 + i3
+i2 = 
+ix = 
+i3 = 
+i4 = 
+i6 = 
+i1 = 
+i5 = 
 
 print('Correntes:\n\n i1 = %.2f A,\n i2 = %.2f A,\n i3 = %.2f A,\n i4 = %.2f A,\n i5 = %.2f A,\n i6 = %.2f A,\n ix = %.2f A.'\
       %(i1, i2, i3, i4, i5, i6, ix))
@@ -99,11 +99,11 @@ print('Correntes:\n\n i1 = %.2f A,\n i2 = %.2f A,\n i3 = %.2f A,\n i4 = %.2f A,\
 # ### Cálculo das potências
 
 # +
-pR = 25*i2**2 + 5*ix**2 + 15*i3**2 + 25*i4**2 + 5*i6**2
-p10V = -10*i1
-p05A = -vd*0.5
-p12V = 12*i3
-p2ix = 2*ix*i5
+pR = 
+p10V = 
+p05A = 
+p12V = 
+p2ix = 
 
 # calcula somatório das potências
 print('Somatório das potências : %.2f W\n' %(pR+p10V+p05A+p12V+p2ix))
@@ -135,10 +135,10 @@ Image("./figures/J4C2.png", width=500)
 ia, ib, ic, id = sp.symbols('ia, ib, ic, id')
 
 # define os sistema de N equações
-eq1 = sp.Eq(2*ia-ib-id, 2)             
-eq2 = sp.Eq(-3*ia+30*ib-25*ic-2*id,0)  
-eq3 = sp.Eq(5*ia+25*ib-40*ic-30*id, 12)
-eq4 = sp.Eq(ic-id, 0.5)
+eq1 = sp.Eq()             
+eq2 = sp.Eq()  
+eq3 = sp.Eq()
+eq4 = sp.Eq()
 
 # resolve o sistema
 soluc = sp.solve((eq1, eq2, eq3, eq4), dict=True)
@@ -154,13 +154,13 @@ print('Solução do sistema:\n\n ia = %.2f A,\n ib = %.2f A,\n ic = %.2f A,\n id
 # ### Cálculo das correntes
 
 # +
-i2 = id
-ix = ia-id
-i3 = ic
-i4 = ib-ic
-i6 = ia-ib
-i1 = ia
-i5 = ib
+i2 = 
+ix = 
+i3 = 
+i4 = 
+i6 = 
+i1 = 
+i5 = 
 
 print('Correntes:\n\n i1 = %.2f A,\n i2 = %.2f A,\n i3 = %.2f A,\n i4 = %.2f A,\n i5 = %.2f A,\n i6 = %.2f A,\n ix = %.2f A.'\
       %(i1, i2, i3, i4, i5, i6, ix))
