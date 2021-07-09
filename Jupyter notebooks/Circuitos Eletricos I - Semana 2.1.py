@@ -14,6 +14,11 @@
 #     name: python3
 # ---
 
+# + [markdown] toc=true
+# <h1>Table of Contents<span class="tocSkip"></span></h1>
+# <div class="toc"><ul class="toc-item"><li><span><a href="#Semana-2---Exercícios" data-toc-modified-id="Semana-2---Exercícios-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Semana 2 - Exercícios</a></span><ul class="toc-item"><li><span><a href="#Exercício-1:-circuito-com-fonte-controlada-de-corrente" data-toc-modified-id="Exercício-1:-circuito-com-fonte-controlada-de-corrente-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>Exercício 1: circuito com fonte controlada de corrente</a></span></li><li><span><a href="#Exercício-2:-circuito-com-fonte-controlada-de-tensão" data-toc-modified-id="Exercício-2:-circuito-com-fonte-controlada-de-tensão-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>Exercício 2: circuito com fonte controlada de tensão</a></span></li><li><span><a href="#Solução-das-equações" data-toc-modified-id="Solução-das-equações-1.3"><span class="toc-item-num">1.3&nbsp;&nbsp;</span>Solução das equações</a></span><ul class="toc-item"><li><span><a href="#Cálculo-das-potências" data-toc-modified-id="Cálculo-das-potências-1.3.1"><span class="toc-item-num">1.3.1&nbsp;&nbsp;</span>Cálculo das potências</a></span></li></ul></li></ul></li></ul></div>
+# -
+
 from IPython.core.display import HTML
 HTML("""
 <style>
