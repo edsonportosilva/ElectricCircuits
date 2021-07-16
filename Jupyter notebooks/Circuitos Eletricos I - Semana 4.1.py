@@ -45,3 +45,5 @@ HTML("""
 # Determine a corrente que passa pelo resistor de $25~\Omega$ aplicando transformações e deslocamentos de fontes.
 
 Image("./figures/J5C1.png", width=500)
+
+# Simulação do circuito: https://tinyurl.com/ydk42vvn
