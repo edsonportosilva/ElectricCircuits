@@ -48,9 +48,9 @@ import numpy as np
 v1, v2, v3, v4 = sp.symbols('v1, v2, v3, v4')
 
 # define os sistema de N equações
-eq1 = sp.Eq(7*v1-4*v2,9)             
-eq2 = sp.Eq(v1-3*v2+v4,-2)  
-eq3 = sp.Eq(v2-5.5*v4,-1.5)
+eq1 = sp.Eq()             
+eq2 = sp.Eq()  
+eq3 = sp.Eq()
 
 # resolve o sistema
 soluc = sp.solve((eq1, eq2, eq3), dict=True)
@@ -61,3 +61,6 @@ v4 = np.array([sol[v4] for sol in soluc])
 v3 = 2 
 
 print('Solução do sistema:\n\n v1 = %.2f V,\n v2 = %.2f V,\n v3 = %.2f V,\n v4 = %.2f V.' %(v1, v2, v3, v4))
+# -
+
+
