@@ -1,0 +1,47 @@
+\documentclass[border=4pt]{standalone}
+\usepackage{tikz}
+\usepackage[siunitx, RPvoltages]{circuitikz}
+
+\begin{document}
+
+\ctikzset{bipoles/length=1.5cm}
+\ctikzset{bipoles/thickness=4}
+\ctikzset{label/align = smart}
+
+\ctikzset{
+ amplifiers/fill=cyan,
+ sources/fill=cyan!30!white,
+ csources/fill=green!30!white,
+ diodes/fill=red,
+ resistors/fill=violet,
+ }
+
+
+\begin{circuitikz}[american, scale = 1.0, cute inductors]]
+	\draw node[ocirc] (a) at (0,3){}
+	      node[ocirc] (b) at (0,0){}
+	      (a) to[open,v=$v_L$,*-*] (b);	
+	                  
+	\draw (0,3) to[short, f=$i_0$,-](3,3)
+	            to[L,l=$L_1$,f=$i_1$,*-*](3,0);	           
+	\draw (5,3) to[L,l=$L_2$,f=$i_2$,-](5,0);     
+  
+	\draw (0,0)--(5,0);
+	\draw (3,3)--(5,3);
+\end{circuitikz}
+
+
+\begin{circuitikz}[american, scale = 1.0, cute inductors]]
+	\draw node[ocirc] (a) at (0,3){}
+	      node[ocirc] (b) at (0,0){}
+	      (a) to[open,v=$v$,*-*] (b);	
+	                  
+	\draw (0,3) to[short, f=$i_0$,-](2,3)
+	            to[L,l=$L_1$,v=$v_1$,-](5,3)	            	           
+	            to[L,l=$L_2$,v=$v_2$,-](5,0);     
+  
+	\draw (0,0)--(5,0);
+	
+\end{circuitikz}
+
+\end{document}

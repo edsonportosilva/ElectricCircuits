@@ -14,8 +14,12 @@
 #     name: python3
 # ---
 
+# +
 from IPython.core.display import HTML
 from IPython.display import Image
+from IPython.display import display, Math
+from IPython.display import display as disp
+
 HTML("""
 <style>
 .output_png {
@@ -25,6 +29,7 @@ HTML("""
 }
 </style>
 """)
+# -
 
 # # *Circuitos Elétricos I - Semana 6*
 
@@ -45,7 +50,7 @@ import numpy as np
 
 tmax = 1
 t = np.linspace(0, tmax, num = 1000)
-v = 1800*t*np.exp(-20*t)
+v = -1800*t*np.exp(-20*t)
 
 plt.plot(t, v)
 plt.xlim(0, tmax)
@@ -94,6 +99,9 @@ p = v*i
 E = integrate(p, (t, 0, oo))
 print('Energia entrege à fonte:')
 print('E = %.2f J' %E)
+# -
+
+i1.simplify()
 
 # +
 # calculando os valores de energia em t=0
@@ -122,3 +130,65 @@ print('E2(oo) = %.2f J' %E2_inf)
 
 print('Variação da energia armazenada nos indutores:')
 print('ΔE = %.2f J' %ΔE)
+# -
+# ### Problema 2
+#
+# Cálculo de indutâncias equivalentes com acoplamento magnético
+
+Image("./figures/J8C2.png", width=700)
+
+# $$
+# \begin{aligned}
+# &v_L = L_{1} \frac{d i_{1}}{d t}+M \frac{d i_{2}}{d t}\\
+# &v_L = L_{2} \frac{d i_{2}}{d t}+M \frac{d i_{1}}{d t}
+# \end{aligned}
+# $$
+
+L1, L2, M, vL, t = symbols('L_1, L_2, M, v_L, t', real=True)
+
+
+# +
+i1 = Function('i_1')(t)
+i2 = Function('i_2')(t)
+
+A  = Matrix([[L1, M],[M, L2]])
+V  = Matrix([[vL],[vL]])
+
+I  = Matrix([[i1],[i2]])
+dI = diff(I, t)
+
+disp(Math('A = '+latex(A)))
+disp(Math('V = '+latex(V)))
+disp(Math('dI = '+latex(dI)))
+# -
+
+Eq(V, A*dI)
+
+# +
+# matriz inversa de A
+
+disp(Math(r'A^{-1} = '+latex(A**-1)))
+
+# +
+# calcula o vetor de derivadas das correntes
+
+dI = (A**-1)*V
+dI.simplify()
+
+disp(Math(r'\frac{dI}{dt} = '+latex(dI)))
+
+# +
+# di0/dt = di1/dt + di2/dt 
+
+dI0 = dI[0] + dI[1]
+
+disp(Math(r'\frac{di_0}{dt} = \frac{di_1}{dt} + \frac{di_2}{dt} =  '+latex(dI0.simplify())))
+
+# +
+# indutância equivalente: vL = Leq*di0/dt -> Leq = vL/di0/dt
+Leq = vL/dI0
+
+disp(Math('L_{eq} = '+latex(Leq.simplify())))
+# -
+
+
