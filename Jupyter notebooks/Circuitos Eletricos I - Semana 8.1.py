@@ -141,7 +141,7 @@ figName = './figures/J11C2a.gif'
 genGIF(t, iL*1000, figName, xlabel = 'tempo (s)', ylabel = '$i_L(t)$ [mA]', fram=t.size, inter=25)
 
 # +
-vL = L*np.diff(iL)/np.diff(t) # tensão aplicada aos terminais do indutor
+vL = L*np.diff(iL)/np.diff(t) # vL = L*diL/dt tensão aplicada aos terminais do indutor
 vL = np.append(vL, vL[0])
 
 figName = './figures/J11C2b.gif'
