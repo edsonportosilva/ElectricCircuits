@@ -116,6 +116,8 @@ Image("./figures/J11C1.png", width=700)
 Image("./figures/J11C2.png", width=600)
 
 # Simulação do circuito disponível no link: https://tinyurl.com/yfs69qqu
+#
+# #### Visualização das curvas $$
 
 # +
 from utils import genGIF
