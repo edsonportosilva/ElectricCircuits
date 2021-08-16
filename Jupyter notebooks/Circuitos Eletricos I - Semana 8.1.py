@@ -44,19 +44,19 @@ Image("./figures/J11C1.png", width=700)
 #
 # com $\tau$ sendo a constante de tempo do circuito. A solução de (\ref{eq1}) pode ser obtida via integração fazendo
 #
-# $$ \begin{equation}  \large \int_{x\left(t_{0}\right)}^{x(t)} \frac{d u}{u}=-\frac{1}{\tau} \int_{t_{0}}^{t} d v \end{equation}$$.
+# $$ \begin{equation}  \large \int_{x\left(t_{0}^+\right)}^{x(t)} \frac{d u}{u}=-\frac{1}{\tau} \int_{t_{0}^+}^{t} d v \end{equation}$$.
 #
-# Logo, a solução da EDO homogênea será dada por  $$ \begin{equation} \large x(t) = x(t_o)e^{-\frac{(t-t_o)}{\tau}}. \end{equation} $$
+# Logo, a solução da EDO homogênea será dada por  $$ \begin{equation} \large x(t) = x(t_0^+)e^{-\frac{(t-t_0^+)}{\tau}}. \end{equation} $$
 
 # ### Resposta natural
 #
 # A resposta natural de circuitos RL/RC corresponderá a solução da EDO homogênea, ou seja,
 #
-# $$ \begin{equation} \large i_L(t) = i_L(t_o)e^{-\frac{(t-t_o)}{\tau}}, \end{equation}$$
+# $$ \begin{equation} \large i_L(t) = i_L(t_0^+)e^{-\frac{(t-t_0^+)}{\tau}}, \end{equation}$$
 #
 # com $\tau = L/R$ para o circuito RL e
 #
-# $$\begin{equation}  \large v_C(t) = v_C(t_o)e^{-\frac{(t-t_o)}{\tau}}, \end{equation} $$
+# $$\begin{equation}  \large v_C(t) = v_C(t_0^+)e^{-\frac{(t-t_0^+)}{\tau}}, \end{equation} $$
 #
 # com $\tau = RC$ para o circuito RC.
 
@@ -64,11 +64,11 @@ Image("./figures/J11C1.png", width=700)
 #
 # A resposta ao degrau de circuitos RL/RC corresponderá a solução da EDO homogênea adicionada da solução particular (ou solução de regime estacionário). Logo,
 #
-# $$\large i_L(t) = i_L(\infty) + A_oe^{-\frac{(t-t_o)}{\tau}}, $$
+# $$\large i_L(t) = i_L(\infty) + A_0e^{-\frac{(t-t_0^+)}{\tau}}, $$
 #
 # com $\tau = L/R$ para o circuito RL e
 #
-# $$\large v_C(t) = v_C(\infty) + A_oe^{-\frac{(t-t_o)}{\tau}}, $$
+# $$\large v_C(t) = v_C(\infty) + A_0e^{-\frac{(t-t_0^+)}{\tau}}, $$
 #
 # com $\tau = RC$ para o circuito RC.
 #
@@ -76,29 +76,29 @@ Image("./figures/J11C1.png", width=700)
 #
 # Desse modo, para o circuito RL
 #
-# $$\large{\begin{align} i_L(t_o) &= i_L(\infty) + A_oe^{-\frac{(t_o-t_o)}{\tau}}\nonumber\\ &= i_L(\infty) + A_o \nonumber\\ \Rightarrow A_o &= i_L(t_o)- i_L(\infty)\nonumber
+# $$\large{\begin{align} i_L(t_0^+) &= i_L(\infty) + A_0e^{-\frac{(t_0^+-t_0^+)}{\tau}}\nonumber\\ &= i_L(\infty) + A_0 \nonumber\\ \Rightarrow A_0 &= i_L(t_0^+)- i_L(\infty)\nonumber
 # \end{align} }$$
 #
 # e para o circuito RC
 #
-# $$\large{\begin{align} v_C(t_o) &= v_C(\infty) + A_oe^{-\frac{(t_o-t_o)}{\tau}}\nonumber\\ &= v_C(\infty) + A_o \nonumber\\ \Rightarrow A_o &= v_C(t_o)- v_C(\infty)\nonumber
+# $$\large{\begin{align} v_C(t_0^+) &= v_C(\infty) + A_0e^{-\frac{(t_0^+-t_0^+)}{\tau}}\nonumber\\ &= v_C(\infty) + A_0 \nonumber\\ \Rightarrow A_0 &= v_C(t_0^+)- v_C(\infty)\nonumber
 # \end{align} }$$
 
 # ### Resposta geral
 #
 # A resposta geral de circuitos RL/RC corresponderá às expressões,
 #
-# $$ \begin{equation} \large i_L(t) = i_L(\infty) + \left[i_L(t_o)- i_L(\infty)\right]e^{-\frac{(t-t_o)}{\tau}},\end{equation} $$
+# $$ \begin{equation} \large i_L(t) = i_L(\infty) + \left[i_L(t_0^+)- i_L(\infty)\right]e^{-\frac{(t-t_0^+)}{\tau}},\end{equation} $$
 #
 # com $\tau = L/R$ para o circuito RL e
 #
-# $$ \begin{equation} \large v_C(t) = v_C(\infty) + \left[v_C(t_o)- v_C(\infty)\right]e^{-\frac{(t-t_o)}{\tau}},\end{equation} $$
+# $$ \begin{equation} \large v_C(t) = v_C(\infty) + \left[v_C(t_0^+)- v_C(\infty)\right]e^{-\frac{(t-t_0^+)}{\tau}},\end{equation} $$
 #
 # com $\tau = RC$ para o circuito RC.
 #
 # Finalmente, para qualquer circuito de primeira ordem,
 #
-# $$\begin{equation}  \large x(t) = x(\infty) + \left[x(t_o)-x(\infty)\right]e^{-\frac{(t-t_o)}{\tau}},\end{equation} $$
+# $$\begin{equation}  \large x(t) = x(\infty) + \left[x(t_0^+)-x(\infty)\right]e^{-\frac{(t-t_0^+)}{\tau}},\end{equation} $$
 #
 # com $\tau$ sendo a constante de tempo associada a este circuito.
 
@@ -116,6 +116,38 @@ Image("./figures/J11C1.png", width=700)
 Image("./figures/J11C2.png", width=600)
 
 # Simulação do circuito disponível no link: https://tinyurl.com/yfs69qqu
+
+# +
+from utils import genGIF
+import numpy as np
+
+L   = 1
+vth = -80e-3
+Rth = 18
+
+iL_inf = vth/Rth # iL(infinito)
+iL_t0  = 2.9e-3  # iL(t0+)
+
+τ = L/Rth   # constante de tempo do circuito RL
+t0  = 0
+
+t  = np.linspace(t0-2*τ, t0+8*τ, 200)
+iL = np.zeros(t.size)
+
+iL[t<t0] = iL_t0                                             # iL(t) para t<t0-
+iL[t>t0] = iL_inf + (iL_t0 - iL_inf)*np.exp(-(t[t>t0]-t0)/τ) # iL(t) para t>t0+
+
+figName = './figures/J11C2a.gif'
+genGIF(t, iL*1000, figName, xlabel = 'tempo (s)', ylabel = '$i_L(t)$ [mA]', fram=t.size, inter=25)
+
+# +
+vL = L*np.diff(iL)/np.diff(t) # tensão aplicada aos terminais do indutor
+vL = np.append(vL, vL[0])
+
+figName = './figures/J11C2b.gif'
+genGIF(t, vL*1000, figName, xlabel = 'tempo (s)', ylabel = '$v_L(t)$ [mV]', fram=t.size, inter=25)
+Image('./figures/J11C2b.gif')
+# -
 
 # ### Problema 2
 #

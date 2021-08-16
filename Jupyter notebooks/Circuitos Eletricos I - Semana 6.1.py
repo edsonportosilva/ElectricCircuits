@@ -189,6 +189,3 @@ disp(Math(r'\frac{di_0}{dt} = \frac{di_1}{dt} + \frac{di_2}{dt} =  '+latex(dI0.s
 Leq = vL/dI0
 
 disp(Math('L_{eq} = '+latex(Leq.simplify())))
-# -
-
-
