@@ -117,7 +117,7 @@ Image("./figures/J11C2.png", width=600)
 
 # Simulação do circuito disponível no link: https://tinyurl.com/yfs69qqu
 #
-# #### Visualização das curvas $$
+# #### Visualização das curvas $i_L(t)$ e $v_L(t)$
 
 # +
 from utils import genGIF
