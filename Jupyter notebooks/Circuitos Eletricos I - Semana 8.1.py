@@ -141,6 +141,9 @@ iL[t>t0] = iL_inf + (iL_t0 - iL_inf)*np.exp(-(t[t>t0]-t0)/τ) # iL(t) para t>t0+
 
 figName = './figures/J11C2a.gif'
 genGIF(t, iL*1000, figName, xlabel = 'tempo (s)', ylabel = '$i_L(t)$ [mA]', fram=t.size, inter=25)
+# -
+
+Image('./figures/J11C2a.gif')
 
 # +
 vL = L*np.diff(iL)/np.diff(t) # vL = L*diL/dt tensão aplicada aos terminais do indutor

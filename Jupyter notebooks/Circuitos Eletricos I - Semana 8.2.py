@@ -161,11 +161,42 @@ HTML("""
 # +
 import numpy as np
 import sympy as sp
+import matplotlib.pyplot as plt
 from matplotlib import style
 
 # função para arredondamento de floats em expressões simbólicas
 def round_expr(expr, num_digits):
     return expr.xreplace({n : round(n, num_digits) for n in expr.atoms(sp.Number)})
+
+# Função para plot de funções do sympy
+def symplot(t, F, interval, funLabel):
+
+    plt.figure()
+    if type(F) == list:
+        indLabel = 0
+        for f in F:
+            f_num = np.zeros(interval.shape)
+ 
+            for indT in range(0,interval.size):
+                f_num[indT] = sp.re(f.doit().evalf(subs={t:interval[indT]}))
+            
+            plt.plot(interval, f_num, label=funLabel[indLabel])
+            plt.legend();
+            plt.xlim([min(interval), max(interval)]);
+            plt.xlabel('tempo [s]');
+            indLabel += 1
+    else:
+        f_num = np.zeros(interval.shape)
+ 
+        for indT in range(0,interval.size):
+            f_num[indT] = sp.re(F.doit().evalf(subs={t:interval[indT]}))
+            
+        plt.plot(interval, f_num, label=funLabel)
+        plt.legend();
+        plt.xlim([min(interval), max(interval)]);
+        plt.xlabel('tempo [s]');            
+    
+    plt.grid();
 
 
 # -
@@ -226,6 +257,11 @@ print('Solução do sistema:\n\n A1 = %.2f A,\n A2 = %.2f A' %(round(A1,2), roun
 iL = A1*sp.exp(s1*(t-t0)) + A2*sp.exp(s2*(t-t0)) + iL_inf
 
 print('iL(t) = ', round_expr(iL,2), ' A')
+# -
+
+# plota gráfico da função
+intervalo = np.linspace(t0,t0+0.02,100)
+symplot(t,iL, intervalo, 'iL(t)')
 
 # +
 # tensão aplicada sobre o capacitor (= tensão sobre o indutor)
@@ -234,15 +270,11 @@ vC = L*sp.diff(iL, t)
 print('vC(t) = ', round_expr(vC, 2), ' V')
 # -
 
-# Resolução item (b):
+# plota gráfico da função
+intervalo = np.linspace(t0,t0+0.02,100)
+symplot(t,vC, intervalo, 'vC(t)')
 
-style.use('seaborn-darkgrid')
-p = sp.plot(iL, vC, (t,0,0.025), ylim = (-8,4), show=False, legend=True)
-p[0].line_color = 'red'
-p[1].line_color = 'blue'
-p[0].label = 'iL(t)'
-p[1].label = 'vC(t)'
-p.show()
+# Resolução item (b):
 
 # +
 # define a equação dvC/dt = 0
@@ -313,6 +345,11 @@ print('Solução do sistema:\n\n B1 = %.2f A,\n B2 = %.2f A' %(round(B1,2), roun
 iL = sp.exp(-α*(t-t0))*(B1*sp.cos(ωd*(t-t0))+B2*sp.sin(ωd*(t-t0))) + iL_inf
 
 print('iL(t) = ', round_expr(iL,2), ' A')
+# -
+
+# plota gráfico da função
+intervalo = np.linspace(t0,t0+0.05,100)
+symplot(t,iL, intervalo, 'iL(t)')
 
 # +
 # tensão aplicada sobre o capacitor (= tensão sobre o indutor)
@@ -322,13 +359,9 @@ vC = sp.simplify(vC)
 print('vC(t) = ', round_expr(vC, 2), ' V')
 # -
 
-#style.use('seaborn-darkgrid')
-p = sp.plot(iL, vC, (t,0,0.050), ylim = (-6,4), show=False, legend=True)
-p[0].line_color = 'red'
-p[1].line_color = 'blue'
-p[0].label = 'iL(t)'
-p[1].label = 'vC(t)'
-p.show()
+# plota gráfico da função
+intervalo = np.linspace(t0,t0+0.05,100)
+symplot(t,vC, intervalo, 'vC(t)')
 
 # ## Circuito RLC em série
 
