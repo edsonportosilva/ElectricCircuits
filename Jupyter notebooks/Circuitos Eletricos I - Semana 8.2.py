@@ -163,11 +163,16 @@ import numpy as np
 import sympy as sp
 import matplotlib.pyplot as plt
 from matplotlib import style
+from IPython.display import Math, display
 
 # função para arredondamento de floats em expressões simbólicas
 def round_expr(expr, num_digits):
     return expr.xreplace({n : round(n, num_digits) for n in expr.atoms(sp.Number)})
 
+# função para print de expressões simbólicas
+def symdisp(expr, var, unit):
+    display(Math(expr+sp.latex(var)+'\;'+unit))
+    
 # Função para plot de funções do sympy
 def symplot(t, F, interval, funLabel):
 
@@ -201,7 +206,11 @@ def symplot(t, F, interval, funLabel):
 
 # -
 
-# Resolução item (a):
+# ### Resolvendo o problema com o código em Python
+#
+# **Resolução item (a):**
+#
+# **Calcula $\alpha$ e $\omega_0$**
 
 # +
 # Parâmetros do circuito:
@@ -213,29 +222,43 @@ C = 0.5e-3
 α  = 1/(2*R*C)
 ω0 = 1/np.sqrt(L*C)
 
-print('α = %.2f rad/s'%α)
-print('ω0 = %.2f rad/s'%ω0)
+symdisp('α =', round(α, 2), ' rad/s')
+symdisp('ω_0 =', round(ω0, 2), ' rad/s')
+# -
+
+# **Define os valores iniciais $v_c(t_0^+)$ e $i_L(t_0^+)$ e o valor final $i_L(\infty)$ (obtidos da análise do circuito)**
 
 # +
 # informações obtidas pela análise do circuito
+
+t0 = 0 # instante do chaveamento
+
 iL_inf = -4 # valor final da corrente no indutor
 iL_t0 = 2   # valor inicial da corrente no indutor
 vc_t0 = 0   # valor inicial da tensão no capcitor
+# -
 
-t0 = 0 # instante do chaveamento
+# **Calcula as raízes da equação característica $s_1$ e $s_2$**
 
 # +
 # raízes da equação característica
 s1 = -α + np.sqrt(α**2-ω0**2)
 s2 = -α - np.sqrt(α**2-ω0**2)
 
+symdisp('s_1 =', round(s1, 2), ' rad/s')
+symdisp('s_2 =', round(s2, 2), ' rad/s')
+
 # define variáveis da solução geral
-t, A1, A2 = sp.symbols('t,A1,A2')
+t, A1, A2 = sp.symbols('t, A1, A2')
 
 # expressão geral da resposta superamortecida
 iL = A1*sp.exp(s1*(t-t0)) + A2*sp.exp(s2*(t-t0)) + iL_inf
 
-print('iL(t) = ', round_expr(iL,2), ' A')
+print('Forma geral da solução:')
+symdisp('i_L(t) = ', round_expr(iL,2), 'A')
+# -
+
+# **Resolve o sistema de equações para determinação das constantes $A_1$ e $A_2$**
 
 # +
 # define os sistema de equações com as condições iniciais
@@ -250,36 +273,52 @@ A2 = np.array([sol[A2] for sol in soluc])
 A1 = A1[0]
 A2 = A2[0]
 
-print('Solução do sistema:\n\n A1 = %.2f A,\n A2 = %.2f A' %(round(A1,2), round(A2,2)))
+print('Solução do sistema:')
+symdisp('A_1 =', round(A1, 2), ' A')
+symdisp('A_2 =', round(A2, 2), ' A')
+# -
+
+# **Determina a expressão final para $i_L(t)$**
 
 # +
 # expressão geral da resposta subamortecida
 iL = A1*sp.exp(s1*(t-t0)) + A2*sp.exp(s2*(t-t0)) + iL_inf
 
-print('iL(t) = ', round_expr(iL,2), ' A')
+symdisp('i_L(t) = ', round_expr(iL,2), 'A')
 # -
+
+# **Plota gráfico de $i_L(t)$**
 
 # plota gráfico da função
 intervalo = np.linspace(t0,t0+0.02,100)
 symplot(t,iL, intervalo, 'iL(t)')
 
+# **Determina $v_C(t)$ a partir de $i_L(t)$**
+
 # +
 # tensão aplicada sobre o capacitor (= tensão sobre o indutor)
 vC = L*sp.diff(iL, t)
 
-print('vC(t) = ', round_expr(vC, 2), ' V')
+symdisp('v_C(t) = ', round_expr(vC, 2), ' V')
 # -
+
+# **Plota gráfico de $v_C(t)$**
 
 # plota gráfico da função
 intervalo = np.linspace(t0,t0+0.02,100)
-symplot(t,vC, intervalo, 'vC(t)')
+symplot(t, vC, intervalo, 'vC(t)')
 
-# Resolução item (b):
+# **Resolução item (b):**
+#
+# $$\frac{dv_C}{dt} = 0$$
 
 # +
 # define a equação dvC/dt = 0
-eq1 = sp.Eq(sp.diff(vC, t),0)   
+eq1 = sp.Eq(sp.diff(vC, t),0)  
 
+round_expr(eq1, 2)
+
+# +
 # resolve a equação em t
 ts = sp.solveset(eq1, t).args[0]
 
@@ -290,7 +329,7 @@ print('ts = %.2e s'%ts)
 print('vC(ts) = %.2f V'%vC_ts)
 # -
 
-# Resolução item (c):
+# **Resolução item (c):**
 
 # +
 # Parâmetros do circuito:
@@ -302,8 +341,8 @@ C = 0.5e-3
 α  = 1/(2*R*C)
 ω0 = 1/np.sqrt(L*C)
 
-print('α = %.2f rad/s'%α)
-print('ω0 = %.2f rad/s'%ω0)
+symdisp('α =', round(α, 2), ' rad/s')
+symdisp('ω_0 =', round(ω0, 2), ' rad/s')
 
 # +
 # informações obtidas pela análise do circuito
@@ -317,13 +356,16 @@ t0 = 0 # instante do chaveamento
 # define a frequência de oscilação amortecida
 ωd =np.sqrt(ω0**2-α**2)
 
+symdisp('ω_d =', round(ωd, 2), ' rad/s')
+
 # define variáveis da solução geral
-t, B1, B2 = sp.symbols('t,B1,B2')
+t, B1, B2 = sp.symbols('t, B1, B2')
 
 # expressão geral da resposta subamortecida
 iL = sp.exp(-α*(t-t0))*(B1*sp.cos(ωd*(t-t0)) + B2*sp.sin(ωd*(t-t0))) + iL_inf
 
-print('iL(t) = ', round_expr(iL,2), ' A')
+print('Forma geral da solução:')
+symdisp('i_L(t) = ', round_expr(iL,2), 'A')
 
 # +
 # define os sistema de equações com as condições iniciais
@@ -338,30 +380,32 @@ B2 = np.array([sol[B2] for sol in soluc])
 B1 = B1[0]
 B2 = B2[0]
 
-print('Solução do sistema:\n\n B1 = %.2f A,\n B2 = %.2f A' %(round(B1,2), round(B2,2)))
+print('Solução do sistema:')
+symdisp('B_1 =', round(B1, 2), ' A')
+symdisp('B_2 =', round(B2, 2), ' A')
 
 # +
 # expressão geral da resposta subamortecida
 iL = sp.exp(-α*(t-t0))*(B1*sp.cos(ωd*(t-t0))+B2*sp.sin(ωd*(t-t0))) + iL_inf
 
-print('iL(t) = ', round_expr(iL,2), ' A')
+symdisp('i_L(t) = ', round_expr(iL,2), 'A')
 # -
 
 # plota gráfico da função
 intervalo = np.linspace(t0,t0+0.05,100)
-symplot(t,iL, intervalo, 'iL(t)')
+symplot(t, iL, intervalo, 'iL(t)')
 
 # +
 # tensão aplicada sobre o capacitor (= tensão sobre o indutor)
 vC = L*sp.diff(iL, t)
 vC = sp.simplify(vC)
 
-print('vC(t) = ', round_expr(vC, 2), ' V')
+symdisp('v_C(t) = ', round_expr(vC, 2), ' V')
 # -
 
 # plota gráfico da função
 intervalo = np.linspace(t0,t0+0.05,100)
-symplot(t,vC, intervalo, 'vC(t)')
+symplot(t, vC, intervalo, 'vC(t)')
 
 # ## Circuito RLC em série
 
@@ -490,22 +534,22 @@ symplot(t,vC, intervalo, 'vC(t)')
 
 # +
 # Parâmetros do circuito:
-R =
+R = 
 L = 
 C = 
 
 # calculando α e ω0
-α  = 
+α  = R/(2*L)
 ω0 = 1/np.sqrt(L*C)
 
-print('α = %.2f rad/s'%α)
-print('ω0 = %.2f rad/s'%ω0)
+symdisp('α =', round(α, 2), ' rad/s')
+symdisp('ω_0 =', round(ω0, 2), ' rad/s')
 
 # +
 # informações obtidas pela análise do circuito
-vC_inf =   # valor final da tensão sobre o capacitor
-iL_t0 =    # valor inicial da corrente no indutor
-vC_t0 =    # valor inicial da tensão sobre o capacitor
+vC_inf =    # valor final da tensão sobre o capacitor
+iL_t0 =   # valor inicial da corrente no indutor
+vC_t0 =     # valor inicial da tensão sobre o capacitor
 
 t0 = 0 # instante do chaveamento
 
@@ -520,7 +564,7 @@ t, D1, D2 = sp.symbols('t, D1, D2')
 # expressão geral da resposta 
 vC = D1*sp.exp(s1*(t-t0)) + D2*(t-t0)*sp.exp(s2*(t-t0)) + vC_inf
 
-print('vC(t) = ', round_expr(vC,2), ' V')
+symdisp('v_C(t) = ', round_expr(vC, 2), ' V')
 
 # +
 # define os sistema de equações com as condições iniciais
@@ -535,25 +579,27 @@ D2 = np.array([sol[D2] for sol in soluc])
 D1 = D1[0]
 D2 = D2[0]
 
-print('Solução do sistema:\n\n D1 = %.2f V,\n D2 = %.2f V/s' %(round(A1,2), round(A2,2)))
+print('Solução do sistema:')
+symdisp('D_1 =', round(D1, 2), ' V')
+symdisp('D_2 =', round(D2, 2), ' V')
 
 # +
 # expressão geral da resposta 
 vC = D1*sp.exp(s1*(t-t0)) + D2*(t-t0)*sp.exp(s2*(t-t0)) + vC_inf
 
-print('vC(t) = ', round_expr(vC,2), ' V')
+symdisp('v_C(t) = ', round_expr(vC, 2), ' V')
 
 # +
 # corrente passando pelo indutor
 iL = C*sp.diff(vC, t)
 
-print('iL(t) = ', round_expr(iL, 2), ' A')
+symdisp('i_L(t) = ', round_expr(iL,2), 'A')
 # -
 
-#style.use('seaborn-darkgrid')
-p = sp.plot(iL, vC, (t,0,0.050), ylim = (-6,4), show=False, legend=True)
-p[0].line_color = 'red'
-p[1].line_color = 'blue'
-p[0].label = 'iL(t)'
-p[1].label = 'vC(t)'
-p.show()
+# plota gráfico da função
+intervalo = np.linspace(t0,t0+0.05,100)
+symplot(t, vC, intervalo, 'vC(t)')
+
+# plota gráfico da função
+intervalo = np.linspace(t0,t0+0.05,100)
+symplot(t, iL, intervalo, 'iL(t)')
