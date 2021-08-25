@@ -265,6 +265,11 @@ symdisp('i_L(t) = ', round_expr(iL,2), 'A')
 eq1 = sp.Eq(   A1 +    A2 + iL_inf, iL_t0)             
 eq2 = sp.Eq(s1*A1 + s2*A2,        vc_t0/L)  
 
+print('Sistema de equações:')
+symdisp('(I): ', round_expr(eq1, 2),' ')
+symdisp('(II): ', round_expr(eq2, 2),' ')
+
+# +
 # resolve o sistema
 soluc = sp.solve((eq1, eq2), dict=True)
 A1 = np.array([sol[A1] for sol in soluc])
@@ -372,6 +377,11 @@ symdisp('i_L(t) = ', round_expr(iL,2), 'A')
 eq1 = sp.Eq(   B1 + iL_inf, iL_t0)             
 eq2 = sp.Eq(-α*B1 + ωd*B2,  vc_t0/L)  
 
+print('Sistema de equações:')
+symdisp('(I): ', round_expr(eq1, 2),' ')
+symdisp('(II): ', round_expr(eq2, 2),' ')
+
+# +
 # resolve o sistema
 soluc = sp.solve((eq1, eq2), dict=True)
 B1 = np.array([sol[B1] for sol in soluc])
@@ -571,6 +581,11 @@ symdisp('v_C(t) = ', round_expr(vC, 2), ' V')
 eq1 = sp.Eq()             
 eq2 = sp.Eq()  
 
+print('Sistema de equações:')
+symdisp('(I): ', round_expr(eq1, 2),' ')
+symdisp('(II): ', round_expr(eq2, 2),' ')
+
+# +
 # resolve o sistema
 soluc = sp.solve((eq1, eq2), dict=True)
 D1 = np.array([sol[D1] for sol in soluc])
