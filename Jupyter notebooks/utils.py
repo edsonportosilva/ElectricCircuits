@@ -6,6 +6,8 @@ from IPython.display import Math, display
 
 def genGIF(x, y, figName, xlabel=[], ylabel=[], fram=200, inter=20):    
     '''
+    Create and save a plot animation as GIF
+     
     :param x: x-axis values [np array]
     :param y: y-axis values [np array]
     :param figName: figure file name w/ folder path [string]
