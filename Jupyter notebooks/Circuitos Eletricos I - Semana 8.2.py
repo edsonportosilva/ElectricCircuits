@@ -158,53 +158,11 @@ HTML("""
 #
 # Link para a simulação do circuito: https://tinyurl.com/yf8pj57t
 
-# +
 import numpy as np
 import sympy as sp
-import matplotlib.pyplot as plt
-from matplotlib import style
-from IPython.display import Math, display
+from utils import round_expr, symdisp, symplot
 
-# função para arredondamento de floats em expressões simbólicas
-def round_expr(expr, num_digits):
-    return expr.xreplace({n : round(n, num_digits) for n in expr.atoms(sp.Number)})
-
-# função para print de expressões simbólicas
-def symdisp(expr, var, unit=' '):
-    display(Math(expr+sp.latex(var)+'\;'+unit))
-    
-# Função para plot de funções do sympy
-def symplot(t, F, interval, funLabel):
-
-    plt.figure()
-    if type(F) == list:
-        indLabel = 0
-        for f in F:
-            f_num = np.zeros(interval.shape)
- 
-            for indT in range(0,interval.size):
-                f_num[indT] = sp.re(f.doit().evalf(subs={t:interval[indT]}))
-            
-            plt.plot(interval, f_num, label=funLabel[indLabel])
-            plt.legend();
-            plt.xlim([min(interval), max(interval)]);
-            plt.xlabel('tempo [s]');
-            indLabel += 1
-    else:
-        f_num = np.zeros(interval.shape)
- 
-        for indT in range(0,interval.size):
-            f_num[indT] = sp.re(F.doit().evalf(subs={t:interval[indT]}))
-            
-        plt.plot(interval, f_num, label=funLabel)
-        plt.legend();
-        plt.xlim([min(interval), max(interval)]);
-        plt.xlabel('tempo [s]');            
-    
-    plt.grid();
-
-
-# -
+help(symdisp)
 
 # ### Resolvendo o problema com o código em Python
 #

@@ -57,8 +57,8 @@ def symdisp(expr, var, unit=' '):
     '''
     Latex style display of sympy expressions
     
-    :param expr: symbolic in Latex [string]
-    :param var: sympy expression
+    :param expr: expression in latex [string]
+    :param var: sympy variable, function, expression.
     :param unit: string indicating unit of var [string]
     '''
     display(Math(expr+sp.latex(var)+'\;'+unit))
