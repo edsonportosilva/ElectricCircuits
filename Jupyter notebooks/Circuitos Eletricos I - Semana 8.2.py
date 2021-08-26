@@ -203,6 +203,7 @@ vc_t0 = 0   # valor inicial da tensão no capcitor
 s1 = -α + np.sqrt(α**2-ω0**2)
 s2 = -α - np.sqrt(α**2-ω0**2)
 
+print('Raízes da equação característica:')
 symdisp('s_1 =', round(s1, 2), ' rad/s')
 symdisp('s_2 =', round(s2, 2), ' rad/s')
 
