@@ -375,6 +375,7 @@ symdisp('v_C(t) = ', round_expr(vC, 2), ' V')
 # plota gráfico da função
 intervalo = np.linspace(t0,t0+0.05,100)
 symplot(t, vC, intervalo, 'vC(t)')
+symplot(t, [iL, vC], intervalo, ['iL(t)', 'vC(t)'])
 
 # ## Circuito RLC em série
 
