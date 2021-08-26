@@ -170,7 +170,7 @@ def round_expr(expr, num_digits):
     return expr.xreplace({n : round(n, num_digits) for n in expr.atoms(sp.Number)})
 
 # função para print de expressões simbólicas
-def symdisp(expr, var, unit):
+def symdisp(expr, var, unit=' '):
     display(Math(expr+sp.latex(var)+'\;'+unit))
     
 # Função para plot de funções do sympy
@@ -370,7 +370,7 @@ t, B1, B2 = sp.symbols('t, B1, B2')
 iL = sp.exp(-α*(t-t0))*(B1*sp.cos(ωd*(t-t0)) + B2*sp.sin(ωd*(t-t0))) + iL_inf
 
 print('Forma geral da solução:')
-symdisp('i_L(t) = ', round_expr(iL,2), 'A')
+symdisp('i_L(t) = ', round_expr(iL,2), ' A')
 
 # +
 # define os sistema de equações com as condições iniciais
