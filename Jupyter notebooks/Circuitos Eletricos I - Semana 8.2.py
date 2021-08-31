@@ -500,7 +500,7 @@ symplot(t, [iL, vC], intervalo, ['iL(t)', 'vC(t)'])
 #
 # Link para a simulação deste circuito: https://tinyurl.com/yjgkkzhu
 
-# Resolução item (a):
+# Resolução item (b):
 
 # +
 # Parâmetros do circuito:
@@ -577,4 +577,84 @@ symplot(t, vC, intervalo, 'vC(t)')
 
 # plota gráfico da função
 intervalo = np.linspace(t0,t0+0.05,100)
+symplot(t, iL, intervalo, 'iL(t)')
+
+# Resolução item (c):
+
+# +
+# Parâmetros do circuito:
+R = 65.02
+L = 1
+C = 100e-6
+
+# calculando α e ω0
+α  = R/(2*L)
+ω0 = 1/np.sqrt(L*C)
+
+symdisp('α =', round(α, 2), ' rad/s')
+symdisp('ω_0 =', round(ω0, 2), ' rad/s')
+
+# +
+# informações obtidas pela análise do circuito
+vC_inf = 75.84   # valor final da tensão sobre o capacitor
+iL_t0 = 0        #  valor inicial da corrente no indutor
+vC_t0 = 21.3     # valor inicial da tensão sobre o capacitor
+
+t0 = 0 # instante do chaveamento
+
+# +
+# define a frequência de oscilação amortecida
+ωd =np.sqrt(ω0**2-α**2)
+
+symdisp('ω_d =', round(ωd, 2), ' rad/s')
+
+# define variáveis da solução geral
+t, B1, B2 = sp.symbols('t, B1, B2')
+
+# expressão geral da resposta subamortecida
+vC = sp.exp(-α*(t-t0))*(B1*sp.cos(ωd*(t-t0)) + B2*sp.sin(ωd*(t-t0))) + vC_inf
+
+symdisp('v_C(t) = ', round_expr(vC, 2), ' V')
+
+# +
+# define os sistema de equações com as condições iniciais
+eq1 = sp.Eq(   B1 + vC_inf, vC_t0)             
+eq2 = sp.Eq(-α*B1 + ωd*B2,  iL_t0/C)  
+
+print('Sistema de equações:')
+symdisp('(I): ', round_expr(eq1, 2),' ')
+symdisp('(II): ', round_expr(eq2, 2),' ')
+
+# +
+# resolve o sistema
+soluc = sp.solve((eq1, eq2), dict=True)
+B1 = np.array([sol[B1] for sol in soluc])
+B2 = np.array([sol[B2] for sol in soluc])
+
+B1 = B1[0]
+B2 = B2[0]
+
+print('Solução do sistema:')
+symdisp('B_1 =', round(B1, 2), ' V')
+symdisp('B_2 =', round(B2, 2), ' V')
+
+# +
+# expressão geral da resposta subamortecida
+vC = sp.exp(-α*(t-t0))*(B1*sp.cos(ωd*(t-t0)) + B2*sp.sin(ωd*(t-t0))) + vC_inf
+
+symdisp('v_C(t) = ', round_expr(vC, 2), ' V')
+
+# +
+# corrente passando pelo indutor
+iL = C*sp.diff(vC, t)
+
+symdisp('i_L(t) = ', round_expr(iL.simplify(),5), 'A')
+# -
+
+# plota gráfico da função
+intervalo = np.linspace(t0,t0+0.25,100)
+symplot(t, vC, intervalo, 'vC(t)')
+
+# plota gráfico da função
+intervalo = np.linspace(t0,t0+0.25,100)
 symplot(t, iL, intervalo, 'iL(t)')
