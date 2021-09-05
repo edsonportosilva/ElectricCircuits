@@ -57,9 +57,15 @@ HTML("""
 #
 # **Teorema da existência:** se $f(t)$ é uma função contínua por pedaços para $t$ no intervalo $[a,\infty)$ e é exponencial de ordem $\sigma_0$, então a integral de Laplace converge para $\Re{(s)}>a$.
 
+# +
 import matplotlib.pyplot as plt
 import numpy as np
 import sympy as sp
+
+# temp workaround
+import warnings
+from matplotlib import MatplotlibDeprecationWarning
+warnings.filterwarnings('ignore', category=MatplotlibDeprecationWarning)
 
 # +
 sp.init_printing()

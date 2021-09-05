@@ -49,6 +49,10 @@ import numpy as np
 import sympy as sp
 from sympy.polys.partfrac import apart
 
+# temp workaround
+import warnings
+from matplotlib import MatplotlibDeprecationWarning
+warnings.filterwarnings('ignore', category=MatplotlibDeprecationWarning)
 
 plt.rcParams['figure.figsize'] = 6, 4
 plt.rcParams['legend.fontsize'] = 13
