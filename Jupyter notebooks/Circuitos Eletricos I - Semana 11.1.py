@@ -61,6 +61,7 @@ HTML("""
 import matplotlib.pyplot as plt
 import numpy as np
 import sympy as sp
+from utils import round_expr, symdisp, symplot
 
 # temp workaround
 import warnings
@@ -74,37 +75,6 @@ plt.rcParams['figure.figsize'] = 6, 4
 plt.rcParams['legend.fontsize'] = 13
 plt.rcParams['lines.linewidth'] = 2
 plt.rcParams['axes.grid'] = False
-
-# Função para plot de funções do sympy
-def symplot(t, F, intervalo, funLabel):
-     
-    if type(F) == list:
-        indLabel = 0
-        for f in F:
-            f_num = np.zeros(intervalo.shape)
- 
-            for indT in range(0,intervalo.size):
-                f_num[indT] = f.evalf(subs={t:intervalo[indT]})
-            
-            plt.plot(intervalo, f_num, label=funLabel[indLabel])
-            plt.legend();
-            plt.xlim([min(intervalo), max(intervalo)]);
-            plt.xlabel('tempo [s]');
-            indLabel += 1
-    else:
-        f_num = np.zeros(intervalo.shape)
- 
-        for indT in range(0,intervalo.size):
-            f_num[indT] = F.evalf(subs={t:intervalo[indT]})
-            
-        plt.plot(intervalo, f_num, label=funLabel)
-        plt.legend();
-        plt.xlim([min(intervalo), max(intervalo)]);
-        plt.xlabel('tempo [s]');            
-    
-    plt.grid();
-
-
 # -
 
 # #### Definindo algumas variáveis simbólicas de interesse
@@ -132,8 +102,11 @@ def invL(F,s,t):
 #
 # #### Domínio do tempo
 
-u = sp.Heaviside(t) # função degrau unitário
-u
+# +
+f = sp.Heaviside(t) # função degrau unitário
+
+symdisp('f(t) =', f)
+# -
 
 # plota função no domínio do tempo
 intervalo = np.arange(-4, 4, 0.01)
@@ -141,19 +114,26 @@ symplot(t, u, intervalo, 'u(t)')
 
 # #### Domínio de Laplace
 
+# +
 # calcula a transformada de Laplace de u(t)
-U = L(u,t,s)
-U
+F = L(f,t,s)
 
-u = sp.Heaviside(t-2) # função degrau unitário em t=2
-u
+symdisp('F(s) =', F)
+
+# +
+f = sp.Heaviside(t-2) # função degrau unitário em t=2
+
+symdisp('f(t) =', f)
+# -
 
 # plota função no domínio do tempo
 intervalo = np.arange(-4, 4, 0.01)
 symplot(t, u, intervalo, 'u(t-2)')
 
-U = L(u,t,s)
-U
+# +
+F = L(f,t,s)
+
+symdisp('F(s) =', F)
 
 # +
 u1 = sp.Heaviside(t)   # função degrau unitário em t=0
@@ -162,30 +142,41 @@ u2 = sp.Heaviside(t-2) # função degrau unitário em t=2
 # plota função no domínio do tempo
 intervalo = np.arange(-4, 4, 0.01)
 symplot(t, u1-u2, intervalo, 'u(t)-u(t-2)')
-# -
 
-U = L(u1-u2,t,s)
-U
+# +
+G = L(u1-u2,t,s)
+
+symdisp('G(s) =', G)
+# -
 
 # ## Função impulso unitário
 #
 # #### Domínio do tempo
 
-d = sp.DiracDelta(t)
-d
+# +
+f = sp.DiracDelta(t)
+
+symdisp('f(t) =', f)
+# -
 
 # #### Domínio de Laplace
 
+# +
 # calcula a transformada de Laplace de δ(t)
-D = L(d,t,s)
-D
+F = L(f,t,s)
+
+symdisp('F(s) =', F)
+# -
 
 # ## Função exponecial
 #
 # #### Domínio do tempo
 
+# +
 f = sp.exp(-a*t)
-f
+
+symdisp('f(t) =', f)
+# -
 
 # plota função no domínio do tempo
 intervalo = np.arange(-1, 4, 0.01)
@@ -193,23 +184,32 @@ symplot(t, f.subs({a:2}), intervalo, 'f(t)')
 
 # #### Domínio de Laplace
 
+# +
 # calcula a transformada de Laplace de f(t)
 F = L(f,t,s)
-F
+
+symdisp('F(s) =', F)
+# -
 
 # ## Função cosseno amortecido
 #
 # #### Domínio do tempo
 
+# +
 g = sp.exp(-a*t)*sp.cos(omega*t)
-g
+
+symdisp('g(t) =', g)
+# -
 
 # plota função no domínio do tempo
 intervalo = np.arange(-1, 4, 0.01)
 symplot(t, g.subs({a:2, omega:10}), intervalo, 'g(t)')
 
+# +
 G = L(g,t,s)
-G
+
+symdisp('G(s) =', G)
+# -
 
 # ## Resposta subamortecida de um circuito de segunda ordem
 
@@ -219,19 +219,26 @@ G
 B1, B2 = sp.symbols('B1, B2', real=True)
 
 h = sp.exp(-a*t)*(B1*sp.cos(omega*t) + B2*sp.sin(omega*t))
-h
+
+symdisp('h(t) =', h)
 # -
 
 # #### Domínio de Laplace
 
+# +
 H = L(h,t,s)
-H
 
+symdisp('H(s) =', H)
+
+# +
 h1 = invL(H,s,t)
-h1
+
+symdisp('h_1(t) =', h1)
+# -
 
 # ## Gere sua tabela de transformadas
 
+# +
 func = [1,
          t,
          sp.exp(-a*t),
@@ -245,5 +252,9 @@ func = [1,
          ]
 func
 
+symdisp('f(t) =', func)
+
+# +
 Fs = [L(f,t,s) for f in func]
-Fs
+
+symdisp('F(s) =', Fs)

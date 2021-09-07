@@ -47,6 +47,8 @@ HTML("""
 import matplotlib.pyplot as plt
 import numpy as np
 import sympy as sp
+from utils import round_expr, symdisp, symplot
+
 from sympy.polys.partfrac import apart
 
 # temp workaround
@@ -59,39 +61,8 @@ plt.rcParams['legend.fontsize'] = 13
 plt.rcParams['lines.linewidth'] = 2
 plt.rcParams['axes.grid'] = False
 
-# Função para plot de funções do sympy
-def symplot(F, intervalo, funLabel):
-     
-    if type(F) == list:
-        indLabel = 0
-        for f in F:
-            f_num = np.zeros(intervalo.shape)
- 
-            for indT in range(0,intervalo.size):
-                f_num[indT] = f.evalf(subs={t:intervalo[indT]})
-            
-            plt.plot(intervalo, f_num, label=funLabel[indLabel])
-            plt.legend();
-            plt.xlim([min(intervalo), max(intervalo)]);
-            plt.xlabel('tempo [s]');
-            indLabel += 1
-    else:
-        f_num = np.zeros(intervalo.shape)
- 
-        for indT in range(0,intervalo.size):
-            f_num[indT] = F.evalf(subs={t:intervalo[indT]})
-            
-        plt.plot(intervalo, f_num, label=funLabel)
-        plt.legend();
-        plt.xlim([min(intervalo), max(intervalo)]);
-        plt.xlabel('tempo [s]');            
-    
-    plt.grid();
-    
-# função para arredondamento de floats em expressões simbólicas
-def round_expr(expr, num_digits):
-    return expr.xreplace({n : round(n, num_digits) for n in expr.atoms(sp.Number)})
 
+# +
 # transformada de Laplace
 def L(f,t,s):
     return sp.laplace_transform(f, t, s, noconds=True)
@@ -174,35 +145,43 @@ I2 = I2[0]
 I3 = I3[0]
 
 print('Correntes de malha no domínio de Laplace: \n')
-print('I1 =',I1)
-print('I2 =',I2)
-print('I3 =',I3)
-# -
+symdisp('I_1(s) =', I1, 'As')
+symdisp('I_2(s) =', I2, 'As')
+symdisp('I_3(s) =', I3, 'As')
 
+# +
 # Calculando Ia
 Ia = I1-I2
 Ia = Ia.simplify()
-Ia
 
+symdisp('I_a(s) =', Ia, 'As')
+
+# +
 # Calculando Ib
 Ib = I2
-Ib
+
+symdisp('I_b(s) =', Ib, 'As')
+# -
 
 # b. Determinando $i_a(t)$ e $i_b(t)$
 
-Ia.apart()
+symdisp('I_a(s) =', Ia.apart(), 'As')
 
 # +
 t = sp.symbols('t',real=True)
 
-ia = invL(Ia,s,t)
-ia
+ia = invL(Ia.apart(),s,t)
+
+symdisp('i_a(t) =', ia, 'A')
 # -
 
-Ib.apart()
+symdisp('I_b(s) =', Ib.apart(), 'As')
 
+# +
 ib = invL(Ib,s,t)
-ib
+
+symdisp('i_b(t) =', ib, 'A')
+# -
 
 # c. Determinando $V_a(s)$, $V_b(s)$ e $V_c(s)$.
 
@@ -211,38 +190,38 @@ Va = (100/s)*I2
 Vb = (100/s)*(I3-I2)
 Vc = (100/s)*(I1-I3)
 
-print('Va =',Va.cancel().simplify())
-print('Vb =',Vb.cancel().simplify())
-print('Vc =',Vc.cancel().simplify())
+symdisp('V_a(s) =', Va.simplify(), 'Vs')
+symdisp('V_b(s) =', Vb.simplify(), 'Vs')
+symdisp('V_c(s) =', Vc.simplify(), 'Vs')
 # -
 
-Va.apart()
+symdisp('V_a(s) =', Va.apart(), 'Vs')
 
-Vb.apart()
+symdisp('V_b(s) =', Vb.apart(), 'Vs')
 
-Vc.apart()
+symdisp('V_c(s) =', Vc.apart(), 'Vs')
 
 # d. Determinando $v_a(t)$, $v_b(t)$ e $v_c(t)$.
 
 # +
 va = ((-400/9)*sp.exp(-6*t) + (400/9) + (400/3)*t)*sp.Heaviside(t)
 
-round_expr(va,2)
+symdisp('v_a(t) =', round_expr(va,2), 'V')
 
 # +
 vb = ((800/9)*sp.exp(-6*t) - (800/9) + (400/3)*t)*sp.Heaviside(t)
 
-round_expr(vb,2)
+symdisp('v_b(t) =', round_expr(vb,2), 'V')
 
 # +
 vc = va
 
-round_expr(vc,2)
+symdisp('v_c(t) =', round_expr(vc,2), 'V')
 # -
 
 # plota funções no domínio do tempo
-intervalo = np.arange(-4, 10, 0.01)
-symplot([va, vb, vc], intervalo, ['va(t)','vb(t)','vc(t)'])
+intervalo = np.arange(-4, 10, 0.1)
+symplot(t, [va, vb, vc], intervalo, ['va(t)','vb(t)','vc(t)'])
 
 # ### Problema 2
 #
@@ -273,18 +252,20 @@ Ia = Ia[0]
 Ib = Ib[0]
 # -
 
-print('Ia =')
-Ia
+symdisp('I_a(s) =', Ia.simplify(), 'As')
 
-print('Ib =')
-Ib.simplify()
+symdisp('I_b(s) =', Ib.simplify(), 'As')
 
+# +
 V0 = 35/s - 2*Ia
-V0.simplify()
 
-partFrac(V0, 2)
+symdisp('V_0(s) =', V0.simplify(), 'Vs')
+# -
 
-np.roots([1, 2, 50, 0])
+symdisp('V_0(s) =', partFrac(V0, 2), 'Vs')
+
+raizes = np.roots([1, 2, 50, 0])
+raizes
 
 # +
 K    = sp.symbols('K')
@@ -293,14 +274,18 @@ K    = sp.symbols('K')
 j = sp.I
 
 F = K/(s + σ + j*ω) + sp.conjugate(K)/(s + σ - j*ω)
-F
+
+symdisp('F(s) =', F)
 # -
 
-invL(F,s,t)
+symdisp('f(t) =', invL(F,s,t))
 
+# +
 v0 = (35 + sp.exp(-t)*(-5.6*sp.cos(7*t)-1.2*sp.sin(7*t)))*sp.Heaviside(t)
-v0
+
+symdisp('v_0(t) =', v0)
+# -
 
 # plota funções no domínio do tempo
-intervalo = np.arange(-4, 10, 0.01)
-symplot(v0, intervalo, 'v0(t)')
+intervalo = np.arange(-4, 10, 0.05)
+symplot(t, v0, intervalo, 'v0(t)')
