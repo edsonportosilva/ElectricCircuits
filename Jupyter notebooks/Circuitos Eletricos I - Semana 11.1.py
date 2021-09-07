@@ -168,7 +168,7 @@ F = L(f,t,s)
 symdisp('F(s) =', F)
 # -
 
-# ## Função exponecial
+# ## Função exponencial
 #
 # #### Domínio do tempo
 
