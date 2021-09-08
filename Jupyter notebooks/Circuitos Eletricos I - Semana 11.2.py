@@ -223,6 +223,8 @@ symdisp('v_c(t) =', round_expr(vc,2), 'V')
 intervalo = np.arange(-4, 10, 0.1)
 symplot(t, [va, vb, vc], intervalo, ['va(t)','vb(t)','vc(t)'])
 
+# Pergunta: estas soluções fazem sentido para o circuito analisado?
+
 # ### Problema 2
 #
 # Não existe nenhuma energia armazenada no circuito da figura a seguir no momento em que a fonte de tensão é conectada.
