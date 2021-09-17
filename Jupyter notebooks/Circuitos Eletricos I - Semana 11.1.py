@@ -79,7 +79,8 @@ plt.rcParams['axes.grid'] = False
 
 # #### Definindo algumas variáveis simbólicas de interesse
 
-t, s  = sp.symbols('t, s')
+t     = sp.symbols('t', real=True)
+s     = sp.symbols('s')
 a     = sp.symbols('a', real=True, positive=True)
 omega = sp.symbols('omega', real=True)
 
@@ -98,6 +99,8 @@ def invL(F,s,t):
 
 # -
 
+help(sp.laplace_transform)
+
 # ## Função degrau unitário
 #
 # #### Domínio do tempo
@@ -110,7 +113,7 @@ symdisp('f(t) =', f)
 
 # plota função no domínio do tempo
 intervalo = np.arange(-4, 4, 0.01)
-symplot(t, u, intervalo, 'u(t)')
+symplot(t, f, intervalo, 'u(t)')
 
 # #### Domínio de Laplace
 
@@ -128,7 +131,7 @@ symdisp('f(t) =', f)
 
 # plota função no domínio do tempo
 intervalo = np.arange(-4, 4, 0.01)
-symplot(t, u, intervalo, 'u(t-2)')
+symplot(t, f, intervalo, 'u(t-2)')
 
 # +
 F = L(f,t,s)
@@ -258,3 +261,11 @@ symdisp('f(t) =', func)
 Fs = [L(f,t,s) for f in func]
 
 symdisp('F(s) =', Fs)
+# -
+
+F = sp.Function('f')(t)
+F
+
+L(sp.diff(t**2*sp.exp(-a*t),t),t,s)
+
+
