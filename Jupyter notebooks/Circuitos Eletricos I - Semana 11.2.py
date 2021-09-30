@@ -160,7 +160,7 @@ symdisp('I_a(s) =', Ia, 'As')
 # Calculando Ib
 Ib = I2
 
-symdisp('I_b(s) =', Ib, 'As')
+symdisp('I_b(s) =', Ib.simplify(), 'As')
 # -
 
 # b. Determinando $i_a(t)$ e $i_b(t)$
@@ -264,9 +264,9 @@ V0 = 35/s - 2*Ia
 symdisp('V_0(s) =', V0.simplify(), 'Vs')
 # -
 
-symdisp('V_0(s) =', partFrac(V0, 2), 'Vs')
+symdisp('V_0(s) =', partFrac(V0, 4), 'Vs')
 
-raizes = np.roots([1, 2, 50, 0])
+raizes = np.roots([5, 10, 250, 0])
 raizes
 
 # +
@@ -291,3 +291,5 @@ symdisp('v_0(t) =', v0)
 # plota funções no domínio do tempo
 intervalo = np.arange(-4, 10, 0.05)
 symplot(t, v0, intervalo, 'v0(t)')
+
+
