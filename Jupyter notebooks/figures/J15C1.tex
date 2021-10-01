@@ -1,0 +1,50 @@
+\documentclass[border=4pt]{standalone}
+\usepackage{tikz}
+\usepackage[siunitx, RPvoltages]{circuitikz}
+
+\begin{document}
+
+\ctikzset{bipoles/length=1.5cm}
+\ctikzset{bipoles/thickness=4}
+\ctikzset{label/align = smart}
+
+\ctikzset{
+ amplifiers/fill=cyan,
+ sources/fill=cyan!30!white,
+ csources/fill=green!30!white,
+ diodes/fill=red,
+ resistors/fill=violet,
+ }
+\ctikzset{quadpoles/transformer/width=2,quadpoles/transformer/height=2}
+
+\begin{circuitikz}[american, scale = 1.0, cute inductors]]
+	\draw (0,0) to[V,l=$v(t)$, -] (0,3)	           
+	            to[C=4<\milli\farad>, -] (3,3)
+	            to[R=10<\ohm>,f=$i_1$,-] (6,3);
+    \draw (0,3)to[short,*-] (0,5) 
+               to[ospst,l=$\mathrm{0\;s}$,-] (3,5)
+               to[short,-*] (3,3);
+               
+  \draw [latexslim-latexslim] (6.5,2.75) -- (7.5,2.75);
+  
+  \draw
+ 	(7,1.5) node[transformer] (T) {}
+ 	(T.A1) node[anchor=east] {}
+ 	(T.A2) node[anchor=east] {}
+ 	(T.B1) node[anchor=west] {}
+ 	(T.B2) node[anchor=west] {}
+ 	(T.base) node{$\mathrm{2H}$}
+ 	(T.inner dot A1) node[circ]{}
+ 	(T.inner dot B1) node[circ]{}
+    (T-L1.midtap) node[anchor=east]{$\mathrm{2H\;\;\;\;}$}
+    (T-L2.midtap) node[anchor=west]{$\mathrm{\;\;\;\;4H}$};
+	\draw (0,0)--(6,0);
+	 
+   	\draw (8,3) to[short, -] (10,3)
+   	            to[R=50<\ohm>,f_=$i_0$,-] (10,0)	           
+	            to[short, -] (8,0);
+
+\end{circuitikz}
+
+
+\end{document}

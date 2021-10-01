@@ -275,7 +275,7 @@ K    = sp.symbols('K')
 
 j = sp.I
 
-F = K/(s + σ + j*ω) + sp.conjugate(K)/(s + σ - j*ω)
+F = K/(s + σ + ω*j) + sp.conjugate(K)/(s + σ - ω*j)
 
 symdisp('F(s) =', F)
 # -
