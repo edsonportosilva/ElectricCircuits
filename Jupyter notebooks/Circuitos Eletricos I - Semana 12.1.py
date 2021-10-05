@@ -80,7 +80,7 @@ infty = sp.oo
 
 # ### Problema 1
 #
-# O circuito da figura a seguir está em regime estacionário no momento em que chave é aberta. Sabe-se que $v(t)=\mathrm{12\;V}$
+# O circuito da figura a seguir está em regime estacionário no momento em que chave é aberta. Sabe-se que $v(t)=\mathrm{12\;V}$.
 #
 # <img src="./figures/J15C1.png" width="600">
 #
@@ -155,14 +155,18 @@ symdisp('i_1(\infty) = ', i1_inf_tvf, ' A' )
 C = 4e-3  # F
 
 # Calculando Vc
-Vc = (1/(s*C)*I1)
+Vc = (1/(s*C))*I1
 
 Vc = Vc.simplify()
 
 symdisp('V_c(s) =', adjustCoeff(Vc).simplify(), 'Vs')
 # -
 
+ sp.limit(s*Vc, s, 0)
+
 np.roots([1, 35, 375, 3125, 0])
+
+partFrac(Vc, 4)
 
 # +
 vc = invL(partFrac(Vc, 4), s, t)
