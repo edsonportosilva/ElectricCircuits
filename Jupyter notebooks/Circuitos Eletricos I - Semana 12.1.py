@@ -209,28 +209,29 @@ symdisp('v(t) =', v, ' V')
 
 # plota funções no domínio do tempo
 intervalo = np.arange(-1, 3, 0.01)
-symplot(t, v1, intervalo, 'v(t)')
+symplot(t, v, intervalo, 'v(t)')
 
 # +
 # determina Vc(s) via função de transferência
-Vc = Hc*V1
+V = L(v, t, s)
+Vc = Hc*V
 
 symdisp('V_c(s) =', Vc.simplify(), ' Vs')
 
 # +
 # função auxiliar Va(s)
-Va = (25*s**2 + 875*s + 3125)/(s**4 + 35*s**3 + 375*s**2 + 3125*s)
-Va = partFrac(Va, 10)
+P = (25*s**2 + 875*s + 3125)/(s**4 + 35*s**3 + 375*s**2 + 3125*s)
+P = partFrac(P, 10)
 
 # encontra va(t)
-va = invL(Va, s, t)
-va = va.expand()
+p = invL(P, s, t)
+p = p.expand()
 
-symdisp('V_a(s) =', Va , ' Vs')
-symdisp('v_a(t) =', va, ' V')
+symdisp('P(s) =', P , ' Vs')
+symdisp('p(t) =', p, ' V')
 
 # +
-vc = 2*va - 3*va.subs({t:sp.UnevaluatedExpr(t-1)}) + va.subs({t:sp.UnevaluatedExpr(t-2)})
+vc = 2*p - 3*p.subs({t:sp.UnevaluatedExpr(t-1)}) + p.subs({t:sp.UnevaluatedExpr(t-2)})
 
 symdisp('v_c(t) =', vc, ' V')
 # -
