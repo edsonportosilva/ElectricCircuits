@@ -18,7 +18,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import sympy as sp
-from utils import round_expr, symdisp, symplot
+from utils import round_expr, symdisp, symplot, genConvGIF
 from sympy import oo as inf
 
 from sympy.polys.partfrac import apart
@@ -35,6 +35,7 @@ plt.rcParams['axes.grid'] = False
 # -
 
 from IPython.core.display import HTML
+from IPython.display import Image
 HTML("""
 <style>
 .output_png {
@@ -83,11 +84,6 @@ def partFrac(expr, Ndigits):
     return sp.N(expr, Ndigits)
 
 sp.init_printing()
-
-def espelhaDesloca(g, t, d):    
-    return g.subs({t:-t+d})
-
-
 # -
 
 # #### Definindo algumas variáveis simbólicas de interesse
@@ -113,9 +109,49 @@ symdisp('x(t) = ', round_expr(x,2))
 intervalo = np.arange(-2, 5, 0.01)
 symplot(t, x, intervalo, 'x(t)')
 
-intervalo = np.arange(-5.5, 6.5, 0.1)
-for delay in [-2.5, 1, 2.5, 4.5]:
-    symplot(t, [espelhaDesloca(x, t, delay), x], intervalo, ['x(t-τ)', 'x(τ)'])
+# +
+ti = -5
+tf = 0
+
+atraso = np.arange(-6, 6, 0.01)
+    
+figName  = './figures/conv1-int1.gif'
+genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
+
+Image('./figures/conv1-int1.gif', width=500)
+
+# +
+ti = 0
+tf = 2
+
+atraso = np.arange(-6, 6, 0.01)
+    
+figName  = './figures/conv1-int2.gif'
+genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
+
+Image('./figures/conv1-int2.gif', width=500)
+
+# +
+ti = 2
+tf = 4
+
+atraso = np.arange(-6, 6, 0.01)
+    
+figName  = './figures/conv1-int3.gif'
+genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
+
+Image('./figures/conv1-int3.gif', width=500)
+
+# +
+ti = 4
+tf = 8
+
+atraso = np.arange(-6, 6, 0.01)
+    
+figName  = './figures/conv1-int4.gif'
+genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
+
+Image('./figures/conv1-int4.gif', width=500)
 
 # +
 y1 = 0 # 1º intervalo
@@ -169,11 +205,54 @@ symdisp('h(t) = ', h)
 # plota função no domínio do tempo
 intervalo = np.arange(-4, 10, 0.05)
 symplot(t, h.subs({R:1, C:1}), intervalo, 'h(t)')
-# -
 
-intervalo = np.arange(-8, 6, 0.1)
-for delay in [-4, 1, 2.5, 3.5]:
-    symplot(t, [espelhaDesloca(x, t, delay), h.subs({R:1, C:1})], intervalo, ['x(t-τ)', 'h(τ)'])
+# +
+ti = -5
+tf = 0
+
+atraso = np.arange(-8, 6, 0.01)
+    
+figName  = './figures/conv2-int1.gif'
+genConvGIF(x, h.subs({R:1, C:1}), t, atraso, ti, tf, figName,\
+           xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
+
+Image('./figures/conv2-int1.gif', width=500)
+
+# +
+ti = 0
+tf = 2
+
+atraso = np.arange(-8, 6, 0.01)
+    
+figName  = './figures/conv2-int2.gif'
+genConvGIF(x, h.subs({R:1, C:1}), t, atraso, ti, tf, figName,\
+           xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
+
+Image('./figures/conv2-int2.gif', width=500)
+
+# +
+ti = 2
+tf = 3
+
+atraso = np.arange(-8, 6, 0.01)
+    
+figName  = './figures/conv2-int3.gif'
+genConvGIF(x, h.subs({R:1, C:1}), t, atraso, ti, tf, figName,\
+           xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
+
+Image('./figures/conv2-int3.gif', width=500)
+
+# +
+ti = 3
+tf = 6
+
+atraso = np.arange(-8, 6, 0.01)
+    
+figName  = './figures/conv2-int4.gif'
+genConvGIF(x, h.subs({R:1, C:1}), t, atraso, ti, tf, figName,\
+           xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
+
+Image('./figures/conv2-int4.gif', width=500)
 
 # +
 x_tau = espelhaDesloca(x, t, τ)
@@ -182,6 +261,8 @@ h_tau = h.subs({t:τ})
 symdisp('h(τ) = ', h_tau)
 symdisp('x(t-τ) = ', round_expr(x_tau,2))
 # -
+
+
 
 h.args[1][0]
 
