@@ -119,14 +119,12 @@ symplot(t, x, intervalo, 'x(t)')
 # **1º Intervalo:** $t<0$ s
 
 # +
-ti = -5
-tf = 0
-
-atraso = np.arange(-6, 6, 0.01)
-    
-figName  = './figures/conv1-int1.gif'
-
 if generateGIFs:
+    ti = -5
+    tf = 0
+
+    atraso = np.arange(-6, 6, 0.01)    
+    figName  = './figures/conv1-int1.gif'
     genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
 
 Image('./figures/conv1-int1.gif', width=500)
@@ -135,14 +133,12 @@ Image('./figures/conv1-int1.gif', width=500)
 # **2º Intervalo:** $0\leq t < 2$ s
 
 # +
-ti = 0
-tf = 2
-
-atraso = np.arange(-6, 6, 0.01)
-    
-figName  = './figures/conv1-int2.gif'
-
 if generateGIFs:
+    ti = 0
+    tf = 2
+    
+    atraso = np.arange(-6, 6, 0.01)    
+    figName  = './figures/conv1-int2.gif'
     genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
 
 Image('./figures/conv1-int2.gif', width=500)
@@ -151,27 +147,26 @@ Image('./figures/conv1-int2.gif', width=500)
 # **3º Intervalo:** $2 \leq t <4$ s
 
 # +
-ti = 2
-tf = 4
-
-atraso = np.arange(-6, 6, 0.01)
-    
-figName  = './figures/conv1-int3.gif'
-
 if generateGIFs:
+    ti = 2
+    tf = 4
+
+    atraso = np.arange(-6, 6, 0.01)    
+    figName  = './figures/conv1-int3.gif'
     genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
 
 Image('./figures/conv1-int3.gif', width=500)
+# -
+
+# **4º Intervalo:** $t \geq 4$ s
 
 # +
-ti = 4
-tf = 8
-
-atraso = np.arange(-6, 6, 0.01)
-    
-figName  = './figures/conv1-int4.gif'
-
 if generateGIFs:
+    ti = 4
+    tf = 8
+
+    atraso = np.arange(-6, 6, 0.01)    
+    figName  = './figures/conv1-int4.gif'
     genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
 
 Image('./figures/conv1-int4.gif', width=500)
@@ -194,20 +189,19 @@ symdisp('y(t) = ', y)
 
 # +
 # plota função no domínio do tempo
-intervalo = np.arange(-6, 6, 0.01)
+if generateGIFs:
+    intervalo = np.arange(-6, 6, 0.01)
 
-y_fun = sp.lambdify(t, y, 'numpy')
-y_num = y_fun(intervalo)
-
-figName = './figures/fullConv1.gif'
-
-#if generateGIFs:
-genGIF(intervalo, y_num, figName, xlabel='t[s]', ylabel='y(t)', fram=200, inter=80)
+    y_fun = sp.lambdify(t, y, 'numpy')
+    y_num = y_fun(intervalo)
+    
+    figName = './figures/fullConv1.gif'
+    genGIF(intervalo, y_num, figName, xlabel='t[s]', ylabel='y(t)', fram=200, inter=80)
 
 Image('./figures/fullConv1.gif', width=500)
 # -
 
-# ### Exemplo 2: resposta de um circuito RC a um pulso
+# ### Exemplo 2: resposta de um circuito RC a uma sequência de pulsos de tensão
 
 # +
 R, C  = sp.symbols('R, C', real=True, positive=True)
@@ -238,58 +232,62 @@ symdisp('h(t) = ', h)
 # plota função no domínio do tempo
 intervalo = np.arange(-4, 10, 0.05)
 symplot(t, h.subs({R:1, C:1}), intervalo, 'h(t)')
+# -
+
+# **1º Intervalo:** $t < 0$ s
 
 # +
-ti = -5
-tf = 0
-
-atraso = np.arange(-8, 6, 0.01)
-    
-figName  = './figures/conv2-int1.gif'
-
 if generateGIFs:
+    ti = -5
+    tf = 0
+
+    atraso = np.arange(-8, 6, 0.01)    
+    figName  = './figures/conv2-int1.gif'
     genConvGIF(x, h.subs({R:1, C:1}), t, atraso, ti, tf, figName,\
                xlabel= 'τ[s]', ylabel=['h(τ)', 'x(t-τ)'], fram=200, inter=80)
 
 Image('./figures/conv2-int1.gif', width=500)
+# -
+
+# **2º Intervalo:** $0 \leq t < 2$ s
 
 # +
-ti = 0
-tf = 2
-
-atraso = np.arange(-8, 6, 0.01)
-    
-figName  = './figures/conv2-int2.gif'
-
 if generateGIFs:
+    ti = 0
+    tf = 2
+
+    atraso = np.arange(-8, 6, 0.01)    
+    figName  = './figures/conv2-int2.gif'
     genConvGIF(x, h.subs({R:1, C:1}), t, atraso, ti, tf, figName,\
                xlabel= 'τ[s]', ylabel=['h(τ)', 'x(t-τ)'], fram=200, inter=80)
 
 Image('./figures/conv2-int2.gif', width=500)
+# -
+
+# **3º Intervalo:** $2\leq t < 3$ s
 
 # +
-ti = 2
-tf = 3
-
-atraso = np.arange(-8, 6, 0.01)
-    
-figName  = './figures/conv2-int3.gif'
-
 if generateGIFs:
+    ti = 2
+    tf = 3
+
+    atraso = np.arange(-8, 6, 0.01)    
+    figName  = './figures/conv2-int3.gif'
     genConvGIF(x, h.subs({R:1, C:1}), t, atraso, ti, tf, figName,\
                xlabel= 'τ[s]', ylabel=['h(τ)', 'x(t-τ)'], fram=200, inter=80)
 
 Image('./figures/conv2-int3.gif', width=500)
+# -
+
+# **4º Intervalo:** $t \geq 3$ s
 
 # +
-ti = 3
-tf = 6
-
-atraso = np.arange(-8, 6, 0.01)
-    
-figName  = './figures/conv2-int4.gif'
-
 if generateGIFs:
+    ti = 3
+    tf = 6
+
+    atraso = np.arange(-8, 6, 0.01)    
+    figName  = './figures/conv2-int4.gif'
     genConvGIF(x, h.subs({R:1, C:1}), t, atraso, ti, tf, figName,\
                xlabel= 'τ[s]', ylabel=['h(τ)', 'x(t-τ)'], fram=200, inter=80)
 
