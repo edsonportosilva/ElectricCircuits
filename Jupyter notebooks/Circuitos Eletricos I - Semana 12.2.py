@@ -352,7 +352,8 @@ if generateGIFs:
 
     atraso = np.arange(-6, 6, 0.01)    
     figName  = './figures/fullConv2.gif'
-    genConvGIF(x, h.subs({R:R_circ,C:C_circ}), t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['h(τ)', 'x(t-τ)','y(t)'],\
+    genConvGIF(x, h.subs({R:R_circ,C:C_circ}), t, atraso, ti, tf,\
+               figName, xlabel= 'τ[s]', ylabel=['h(τ)', 'x(t-τ)','y(t)'],\
                fram=200, inter=80, plotConv=True)
 
 Image('./figures/fullConv2.gif', width=500)

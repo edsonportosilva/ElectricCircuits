@@ -128,7 +128,7 @@ def genConvGIF(x, h, t, totalTime, ti, tf, figName, xlabel=[], ylabel=[], fram=2
     dt = totalTime[1]-totalTime[0]
     
     if plotConv:
-        y_num  = np.convolve(x_num, h_num, 'same')*dt
+        y_num  = np.convolve(h_num, x_num, 'same')*dt
         ymax = np.max([x_num, h_num, y_num])
         ymin = np.min([x_num, h_num, y_num])
     else:
