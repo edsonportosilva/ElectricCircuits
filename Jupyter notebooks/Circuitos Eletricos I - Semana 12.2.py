@@ -18,7 +18,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import sympy as sp
-from utils import round_expr, symdisp, symplot, genConvGIF
+from utils import round_expr, symdisp, symplot, genConvGIF, genGIF
 from sympy import oo as inf
 
 from sympy.polys.partfrac import apart
@@ -84,6 +84,11 @@ def partFrac(expr, Ndigits):
     return sp.N(expr, Ndigits)
 
 sp.init_printing()
+
+def espelhaDesloca(g, t, d):    
+    return g.subs({t:-t+d})
+
+
 # -
 
 # #### Definindo algumas variáveis simbólicas de interesse
@@ -91,6 +96,8 @@ sp.init_printing()
 s  = sp.symbols('s')
 a, R, C  = sp.symbols('a, R, C', real=True, positive=True)
 t, τ, omega = sp.symbols('t, τ, omega', real=True)
+
+generateGIFs = False
 
 # ## Exemplos de cálculo da convolução utilizando o sympy
 #
@@ -109,6 +116,8 @@ symdisp('x(t) = ', round_expr(x,2))
 intervalo = np.arange(-2, 5, 0.01)
 symplot(t, x, intervalo, 'x(t)')
 
+# **1º Intervalo:** $t<0$ s
+
 # +
 ti = -5
 tf = 0
@@ -116,9 +125,14 @@ tf = 0
 atraso = np.arange(-6, 6, 0.01)
     
 figName  = './figures/conv1-int1.gif'
-genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
+
+if generateGIFs:
+    genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
 
 Image('./figures/conv1-int1.gif', width=500)
+# -
+
+# **2º Intervalo:** $0\leq t < 2$ s
 
 # +
 ti = 0
@@ -127,9 +141,14 @@ tf = 2
 atraso = np.arange(-6, 6, 0.01)
     
 figName  = './figures/conv1-int2.gif'
-genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
+
+if generateGIFs:
+    genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
 
 Image('./figures/conv1-int2.gif', width=500)
+# -
+
+# **3º Intervalo:** $2 \leq t <4$ s
 
 # +
 ti = 2
@@ -138,7 +157,9 @@ tf = 4
 atraso = np.arange(-6, 6, 0.01)
     
 figName  = './figures/conv1-int3.gif'
-genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
+
+if generateGIFs:
+    genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
 
 Image('./figures/conv1-int3.gif', width=500)
 
@@ -149,7 +170,9 @@ tf = 8
 atraso = np.arange(-6, 6, 0.01)
     
 figName  = './figures/conv1-int4.gif'
-genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
+
+if generateGIFs:
+    genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
 
 Image('./figures/conv1-int4.gif', width=500)
 
@@ -168,11 +191,21 @@ y = sp.Piecewise((y1, t<0),
                  (y4, (t>=4)))
 
 symdisp('y(t) = ', y)
-# -
 
+# +
 # plota função no domínio do tempo
-intervalo = np.arange(-4, 10, 0.05)
-symplot(t, y, intervalo, 'y(t)')
+intervalo = np.arange(-6, 6, 0.01)
+
+y_fun = sp.lambdify(t, y, 'numpy')
+y_num = y_fun(intervalo)
+
+figName = './figures/fullConv1.gif'
+
+#if generateGIFs:
+genGIF(intervalo, y_num, figName, xlabel='t[s]', ylabel='y(t)', fram=200, inter=80)
+
+Image('./figures/fullConv1.gif', width=500)
+# -
 
 # ### Exemplo 2: resposta de um circuito RC a um pulso
 
@@ -213,8 +246,10 @@ tf = 0
 atraso = np.arange(-8, 6, 0.01)
     
 figName  = './figures/conv2-int1.gif'
-genConvGIF(x, h.subs({R:1, C:1}), t, atraso, ti, tf, figName,\
-           xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
+
+if generateGIFs:
+    genConvGIF(x, h.subs({R:1, C:1}), t, atraso, ti, tf, figName,\
+               xlabel= 'τ[s]', ylabel=['h(τ)', 'x(t-τ)'], fram=200, inter=80)
 
 Image('./figures/conv2-int1.gif', width=500)
 
@@ -225,8 +260,10 @@ tf = 2
 atraso = np.arange(-8, 6, 0.01)
     
 figName  = './figures/conv2-int2.gif'
-genConvGIF(x, h.subs({R:1, C:1}), t, atraso, ti, tf, figName,\
-           xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
+
+if generateGIFs:
+    genConvGIF(x, h.subs({R:1, C:1}), t, atraso, ti, tf, figName,\
+               xlabel= 'τ[s]', ylabel=['h(τ)', 'x(t-τ)'], fram=200, inter=80)
 
 Image('./figures/conv2-int2.gif', width=500)
 
@@ -237,8 +274,10 @@ tf = 3
 atraso = np.arange(-8, 6, 0.01)
     
 figName  = './figures/conv2-int3.gif'
-genConvGIF(x, h.subs({R:1, C:1}), t, atraso, ti, tf, figName,\
-           xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
+
+if generateGIFs:
+    genConvGIF(x, h.subs({R:1, C:1}), t, atraso, ti, tf, figName,\
+               xlabel= 'τ[s]', ylabel=['h(τ)', 'x(t-τ)'], fram=200, inter=80)
 
 Image('./figures/conv2-int3.gif', width=500)
 
@@ -249,8 +288,10 @@ tf = 6
 atraso = np.arange(-8, 6, 0.01)
     
 figName  = './figures/conv2-int4.gif'
-genConvGIF(x, h.subs({R:1, C:1}), t, atraso, ti, tf, figName,\
-           xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
+
+if generateGIFs:
+    genConvGIF(x, h.subs({R:1, C:1}), t, atraso, ti, tf, figName,\
+               xlabel= 'τ[s]', ylabel=['h(τ)', 'x(t-τ)'], fram=200, inter=80)
 
 Image('./figures/conv2-int4.gif', width=500)
 
@@ -261,8 +302,6 @@ h_tau = h.subs({t:τ})
 symdisp('h(τ) = ', h_tau)
 symdisp('x(t-τ) = ', round_expr(x_tau,2))
 # -
-
-
 
 h.args[1][0]
 

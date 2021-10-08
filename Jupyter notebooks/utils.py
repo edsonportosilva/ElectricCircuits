@@ -21,8 +21,10 @@ def genGIF(x, y, figName, xlabel=[], ylabel=[], fram=200, inter=20):
     figAnin = plt.figure()
     ax      = plt.axes(xlim=(np.min(x), np.max(x)),\
                        ylim=(np.min(y)-0.1*np.max(np.abs(y)), np.max(y)+0.1*np.max(np.abs(y))))
-    line,   = ax.plot([], [], lw=2)
+    line,   = ax.plot([], [])
     ax.grid()  
+
+    indx = np.arange(0, len(x), int(len(x)/fram))
     
     if len(xlabel): 
            plt.xlabel(xlabel)
@@ -35,12 +37,12 @@ def genGIF(x, y, figName, xlabel=[], ylabel=[], fram=200, inter=20):
         return line,
 
     def animate(i):
-        line.set_data(x[0:i], y[0:i])
+        line.set_data(x[0:indx[i]], y[0:indx[i]])
         return line,
 
     anim = FuncAnimation(figAnin, animate, init_func=init, frames=fram, interval=inter, blit=True)
 
-    anim.save(figName, dpi=100, writer='imagemagick')
+    anim.save(figName, dpi=200, writer='imagemagick')
     plt.close()
 
 # função para arredondamento de floats em expressões simbólicas
@@ -148,7 +150,7 @@ def genConvGIF(x, h, t, intervalo, ti, tf, figName, xlabel=[], ylabel=[], fram=2
     
     def animate(i):
         figx = symplot(t, x.subs({t:delays[i]-t}), intervalo, 'x(t-τ)')
-        line2.set_data(figx.get_axes()[0].lines[0].get_data())
+        line2.set_data(figx.get_axes()[0].lines[0].get_data())       
         plt.close(figx)
         return line2,
 
