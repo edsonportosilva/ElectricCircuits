@@ -103,12 +103,16 @@ def symplot(t, F, interval, funLabel):
     plt.close();
     return fig
 
-def genConvGIF(x, h, t, intervalo, ti, tf, figName, xlabel=[], ylabel=[], fram=200, inter=20, plotConv=False):    
+def genConvGIF(x, h, t, totalTime, ti, tf, figName, xlabel=[], ylabel=[], fram=200, inter=20, plotConv=False):    
     '''
-    Create and save a plot animation as GIF
+    Create and save a convolution plot animation as GIF
      
-    :param x: x-axis values [np array]
-    :param y: y-axis values [np array]
+    :param x: x(t) function [sympy expr]
+    :param h: h(t) function [sympy expr]
+    :param t: t time variable [sympy variable]
+    :param totalTime: array of time instants where the functions will be evaluated [nparray]
+    :param ti: time when animation starts [scalar]
+    :param tf: time when animation stops [scalar]
     :param figName: figure file name w/ folder path [string]
     :param xlabel: xlabel [string]
     :param ylabel: ylabel [string]
@@ -119,9 +123,9 @@ def genConvGIF(x, h, t, intervalo, ti, tf, figName, xlabel=[], ylabel=[], fram=2
     x_func = lambdify(t, x, 'numpy')
     h_func = lambdify(t, h, 'numpy')
     
-    x_num  = x_func(intervalo)
-    h_num  = h_func(intervalo)    
-    dt = intervalo[1]-intervalo[0]
+    x_num  = x_func(totalTime)
+    h_num  = h_func(totalTime)    
+    dt = totalTime[1]-totalTime[0]
     
     if plotConv:
         y_num  = np.convolve(x_num, h_num, 'same')*dt
@@ -132,7 +136,7 @@ def genConvGIF(x, h, t, intervalo, ti, tf, figName, xlabel=[], ylabel=[], fram=2
         ymin = np.min([x_num, h_num])
     
     figAnim = plt.figure()
-    ax      = plt.axes(xlim=(intervalo.min(), intervalo.max()),ylim=(ymin-0.1*np.abs(ymax), ymax+0.1*np.abs(ymax)))
+    ax      = plt.axes(xlim=(totalTime.min(), totalTime.max()),ylim=(ymin-0.1*np.abs(ymax), ymax+0.1*np.abs(ymax)))
     line1, line2, line3 = ax.plot([], [], [], [], [], [])
     line1.set_label(ylabel[0])
     line2.set_label(ylabel[1])
@@ -144,7 +148,7 @@ def genConvGIF(x, h, t, intervalo, ti, tf, figName, xlabel=[], ylabel=[], fram=2
     ax.legend(loc="upper right");
 
     # plot static function
-    figh = symplot(t, h, intervalo, 'h(t)')
+    figh = symplot(t, h, totalTime, 'h(t)')
 
     if len(xlabel): 
            plt.xlabel(xlabel)            
@@ -155,8 +159,8 @@ def genConvGIF(x, h, t, intervalo, ti, tf, figName, xlabel=[], ylabel=[], fram=2
 
     plt.close(figh)
     
-    delays = intervalo[::int(len(intervalo)/fram)]
-    ind    = np.arange(0, len(intervalo), int(len(intervalo)/fram))
+    delays = totalTime[::int(len(totalTime)/fram)]
+    ind    = np.arange(0, len(totalTime), int(len(totalTime)/fram))
     
     ind    = ind[delays > ti]
     delays = delays[delays > ti]
@@ -167,11 +171,11 @@ def genConvGIF(x, h, t, intervalo, ti, tf, figName, xlabel=[], ylabel=[], fram=2
     totalFrames = len(delays)
     
     def animate(i):
-        figx = symplot(t, x.subs({t:delays[i]-t}), intervalo, 'x(t-τ)')
+        figx = symplot(t, x.subs({t:delays[i]-t}), totalTime, 'x(t-τ)')
         line2.set_data(figx.get_axes()[0].lines[0].get_data())
         
         if plotConv:
-            line3.set_data(intervalo[0:ind[i]], y_num[0:ind[i]])
+            line3.set_data(totalTime[0:ind[i]], y_num[0:ind[i]])
             
         plt.close(figx)
         return line2, line3
