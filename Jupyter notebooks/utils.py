@@ -103,7 +103,7 @@ def symplot(t, F, interval, funLabel):
     plt.close();
     return fig
 
-def genConvGIF(x, h, t, intervalo, ti, tf, figName, xlabel=[], ylabel=[], fram=200, inter=20):    
+def genConvGIF(x, h, t, intervalo, ti, tf, figName, xlabel=[], ylabel=[], fram=200, inter=20, plotConv=False):    
     '''
     Create and save a plot animation as GIF
      
@@ -118,15 +118,28 @@ def genConvGIF(x, h, t, intervalo, ti, tf, figName, xlabel=[], ylabel=[], fram=2
     '''
     x_func = lambdify(t, x, 'numpy')
     h_func = lambdify(t, h, 'numpy')
-
-    ymax = np.max([x_func(intervalo), h_func(intervalo)])
-    ymin = np.min([x_func(intervalo), h_func(intervalo)])
+    
+    x_num  = x_func(intervalo)
+    h_num  = h_func(intervalo)    
+    dt = intervalo[1]-intervalo[0]
+    
+    if plotConv:
+        y_num  = np.convolve(x_num, h_num, 'same')*dt
+        ymax = np.max([x_num, h_num, y_num])
+        ymin = np.min([x_num, h_num, y_num])
+    else:
+        ymax = np.max([x_num, h_num])
+        ymin = np.min([x_num, h_num])
     
     figAnim = plt.figure()
     ax      = plt.axes(xlim=(intervalo.min(), intervalo.max()),ylim=(ymin-0.1*np.abs(ymax), ymax+0.1*np.abs(ymax)))
-    line1, line2 = ax.plot([], [], [], [])
+    line1, line2, line3 = ax.plot([], [], [], [], [], [])
     line1.set_label(ylabel[0])
     line2.set_label(ylabel[1])
+    
+    if plotConv:
+        line3.set_label(ylabel[2])
+        
     ax.grid()
     ax.legend(loc="upper right");
 
@@ -141,18 +154,27 @@ def genConvGIF(x, h, t, intervalo, ti, tf, figName, xlabel=[], ylabel=[], fram=2
         return line1,
 
     plt.close(figh)
-    delays = intervalo[::int(len(intervalo)/fram)]
     
+    delays = intervalo[::int(len(intervalo)/fram)]
+    ind    = np.arange(0, len(intervalo), int(len(intervalo)/fram))
+    
+    ind    = ind[delays > ti]
     delays = delays[delays > ti]
+    
+    ind    = ind[delays < tf]   
     delays = delays[delays < tf]
     
     totalFrames = len(delays)
     
     def animate(i):
         figx = symplot(t, x.subs({t:delays[i]-t}), intervalo, 'x(t-τ)')
-        line2.set_data(figx.get_axes()[0].lines[0].get_data())       
+        line2.set_data(figx.get_axes()[0].lines[0].get_data())
+        
+        if plotConv:
+            line3.set_data(intervalo[0:ind[i]], y_num[0:ind[i]])
+            
         plt.close(figx)
-        return line2,
+        return line2, line3
 
     anim = FuncAnimation(figAnim, animate, init_func=init, frames=totalFrames, interval=inter, blit=True)
 

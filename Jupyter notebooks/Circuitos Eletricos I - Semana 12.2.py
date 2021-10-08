@@ -140,7 +140,7 @@ Image('./figures/conv1-int1.gif', width=500)
 if generateGIFs:
     ti = 0
     tf = 2
-    
+
     atraso = np.arange(-6, 6, 0.01)    
     figName  = './figures/conv1-int2.gif'
     genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)'], fram=200, inter=80)
@@ -194,13 +194,13 @@ symdisp('y(t) = ', y)
 # +
 # plota função no domínio do tempo
 if generateGIFs:
-    intervalo = np.arange(-6, 6, 0.01)
+    ti = -6
+    tf = 6
 
-    y_fun = sp.lambdify(t, y, 'numpy')
-    y_num = y_fun(intervalo)
-    
-    figName = './figures/fullConv1.gif'
-    genGIF(intervalo, y_num, figName, xlabel='t[s]', ylabel='y(t)', fram=200, inter=80)
+    atraso = np.arange(-6, 6, 0.01)    
+    figName  = './figures/fullConv1.gif'
+    genConvGIF(x, x, t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['x(τ)', 'x(t-τ)','y(t)'],\
+               fram=200, inter=80, plotConv=True)
 
 Image('./figures/fullConv1.gif', width=500)
 # -
@@ -346,6 +346,21 @@ symdisp('y(t) = ', round_expr(y,2))
 C_circ = 100e-6
 R_circ = 1e3
 
+if generateGIFs:
+    ti = -8
+    tf = 6
+
+    atraso = np.arange(-6, 6, 0.01)    
+    figName  = './figures/fullConv2.gif'
+    genConvGIF(x, h.subs({R:R_circ,C:C_circ}), t, atraso, ti, tf, figName, xlabel= 'τ[s]', ylabel=['h(τ)', 'x(t-τ)','y(t)'],\
+               fram=200, inter=80, plotConv=True)
+
+Image('./figures/fullConv2.gif', width=500)
+
+# +
+C_circ = 100e-6
+R_circ = 1e3
+
 intervalo = np.arange(-4, 10, 0.05)
 
 # plota resposta ao impulso 
@@ -356,5 +371,3 @@ symplot(t, [x, y.subs({R:R_circ,C:C_circ})], intervalo, ['x(t)', 'y(t)'])
 # -
 
 print(R_circ*C_circ)
-
-
