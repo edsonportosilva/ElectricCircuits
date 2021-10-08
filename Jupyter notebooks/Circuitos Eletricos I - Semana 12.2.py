@@ -113,8 +113,12 @@ symdisp('x(t) = ', round_expr(x,2))
 # -
 
 # plota função no domínio do tempo
-intervalo = np.arange(-2, 5, 0.01)
+intervalo = np.arange(-10, 10, 0.01)
 symplot(t, x, intervalo, 'x(t)')
+
+# plota função no domínio do tempo
+intervalo = np.arange(-10, 10, 0.01)
+symplot(t, [x, espelhaDesloca(x,t,0), espelhaDesloca(x,t,-6)], intervalo, ['x(τ)', 'x(-τ)', 'x(-6-τ)'])
 
 # **1º Intervalo:** $t<0$ s
 
@@ -222,8 +226,12 @@ symdisp('x(t) = ', round_expr(x,2))
 intervalo = np.arange(-2, 5, 0.01)
 symplot(t, x, intervalo, 'x(t)')
 
+# plota função no domínio do tempo
+intervalo = np.arange(-10, 10, 0.01)
+symplot(t, [x, espelhaDesloca(x,t,0), espelhaDesloca(x,t,6)], intervalo, ['x(τ)', 'x(-τ)', 'x(6-τ)'])
+
 # +
-h = (1/τRC)*sp.exp(-t/τRC) # resposta ao impulso de um circuito RC
+h = (1/τRC)*sp.exp(-t/τRC) # resposta ao impulso da tensão sobre o capacitor num circuito RC
 
 h = sp.Piecewise((0,t<0),(h, t>=0))
 
@@ -345,3 +353,8 @@ symplot(t, h.subs({R:R_circ,C:C_circ}), intervalo, 'h(t)')
 
 # plota função no domínio do tempo
 symplot(t, [x, y.subs({R:R_circ,C:C_circ})], intervalo, ['x(t)', 'y(t)'])
+# -
+
+print(R_circ*C_circ)
+
+
