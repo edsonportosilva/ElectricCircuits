@@ -82,7 +82,7 @@ def symplot(t, F, interval, funLabel):
     if type(F) == list:
         indLabel = 0
         for f in F:
-            func  = lambdify(t, f, 'numpy')
+            func  = lambdify(t, f, modules=['numpy', {'Heaviside': lambda t:np.heaviside(t,0)}])
             f_num = func(interval)
             
             plt.plot(interval, f_num, label=funLabel[indLabel])
@@ -91,7 +91,7 @@ def symplot(t, F, interval, funLabel):
             plt.xlabel('tempo [s]');
             indLabel += 1
     else:        
-        func  = lambdify(t, F, 'numpy')
+        func  = lambdify(t, F, modules=['numpy', {'Heaviside': lambda t:np.heaviside(t,0)}])
         f_num = func(interval)           
                     
         plt.plot(interval, f_num, label=funLabel)
@@ -102,6 +102,7 @@ def symplot(t, F, interval, funLabel):
     plt.grid();
     plt.close();
     return fig
+
 
 def genConvGIF(x, h, t, totalTime, ti, tf, figName, xlabel=[], ylabel=[], fram=200, inter=20, plotConv=False):    
     '''
