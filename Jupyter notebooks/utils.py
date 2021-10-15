@@ -121,8 +121,8 @@ def genConvGIF(x, h, t, totalTime, ti, tf, figName, xlabel=[], ylabel=[], fram=2
     :param inter: time interval between frames [milliseconds]
     
     '''
-    x_func = lambdify(t, x, 'numpy')
-    h_func = lambdify(t, h, 'numpy')
+    x_func = lambdify(t, x, modules=['numpy', {'Heaviside': lambda t:np.heaviside(t,0)}])
+    h_func = lambdify(t, h, modules=['numpy', {'Heaviside': lambda t:np.heaviside(t,0)}])
     
     x_num  = x_func(totalTime)
     h_num  = h_func(totalTime)    
