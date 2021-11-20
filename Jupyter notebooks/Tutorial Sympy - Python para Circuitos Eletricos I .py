@@ -18,13 +18,13 @@
 
 # + [markdown] toc=true
 # <h1>Sumário<span class="tocSkip"></span></h1>
-# <div class="toc"><ul class="toc-item"><li><span><a href="#Definindo-expressões-matemáticas" data-toc-modified-id="Definindo-expressões-matemáticas-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Definindo expressões matemáticas</a></span></li><li><span><a href="#Calculando-valores-numéricos-de-funções" data-toc-modified-id="Calculando-valores-numéricos-de-funções-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Calculando valores numéricos de funções</a></span></li><li><span><a href="#Arrendondamento-de-valores-numéricos" data-toc-modified-id="Arrendondamento-de-valores-numéricos-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Arrendondamento de valores numéricos</a></span></li><li><span><a href="#Derivadas-utilizando-sp.diff" data-toc-modified-id="Derivadas-utilizando-sp.diff-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Derivadas utilizando <em>sp.diff</em></a></span></li><li><span><a href="#Integrais-definidas-utilizando-sp.integrate" data-toc-modified-id="Integrais-definidas-utilizando-sp.integrate-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>Integrais definidas utilizando <em>sp.integrate</em></a></span></li><li><span><a href="#Plotando-gráficos-com-symplot" data-toc-modified-id="Plotando-gráficos-com-symplot-6"><span class="toc-item-num">6&nbsp;&nbsp;</span>Plotando gráficos com symplot</a></span></li><li><span><a href="#Encontrando-numericamente-um-ponto-de-extremo-(máximo-ou-mínimo)-de-uma-função-com-sp.nsolve" data-toc-modified-id="Encontrando-numericamente-um-ponto-de-extremo-(máximo-ou-mínimo)-de-uma-função-com-sp.nsolve-7"><span class="toc-item-num">7&nbsp;&nbsp;</span>Encontrando numericamente um ponto de extremo (máximo ou mínimo) de uma função com <em>sp.nsolve</em></a></span></li></ul></div>
+# <div class="toc"><ul class="toc-item"><li><span><a href="#Definindo-expressões-matemáticas" data-toc-modified-id="Definindo-expressões-matemáticas-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Definindo expressões matemáticas</a></span></li><li><span><a href="#Calculando-valores-numéricos-de-funções" data-toc-modified-id="Calculando-valores-numéricos-de-funções-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Calculando valores numéricos de funções</a></span></li><li><span><a href="#Arrendondamento-de-valores-numéricos" data-toc-modified-id="Arrendondamento-de-valores-numéricos-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Arrendondamento de valores numéricos</a></span></li><li><span><a href="#Derivadas-utilizando-sp.diff" data-toc-modified-id="Derivadas-utilizando-sp.diff-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Derivadas utilizando <em>sp.diff</em></a></span></li><li><span><a href="#Integrais-definidas-utilizando-sp.integrate" data-toc-modified-id="Integrais-definidas-utilizando-sp.integrate-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>Integrais definidas utilizando <em>sp.integrate</em></a></span></li><li><span><a href="#Plotando-gráficos-com-symplot" data-toc-modified-id="Plotando-gráficos-com-symplot-6"><span class="toc-item-num">6&nbsp;&nbsp;</span>Plotando gráficos com symplot</a></span></li><li><span><a href="#Encontrando-numericamente-um-ponto-de-extremo-(máximo-ou-mínimo)-de-uma-função-com-sp.nsolve" data-toc-modified-id="Encontrando-numericamente-um-ponto-de-extremo-(máximo-ou-mínimo)-de-uma-função-com-sp.nsolve-7"><span class="toc-item-num">7&nbsp;&nbsp;</span>Encontrando numericamente um ponto de extremo (máximo ou mínimo) de uma função com <em>sp.nsolve</em></a></span></li><li><span><a href="#Resolvendo-um-sistema-de-equações-lineares" data-toc-modified-id="Resolvendo-um-sistema-de-equações-lineares-8"><span class="toc-item-num">8&nbsp;&nbsp;</span>Resolvendo um sistema de equações lineares</a></span></li></ul></div>
 # -
 
 import sympy as sp
 import numpy as np
 from utils import symdisp, symplot
-from IPython.display import Math, Latex
+from IPython.display import Math, Latex, display
 
 # ### Definindo expressões matemáticas
 
@@ -102,3 +102,27 @@ elif sinal_d2 < 0:
 symdisp('p(t) = ', p)
 symdisp('t_{ext} =', round(text,3))    
 symdisp('p_{ext} =', round(pext,3))
+# -
+
+# ### Resolvendo um sistema de equações lineares
+
+# +
+# define as N variáveis desconhecidas
+x, y, z = sp.symbols('x, y, z')
+
+# define os sistema de N equações
+eq1 = sp.Eq(x   + y + z, 10)             
+eq2 = sp.Eq(2*x - y + z, 1)  
+eq3 = sp.Eq(5*x - 2*y + 3*z, 5)  
+
+print('Sistema de equações lineares:')
+display(eq1, eq2, eq3) 
+
+# resolve o sistema
+soluc = sp.solve((eq1, eq2, eq3), dict=True)
+
+x = np.array([sol[x] for sol in soluc])
+y = np.array([sol[y] for sol in soluc]) 
+z = np.array([sol[z] for sol in soluc])
+
+print('Solução do sistema:\n\n x = %.2f\n y = %.2f\n z = %.2f' %(x, y, z))
