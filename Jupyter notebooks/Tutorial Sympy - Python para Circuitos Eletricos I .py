@@ -15,6 +15,8 @@
 # ---
 
 # # *Tutorial Sympy - Python para Circuitos Elétricos I*
+#
+# Neste notebook, apresenta-se um guia de como utilizar o pacote **SymPy** do Python para implementar a maior parte das ferramentas matemáticas básicas utilizadas na disciplina de Circuitos Elétricos I.
 
 # + [markdown] toc=true
 # <h1>Sumário<span class="tocSkip"></span></h1>
@@ -150,9 +152,13 @@ display(eq1, eq2, eq3)
 
 # resolve o sistema
 soluc = sp.solve((eq1, eq2, eq3), dict=True)
+soluc = soluc[0]
 
-x = np.array([sol[x] for sol in soluc])
-y = np.array([sol[y] for sol in soluc]) 
-z = np.array([sol[z] for sol in soluc])
+x = soluc[x]
+y = soluc[y]
+z = soluc[z]
 
-print('Solução do sistema:\n\n x = %.2f\n y = %.2f\n z = %.2f' %(x, y, z))
+print('Solução do sistema:')
+symdisp('x =', x)
+symdisp('y =', y)
+symdisp('z =', z)
