@@ -20,7 +20,7 @@
 
 # + [markdown] toc=true
 # <h1>Sumário<span class="tocSkip"></span></h1>
-# <div class="toc"><ul class="toc-item"><li><span><a href="#Definindo-expressões-matemáticas" data-toc-modified-id="Definindo-expressões-matemáticas-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Definindo expressões matemáticas</a></span></li><li><span><a href="#Calculando-valores-numéricos-de-funções" data-toc-modified-id="Calculando-valores-numéricos-de-funções-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Calculando valores numéricos de funções</a></span></li><li><span><a href="#Arrendondamento-de-valores-numéricos" data-toc-modified-id="Arrendondamento-de-valores-numéricos-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Arrendondamento de valores numéricos</a></span></li><li><span><a href="#Derivadas-utilizando-sp.diff" data-toc-modified-id="Derivadas-utilizando-sp.diff-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Derivadas utilizando <em>sp.diff</em></a></span></li><li><span><a href="#Integrais-definidas-utilizando-sp.integrate" data-toc-modified-id="Integrais-definidas-utilizando-sp.integrate-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>Integrais definidas utilizando <em>sp.integrate</em></a></span></li><li><span><a href="#Plotando-gráficos-com-symplot" data-toc-modified-id="Plotando-gráficos-com-symplot-6"><span class="toc-item-num">6&nbsp;&nbsp;</span>Plotando gráficos com symplot</a></span></li><li><span><a href="#Encontrando-numericamente-um-ponto-de-extremo-(máximo-ou-mínimo)-de-uma-função-com-sp.nsolve" data-toc-modified-id="Encontrando-numericamente-um-ponto-de-extremo-(máximo-ou-mínimo)-de-uma-função-com-sp.nsolve-7"><span class="toc-item-num">7&nbsp;&nbsp;</span>Encontrando numericamente um ponto de extremo (máximo ou mínimo) de uma função com <em>sp.nsolve</em></a></span></li><li><span><a href="#Resolvendo-um-sistema-de-equações-lineares-com-sp.solve" data-toc-modified-id="Resolvendo-um-sistema-de-equações-lineares-com-sp.solve-8"><span class="toc-item-num">8&nbsp;&nbsp;</span>Resolvendo um sistema de equações lineares com <em>sp.solve</em></a></span></li></ul></div>
+# <div class="toc"><ul class="toc-item"><li><span><a href="#Definindo-expressões-matemáticas" data-toc-modified-id="Definindo-expressões-matemáticas-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Definindo expressões matemáticas</a></span></li><li><span><a href="#Calculando-valores-numéricos-de-funções" data-toc-modified-id="Calculando-valores-numéricos-de-funções-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Calculando valores numéricos de funções</a></span></li><li><span><a href="#Arrendondamento-de-valores-numéricos-com-round" data-toc-modified-id="Arrendondamento-de-valores-numéricos-com-round-3"><span class="toc-item-num">3&nbsp;&nbsp;</span>Arrendondamento de valores numéricos com <em>round</em></a></span></li><li><span><a href="#Derivadas-utilizando-sp.diff" data-toc-modified-id="Derivadas-utilizando-sp.diff-4"><span class="toc-item-num">4&nbsp;&nbsp;</span>Derivadas utilizando <em>sp.diff</em></a></span></li><li><span><a href="#Integrais-definidas-utilizando-sp.integrate" data-toc-modified-id="Integrais-definidas-utilizando-sp.integrate-5"><span class="toc-item-num">5&nbsp;&nbsp;</span>Integrais definidas utilizando <em>sp.integrate</em></a></span></li><li><span><a href="#Plotando-gráficos-com-symplot" data-toc-modified-id="Plotando-gráficos-com-symplot-6"><span class="toc-item-num">6&nbsp;&nbsp;</span>Plotando gráficos com <em>symplot</em></a></span></li><li><span><a href="#Encontrando-numericamente-um-ponto-de-extremo-(máximo-ou-mínimo)-de-uma-função-com-sp.nsolve" data-toc-modified-id="Encontrando-numericamente-um-ponto-de-extremo-(máximo-ou-mínimo)-de-uma-função-com-sp.nsolve-7"><span class="toc-item-num">7&nbsp;&nbsp;</span>Encontrando numericamente um ponto de extremo (máximo ou mínimo) de uma função com <em>sp.nsolve</em></a></span></li><li><span><a href="#Resolvendo-um-sistema-de-equações-lineares-com-sp.solve" data-toc-modified-id="Resolvendo-um-sistema-de-equações-lineares-com-sp.solve-8"><span class="toc-item-num">8&nbsp;&nbsp;</span>Resolvendo um sistema de equações lineares com <em>sp.solve</em></a></span></li></ul></div>
 # -
 
 import sympy as sp
@@ -53,7 +53,7 @@ symdisp('i(2) = ',  i.evalf(subs={t:2}), 'A')
 symdisp('v(2) = ',  v.evalf(subs={t:2}), 'V')
 symdisp('p(2) = ',  p.evalf(subs={t:2}), 'W')
 
-# ###  Arrendondamento de valores numéricos
+# ###  Arrendondamento de valores numéricos com *round*
 
 symdisp('i(2) = ',  round(i.evalf(subs={t:2}),3), 'A')
 symdisp('v(2) = ',  round(v.evalf(subs={t:2}),3), 'V')
@@ -105,7 +105,7 @@ symdisp('\int_{0}^{1} i(u)du =', sp.N(int_i, 2))
 symdisp('\int_{0}^{1} v(u)du =', sp.N(int_v, 2))
 symdisp('\int_{0}^{1} p(u)du =', sp.N(int_p, 2))
 
-# ### Plotando gráficos com symplot
+# ### Plotando gráficos com *symplot*
 #
 # ```symplot``` é uma função customizada (disponível no arquivo ```utils.py``` presente no repositório) para plotar gráficos de funções definidas simbolicamente com SymPy. Para utilizar esta função num notebooks qualquer, faz-se necessário que o arquivo ```utils.py``` esteja no mesmo diretório em que o notebook está salvo.
 
