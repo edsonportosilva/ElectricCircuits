@@ -55,19 +55,49 @@ symdisp('p(2) = ',  round(p.evalf(subs={t:2}),3) )
 
 # ### Derivadas utilizando *sp.diff*
 
-symdisp('\\frac{ d i(t) }{ dt } =', sp.diff(i,t))
-symdisp('\\frac{ d v(t) }{ dt } =', sp.diff(v,t))
-symdisp('\\frac{ d p(t) }{ dt } =', sp.diff(p,t))
+# +
+didt = sp.diff(i,t)
+dvdt = sp.diff(v,t)
+dpdt = sp.diff(p,t)
 
-symdisp('\\frac{ d^2 i(t) }{ dt^2 } =', sp.diff(i,t,t))
-symdisp('\\frac{ d^2 v(t) }{ dt^2 } =', sp.diff(v,t,t))
-symdisp('\\frac{ d^2 p(t) }{ dt^2 } =', sp.diff(p,t,t))
+symdisp('\\frac{ d i(t) }{ dt } =', didt)
+symdisp('\\frac{ d v(t) }{ dt } =', dvdt)
+symdisp('\\frac{ d p(t) }{ dt } =', dpdt)
+
+# +
+d2idt2 = sp.diff(i,t,t)
+d2vdt2 = sp.diff(v,t,t)
+d2pdt2 = sp.diff(p,t,t)
+
+symdisp('\\frac{ d^2 i(t) }{ dt^2 } =', d2idt2)
+symdisp('\\frac{ d^2 v(t) }{ dt^2 } =', d2vdt2)
+symdisp('\\frac{ d^2 p(t) }{ dt^2 } =', d2pdt2)
+# -
 
 # ### Integrais definidas utilizando *sp.integrate*
 
-symdisp('\int_{0}^{t} i(u)du =', sp.integrate(i, (t, 0, t)))
-symdisp('\int_{0}^{t} v(u)du =', sp.integrate(v, (t, 0, t)))
-symdisp('\int_{0}^{t} p(u)du =', sp.integrate(p, (t, 0, t)))
+# +
+int_i = sp.integrate(i, (t, 0, t))
+int_v = sp.integrate(v, (t, 0, t))
+int_p = sp.integrate(p, (t, 0, t))
+
+symdisp('\int_{0}^{t} i(u)du =', int_i)
+symdisp('\int_{0}^{t} v(u)du =', int_v)
+symdisp('\int_{0}^{t} p(u)du =', int_p)
+
+# +
+int_i = sp.integrate(i, (t, 0, 1))
+int_v = sp.integrate(v, (t, 0, 1))
+int_p = sp.integrate(p, (t, 0, 1))
+
+symdisp('\int_{0}^{1} i(u)du =', int_i)
+symdisp('\int_{0}^{1} v(u)du =', int_v)
+symdisp('\int_{0}^{1} p(u)du =', int_p)
+# -
+
+symdisp('\int_{0}^{1} i(u)du =', sp.N(int_i, 2))
+symdisp('\int_{0}^{1} v(u)du =', sp.N(int_v, 2))
+symdisp('\int_{0}^{1} p(u)du =', sp.N(int_p, 2))
 
 # ### Plotando gráficos com symplot
 
