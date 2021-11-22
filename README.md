@@ -3,13 +3,14 @@ Simulation code to support the lectures of the Electric Circuits I course at the
 
 Este repositório contém material de apoio (jupyter notebooks, simulações em MATLAB/Octave) utilizado nas minhas aulas da disciplina Circuitos Elétricos I na Universidade Federal de Campina Grande UFCG. 
 
-* [Tutorial básico](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Tutorial%20Sympy%20-%20Python%20para%20Circuitos%20Eletricos%20I%20.ipynb)
-* [Playlist no YouTube com resolução de exercícios utilizando o material deste repositório](https://www.youtube.com/playlist?list=PLCdbPtPv2u2qrtZAyDACc0v0fOb3j9pWD)
+## Algumas informações úteis
+* [Tutorial básico](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Tutorial%20Sympy%20-%20Python%20para%20Circuitos%20Eletricos%20I%20.ipynb) ilustrando as funcionalidas do pacote [SymPy](https://www.sympy.org/pt/index.html) que são úteis na análise de circuitos elétricos.
+* [Playlist no YouTube](https://www.youtube.com/playlist?list=PLCdbPtPv2u2qrtZAyDACc0v0fOb3j9pWD) com resolução de exercícios utilizando o material deste repositório.
 * Clique aqui no ícone abaixo para rodar os notebooks no [Binder](https://mybinder.org/).
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/edsonportosilva/ElectricCircuits/HEAD?urlpath=lab)
 
-## Sumário dos notebooks:
+## Sumário dos notebooks
 
 1. [Convenções para aplicação das Leis de Kirchhoff na análise de circuitos](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%201.ipynb)
 2. [Exercícios: circuitos com fontes controladas](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%202.1.ipynb)
@@ -28,3 +29,6 @@ Este repositório contém material de apoio (jupyter notebooks, simulações em 
 15. [Exercícios: teorema do valor final, teorema do valor inicial, função de transferência](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%2012.1.ipynb)
 16. [Exercícios: integral de convolução](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%2012.2.ipynb)
 17. [Visualizando graficamente a convolução](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Visualize%20convolution.ipynb)
+
+## Contato
+* e-mail: edson.silva@dee.ufcg.edu.br
