@@ -12,10 +12,10 @@ Este repositório contém material de apoio (jupyter notebooks, simulações em 
 
 ## Sumário dos notebooks
 
-1. [Convenções para aplicação das Leis de Kirchhoff na análise de circuitos](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%201.ipynb)
+1. [Convenções para aplicação das Leis de Kirchhoff na análise de circuitos](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%201.ipynb) [[vídeo YouTube](https://www.youtube.com/watch?v=wIywW9MLRxU)]
 2. [Exercícios: circuitos com fontes controladas](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%202.1.ipynb)
 3. [Análise do carregamento de um circuito de alimentação e exercícios com circuitos divisores](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%202.2.ipynb)
-4. [Exercícios de análise nodal e análise de malhas](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%203.ipynb)
+4. [Exercícios de análise nodal e análise de malhas](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%203.ipynb) [[vídeo YouTube](https://www.youtube.com/watch?v=XjCG_wkyN98)]
 5. [Exercícios: transformação de fontes](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%204.1.ipynb)
 6. [Exercícios 1: circuito equivalente de Thévenin](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%204.2.ipynb)
 7. [Exercícios 2: circuito equivalente de Thévenin](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%205.ipynb)
