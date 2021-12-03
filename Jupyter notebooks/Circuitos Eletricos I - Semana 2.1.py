@@ -7,17 +7,12 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.11.3
+#       jupytext_version: 1.13.0
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
 #     name: python3
 # ---
-
-# + [markdown] toc=true
-# <h1>Table of Contents<span class="tocSkip"></span></h1>
-# <div class="toc"><ul class="toc-item"><li><span><a href="#Semana-2---Exercícios" data-toc-modified-id="Semana-2---Exercícios-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Semana 2 - Exercícios</a></span><ul class="toc-item"><li><span><a href="#Exercício-1:-circuito-com-fonte-controlada-de-corrente" data-toc-modified-id="Exercício-1:-circuito-com-fonte-controlada-de-corrente-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>Exercício 1: circuito com fonte controlada de corrente</a></span></li><li><span><a href="#Exercício-2:-circuito-com-fonte-controlada-de-tensão" data-toc-modified-id="Exercício-2:-circuito-com-fonte-controlada-de-tensão-1.2"><span class="toc-item-num">1.2&nbsp;&nbsp;</span>Exercício 2: circuito com fonte controlada de tensão</a></span></li><li><span><a href="#Solução-das-equações" data-toc-modified-id="Solução-das-equações-1.3"><span class="toc-item-num">1.3&nbsp;&nbsp;</span>Solução das equações</a></span><ul class="toc-item"><li><span><a href="#Cálculo-das-potências" data-toc-modified-id="Cálculo-das-potências-1.3.1"><span class="toc-item-num">1.3.1&nbsp;&nbsp;</span>Cálculo das potências</a></span></li></ul></li></ul></li></ul></div>
-# -
 
 from IPython.core.display import HTML
 HTML("""
@@ -37,21 +32,19 @@ HTML("""
 # ### Exercício 1: circuito com fonte controlada de corrente
 #
 # No circuito abaixo, dado que $\frac{V_0}{V_s}=9$, determine o valor de $A$.
-
-from IPython.display import Image
-Image("./figures/J2C1.png", width=600)
+#
+# <img src="./figures/J2C1.png" width="700">
 
 # ### Exercício 2: circuito com fonte controlada de tensão
 #
 # Determine o valor de todas as correntes no circuito abaixo.
-
-from IPython.display import Image
-Image("./figures/J2C2.png", width=500)
+#
+# <img src="./figures/J2C2.png" width="500">
 
 # ### Solução das equações
 
 import sympy as sp
-import numpy as np
+from utils import symdisp
 
 # +
 # define as N variáveis desconhecidas
@@ -65,15 +58,20 @@ eq4 = sp.Eq()
 
 # resolve o sistema
 soluc = sp.solve((eq1, eq2, eq3, eq4), dict=True)
+soluc = soluc[0]
 
-i1 = np.array([sol[i1] for sol in soluc])
-i2 = np.array([sol[i2] for sol in soluc]) 
-i3 = np.array([sol[i3] for sol in soluc]) 
-i4 = np.array([sol[i4] for sol in soluc]) 
+i1 = soluc[i1]
+i2 = soluc[i2]
+i3 = soluc[i3]
+i4 = soluc[i4]
 ix = 3
 
-print('Solução do sistema:\n\n i1 = %.3f A,\n i2 = %.3f A,\n i3 = %.3f A,\n i4 = %.3f A, \n ix = %.3f A.'\
-      %(i1, i2, i3, i4, ix))
+print('Solução do sistema:')
+symdisp('i_1 = ', round(i1, 2), ' A')
+symdisp('i_2 = ', round(i2, 2), ' A')
+symdisp('i_3 = ', round(i3, 2), ' A')
+symdisp('i_4 = ', round(i4, 2), ' A')
+symdisp('i_x = ', round(ix, 2), ' A')
 # -
 
 # #### Cálculo das potências
@@ -85,10 +83,12 @@ p10v =
 p15v = 
 p2ix = 
 
-print('Potências:\n\n pR = %.2f W,\n p10v = %.2f W,\n p15v = %.2f W,\n p2ix = %.2f W'%(pR, p10v, p15v, p2ix))
+print('Potências:')
+symdisp('p_R = ', round(pR, 2), ' W')
+symdisp('p_{10V} = ', round(p10v, 2), ' W')
+symdisp('p_{15V} = ', round(p15v, 2), ' W')
+symdisp('p_{2i_x} = ', round(p2ix, 2), ' W')
 # -
 
 # calcula somatório das potências
 print('Somatório das potências : %.2f W\n' %(pR+p10v+p15v+p2ix))
-
-

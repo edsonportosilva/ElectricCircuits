@@ -7,17 +7,12 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.11.3
+#       jupytext_version: 1.13.0
 #   kernelspec:
 #     display_name: Python 3
 #     language: python
 #     name: python3
 # ---
-
-# + [markdown] toc=true
-# <h1>Table of Contents<span class="tocSkip"></span></h1>
-# <div class="toc"><ul class="toc-item"><li><span><a href="#Semana-2---Circuitos-divisores" data-toc-modified-id="Semana-2---Circuitos-divisores-1"><span class="toc-item-num">1&nbsp;&nbsp;</span>Semana 2 - Circuitos divisores</a></span><ul class="toc-item"><li><span><a href="#Carregamento-de-um-circuito-de-alimentação" data-toc-modified-id="Carregamento-de-um-circuito-de-alimentação-1.1"><span class="toc-item-num">1.1&nbsp;&nbsp;</span>Carregamento de um circuito de alimentação</a></span></li></ul></li><li><span><a href="#Exercícios" data-toc-modified-id="Exercícios-2"><span class="toc-item-num">2&nbsp;&nbsp;</span>Exercícios</a></span><ul class="toc-item"><li><span><a href="#Exercício-1:" data-toc-modified-id="Exercício-1:-2.1"><span class="toc-item-num">2.1&nbsp;&nbsp;</span>Exercício 1:</a></span></li><li><span><a href="#Exercício-2:" data-toc-modified-id="Exercício-2:-2.2"><span class="toc-item-num">2.2&nbsp;&nbsp;</span>Exercício 2:</a></span></li></ul></li></ul></div>
-# -
 
 from IPython.core.display import HTML
 from IPython.display import Image
@@ -38,8 +33,8 @@ HTML("""
 # ### Carregamento de um circuito de alimentação
 #
 # Quando uma fonte de tensão fornece energia a um dado elemento de circuito, diz-se que a fonte encontra-se *carregada*, ou que o elemento conectado à fonte é uma *carga* que está sendo alimentada pela fonte. De maneira geral, o carregamento de um circuito é o processo de introdução de elementos que extrairão corrente do circuito. Quanto maior for a  magnitude da corrente drenada, maior será o efeito de carregamento.
-
-Image("./figures/J3C0.png", width=300)
+#
+# <img src="./figures/J3C0.png" width="300">
 
 # Da relação do divisor de tensão, temos que:
 #
@@ -54,68 +49,72 @@ Image("./figures/J3C0.png", width=300)
 # \end{align}$$
 #
 #
-# Note que, se $R_L >> R_y$, a tensão $v_y$ com a carga conectada aproxima-se da tensão obtida com os terminais em aberto.
+# Note que, se $R_L \gg R_y$, a tensão $v_y$ com a carga conectada aproxima-se da tensão obtida com os terminais em aberto.
+
+# ### Visualizando o comportamento do circuito alimentador em função da carga conectada
 
 # +
-from pylab import *
+import numpy as np
+import matplotlib.pyplot as plt
 
 # parâmetros do circuito
 Vs = 15
-Rx = 10
-Ry = 20
+Rx = 100
+Ry = 200
 
 # cálculo das tensões com o divisor de tensão carregado
 # com uma carga RL
-RL = arange(0,50000,10)
-Vy = zeros(RL.shape)
-Vx = zeros(RL.shape)
-iL = zeros(RL.shape)
+R = np.arange(0,4000,25)
+Vy = np.zeros(R.shape)
+Vx = np.zeros(R.shape)
+iL = np.zeros(R.shape)
 
-for ind in range(0, len(RL)):
-    if RL[ind] == 0:
-        Vy[ind] = 0
-        iL[ind] = Vs/Rx
+for k, RL in enumerate(R):
+    if RL == 0:
+        Vy[k] = 0
+        iL[k] = Vs/Rx
     else:
-        Vy[ind] = (Ry/(Rx*(Ry/RL[ind]+1)+Ry))*Vs
-        iL[ind] = Vy[ind]/RL[ind]
+        Vy[k] = ( Ry/( Rx * (Ry/RL + 1) + Ry ) )*Vs
+        iL[k] = Vy[k]/RL
         
-    Vx[ind] = Vs-Vy[ind]
+    Vx[k] = Vs-Vy[k]
 
-figure(figsize=(12,5))
-plot(RL, Vy,'-o', label='$v_y(R_L)$');
-plot(RL, Vx,'-*' , label='$v_x(R_L)$');
-hlines((Ry/(Rx+Ry))*Vs, RL.min(0),RL.max(0), label = '$v_y$');
-hlines((Rx/(Rx+Ry))*Vs, RL.min(0),RL.max(0), label = '$v_x$');
+plt.figure(figsize=(12,5))
+plt.plot(R, Vy,'--', label='Tensão $v_y$ sobre $R_L$||$R_y$', linewidth=2)
+plt.plot(R, Vx,'--' , label='Tensão $v_x$ sobre $R_x$', linewidth=2)
+plt.hlines((Ry/(Rx+Ry))*Vs, R.min(0),R.max(0),'k', label = 'Tensão $v_y$ (sem carregamento)')
+plt.hlines((Rx/(Rx+Ry))*Vs, R.min(0),R.max(0),'r', label = 'Tensão $v_x$ (sem carregamento)')
 
-legend()
-xlabel('$R_L$ [Ω]')
-ylabel('[V]')
-grid()
+plt.legend()
+plt.xlabel('$R_L$ [Ω]')
+plt.ylabel('[V]')
+plt.grid()
 
-figure(figsize=(12,4))
-plot(RL, iL,'-o', label='$i_L(R_L)$');
+plt.figure(figsize=(12,4))
+plt.plot(R, iL,'--', label='$i_L(R_L)$', linewidth=2)
 
-legend()
-xlabel('$R_L$ [Ω]')
-ylabel('$i_L$ [A]')
-grid()
+plt.legend()
+plt.xlabel('$R_L$ [Ω]')
+plt.ylabel('$i_L$ [A]')
+plt.grid();
 
-Image("J3C0.png", width=300)
+Image("figures/J3C0.png", width=300)
 # -
+
+# **Pergunta**: como os gráficos acima podem ser utilizados para explicar os riscos de conectar diversos equipamentos elétricos numa mesma tomada?
 
 # ## Exercícios
 #
 # ### Exercício 1: 
 #
-# a. No circuito abaixo, $V_s=$120 V, determine o valor das tensões nos terminais $a$, $b$ e $c$ indicados.
+# a. No circuito abaixo, $V_s=$120 V, determine o valor das tensões nos terminais $a$, $b$ e $c$ indicados, com relação ao potencial de referência.
 #
 # b. Determine o valor das tensões nos terminais indicados considerando que cada um deles alimenta uma carga de 20 $\Omega$.
-
-Image("./figures/J3C1.png", width=400)
+#
+# <img src="./figures/J3C1.png" width="400">
 
 # ### Exercício 2: 
 #
 # Determine o valor de $R_1$, $R_2$ e $R_3$ no circuito divisor de tensão ilustrado na figura seguinte. O circuito pode ser projetado utilizando resistores de 2 W?
-
-from IPython.display import Image
-Image("./figures/J3C2.png", width=600)
+#
+# <img src="./figures/J3C2.png" width="600">
