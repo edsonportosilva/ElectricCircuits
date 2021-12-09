@@ -54,7 +54,6 @@ HTML("""
 
 from utils import symdisp
 import sympy as sp
-import numpy as np
 
 # +
 # define as N variáveis desconhecidas
