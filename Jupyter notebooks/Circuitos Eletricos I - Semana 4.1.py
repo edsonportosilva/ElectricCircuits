@@ -7,9 +7,9 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.11.3
+#       jupytext_version: 1.13.0
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
@@ -43,7 +43,7 @@ HTML("""
 # ### Problema 1
 #   
 # Determine a corrente que passa pelo resistor de $25~\Omega$ aplicando transformações e deslocamentos de fontes.
-
-Image("./figures/J5C1.png", width=500)
+#
+# <img src="./figures/J5C1.png" width="500">
 
 # Simulação do circuito: https://tinyurl.com/ydk42vvn

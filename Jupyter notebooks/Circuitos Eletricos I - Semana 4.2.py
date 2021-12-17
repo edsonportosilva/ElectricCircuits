@@ -7,9 +7,9 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.11.3
+#       jupytext_version: 1.13.0
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
@@ -37,11 +37,11 @@ HTML("""
 # c) Determine a $v_{th}$ via superposição.\
 # d) Determine a $R_{th}$ via resistência equivalente.\
 # e) Determine $v_{th}$, $R_{th}$ via transformação de fontes.
-
-Image("./figures/J6C1.png", width=700)
+#
+# <img src="./figures/J6C1.png" width="700">
 
 import sympy as sp
-import numpy as np
+from utils import symdisp
 
 # +
 # define as N variáveis desconhecidas
@@ -54,13 +54,15 @@ eq3 = sp.Eq()
 
 # resolve o sistema
 soluc = sp.solve((eq1, eq2, eq3), dict=True)
+soluc = soluc[0]
 
-v1 = np.array([sol[v1] for sol in soluc])
-v2 = np.array([sol[v2] for sol in soluc]) 
-v4 = np.array([sol[v4] for sol in soluc]) 
-v3 = 2 
+v1 = soluc[v1]
+v2 = soluc[v2]
+v4 = soluc[v4]
+v3 = 2
 
-print('Solução do sistema:\n\n v1 = %.2f V,\n v2 = %.2f V,\n v3 = %.2f V,\n v4 = %.2f V.' %(v1, v2, v3, v4))
-# -
-
-
+print('Solução do sistema:')
+symdisp('v_1 = ', round(v1, 2), ' V')
+symdisp('v_2 = ', round(v2, 2), ' V')
+symdisp('v_3 = ', round(v3, 2), ' V')
+symdisp('v_4 = ', round(v4, 2), ' V')
