@@ -39,6 +39,8 @@ HTML("""
 # e) Determine $v_{th}$, $R_{th}$ via transformação de fontes.
 #
 # <img src="./figures/J6C1.png" width="700">
+#
+# Simulação do circuito: https://tinyurl.com/y4kwdr8z
 
 import sympy as sp
 from utils import symdisp
