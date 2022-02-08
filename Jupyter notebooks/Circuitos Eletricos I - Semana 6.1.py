@@ -69,6 +69,9 @@ L2 = 30
 i1_0 = 4
 i2_0 = -16
 
+#i1_0 = 1
+#i2_0 = 2
+
 # +
 # correntes nos indutores em função da tensão aplicada aos terminais
 i1 = -(1/L1)*sp.integrate(v, (t, 0, t)) + i1_0
@@ -77,14 +80,27 @@ i2 = -(1/L2)*sp.integrate(v, (t, 0, t)) + i2_0
 print('Correntes nos indutores:')
 symdisp('i_1(t) = ', round_expr(i1, 2) , ' A')
 symdisp('i_2(t) = ', round_expr(i2, 2) , ' A')
+# -
+
+tmax = 0.5
+intervalo = np.linspace(0, tmax, num=1000)
+symplot(t, i1, intervalo, funLabel= '$i_1(t)$')
+
+symplot(t, i2, intervalo, funLabel= '$i_2(t)$')
 
 # +
 # LKC
 i = i1 + i2
 
-# potência fornecida à fonte
+# potência desenvolvida pela fonte
 p = v*i
 
+symdisp('p(t) = ', round_expr(p.simplify(),2), 'W')
+# -
+
+symplot(t, p, intervalo, funLabel= '$p(t)$')
+
+# +
 # energia entrege à fonte
 E = sp.integrate(p, (t, 0, oo))
 
