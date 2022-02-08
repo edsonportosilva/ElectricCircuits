@@ -7,18 +7,20 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.11.3
+#       jupytext_version: 1.13.0
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
 
 # +
 from IPython.core.display import HTML
-from IPython.display import Image
-from IPython.display import display, Math
-from IPython.display import display as disp
+
+import sympy as sp
+from sympy import oo
+from utils import symplot, symdisp, round_expr
+import numpy as np
 
 HTML("""
 <style>
@@ -41,67 +43,53 @@ HTML("""
 # b) Determine a energia fornecida à fonte de tensão no intervalo $0\leq t \leq\infty$.\
 # c) Determine a energia inicial armazenada nos indutores.\
 # d) Determine a energia final armazenada nos indutores.
-
-Image("./figures/J8C1.png", width=500)
+#
+# <img src="./figures/J8C1.png" width="500">
 
 # +
-import matplotlib.pyplot as plt
-import numpy as np
+# define as variáveis 
+t = sp.symbols('t', real=True)
 
-tmax = 1
-t = np.linspace(0, tmax, num = 1000)
-v = -1800*t*np.exp(-20*t)
+# expressão para a tensão v(t)
+v = -1800*t*sp.exp(-20*t)
 
-plt.plot(t, v)
-plt.xlim(0, tmax)
-plt.grid()
-plt.xlabel('t [s]')
-plt.ylabel('v(t) [V]')
-plt.show()
+symdisp('v(t) = ', v, 'V')
+# -
+
+tmax = 0.5
+intervalo = np.linspace(0, tmax, num=1000)
+symplot(t, v, intervalo, funLabel= 'v(t)')
 
 # +
 # valores das indutâncias
 L1 = 10
 L2 = 30
 
-# valores iniciais das correntes
+# valores iniciais das correntes nos indutores
 i1_0 = 4
 i2_0 = -16
 
 # +
-from sympy import *
-
-# define as variáveis 
-t, τ = symbols('t, τ')
-
-# define v(τ)
-v = -1800*τ*exp(-20*τ)
-
 # correntes nos indutores em função da tensão aplicada aos terminais
-i1 = -(1/L1)*integrate(v, (τ, 0, t)) + i1_0
-i2 = -(1/L2)*integrate(v, (τ, 0, t)) + i2_0
+i1 = -(1/L1)*sp.integrate(v, (t, 0, t)) + i1_0
+i2 = -(1/L2)*sp.integrate(v, (t, 0, t)) + i2_0
 
 print('Correntes nos indutores:')
-print('i1(t) = ', i1 , ' A')
-print('i2(t) = ', i2 , ' A')
+symdisp('i_1(t) = ', round_expr(i1, 2) , ' A')
+symdisp('i_2(t) = ', round_expr(i2, 2) , ' A')
 
 # +
 # LKC
 i = i1 + i2
 
-# define v(t)
-v = -1800*t*exp(-20*t) 
-
 # potência fornecida à fonte
 p = v*i
 
 # energia entrege à fonte
-E = integrate(p, (t, 0, oo))
-print('Energia entrege à fonte:')
-print('E = %.2f J' %E)
-# -
+E = sp.integrate(p, (t, 0, oo))
 
-i1.simplify()
+print('Energia entrege à fonte quando t tende a infinito:')
+symdisp('E = ', E, 'J')
 
 # +
 # calculando os valores de energia em t=0
@@ -110,8 +98,8 @@ E1_0 = (1/2)*L1*(i1.evalf(subs={t:0}))**2
 E2_0 = (1/2)*L2*(i2.evalf(subs={t:0}))**2
 
 print('Energia inicial armazenada nos indutores:')
-print('E1(0) = %.2f J' %E1_0)
-print('E2(0) = %.2f J' %E2_0)
+symdisp('E_1(0) = ', E1_0, 'J')
+symdisp('E_2(0) = ', E2_0, 'J')
 
 # +
 # calculando os valores de energia em t =oo
@@ -120,8 +108,8 @@ E1_inf = (1/2)*L1*(i1.evalf(subs={t:100}))**2
 E2_inf = (1/2)*L2*(i2.evalf(subs={t:100}))**2
 
 print('Energia final armazenada nos indutores:')
-print('E1(oo) = %.2f J' %E1_inf)
-print('E2(oo) = %.2f J' %E2_inf)
+symdisp('E_1(\infty) = ', round_expr(E1_inf, 2), 'J')
+symdisp('E_2(\infty) = ', round_expr(E2_inf, 2), 'J')
 
 # +
 # calculando a variação de energia nos indutores
@@ -129,13 +117,13 @@ print('E2(oo) = %.2f J' %E2_inf)
 ΔE = (E1_inf-E1_0) + (E2_inf-E2_0)
 
 print('Variação da energia armazenada nos indutores:')
-print('ΔE = %.2f J' %ΔE)
+symdisp('ΔE = ', round_expr(ΔE,2), 'J')
 # -
 # ### Problema 2
 #
-# Cálculo de indutâncias equivalentes com acoplamento magnético
-
-Image("./figures/J8C2.png", width=700)
+# Obtendo expressões para as indutâncias equivalentes em circuitos com acoplamento magnético
+#
+# <img src="./figures/J8C2.png" width="700">
 
 # $$
 # \begin{aligned}
@@ -144,48 +132,59 @@ Image("./figures/J8C2.png", width=700)
 # \end{aligned}
 # $$
 
-L1, L2, M, vL, t = symbols('L_1, L_2, M, v_L, t', real=True)
+# #### Definindo as equações do circuito na forma matricial
+
+L1, L2, M, vL, t = sp.symbols('L_1, L_2, M, v_L, t', real=True)
 
 
 # +
-i1 = Function('i_1')(t)
-i2 = Function('i_2')(t)
+i1 = sp.Function('i_1')(t)
+i2 = sp.Function('i_2')(t)
 
-A  = Matrix([[L1, M],[M, L2]])
-V  = Matrix([[vL],[vL]])
+A  = sp.Matrix([[L1, M],[M, L2]])
+V  = sp.Matrix([[vL],[vL]])
 
-I  = Matrix([[i1],[i2]])
-dI = diff(I, t)
+I  = sp.Matrix([[i1],[i2]])
+dI = sp.diff(I, t)
 
-disp(Math('A = '+latex(A)))
-disp(Math('V = '+latex(V)))
-disp(Math('dI = '+latex(dI)))
+symdisp('A = ', A)
+symdisp('V = ', V)
+symdisp(r'\frac{dI}{dt} = ', dI)
 # -
 
-Eq(V, A*dI)
+# #### Equação da tensão em função das correntes na forma matricial
 
-# +
+sp.Eq(V, A*dI)
+
+# #### Determinado a inversa da matriz de indutâncias $A$
+
 # matriz inversa de A
+symdisp('A^{-1} = ' , A**-1)
 
-disp(Math(r'A^{-1} = '+latex(A**-1)))
+# #### Determinando o vetor de derivadas das correntes
 
 # +
 # calcula o vetor de derivadas das correntes
-
 dI = (A**-1)*V
+
 dI.simplify()
 
-disp(Math(r'\frac{dI}{dt} = '+latex(dI)))
+symdisp(r'\frac{dI}{dt} = ', dI)
+# -
+
+# #### LKC
 
 # +
-# di0/dt = di1/dt + di2/dt 
-
+# di0/dt = di1/dt + di2/dt
 dI0 = dI[0] + dI[1]
 
-disp(Math(r'\frac{di_0}{dt} = \frac{di_1}{dt} + \frac{di_2}{dt} =  '+latex(dI0.simplify())))
+symdisp(r'\frac{di_0}{dt} = \frac{di_1}{dt} + \frac{di_2}{dt} =  ', dI0)
+# -
+
+# #### Obtendo a expressão para a indutância equivalente
 
 # +
 # indutância equivalente: vL = Leq*di0/dt -> Leq = vL/di0/dt
 Leq = vL/dI0
 
-disp(Math('L_{eq} = '+latex(Leq.simplify())))
+symdisp('L_{eq} = ', Leq.simplify())
