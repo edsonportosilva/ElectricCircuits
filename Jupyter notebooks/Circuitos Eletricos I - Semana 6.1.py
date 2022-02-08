@@ -134,10 +134,11 @@ symdisp('ΔE = ', round_expr(ΔE,2), 'J')
 
 # #### Definindo as equações do circuito na forma matricial
 
+# + hide_input=true
 L1, L2, M, vL, t = sp.symbols('L_1, L_2, M, v_L, t', real=True)
 
 
-# +
+# + hide_input=true
 i1 = sp.Function('i_1')(t)
 i2 = sp.Function('i_2')(t)
 
@@ -154,16 +155,20 @@ symdisp(r'\frac{dI}{dt} = ', dI)
 
 # #### Equação da tensão em função das correntes na forma matricial
 
+# + hide_input=false
 sp.Eq(V, A*dI)
+# -
 
 # #### Determinado a inversa da matriz de indutâncias $A$
 
+# + hide_input=false
 # matriz inversa de A
 symdisp('A^{-1} = ' , A**-1)
+# -
 
 # #### Determinando o vetor de derivadas das correntes
 
-# +
+# + hide_input=false
 # calcula o vetor de derivadas das correntes
 dI = (A**-1)*V
 
@@ -174,7 +179,7 @@ symdisp(r'\frac{dI}{dt} = ', dI)
 
 # #### LKC
 
-# +
+# + hide_input=false
 # di0/dt = di1/dt + di2/dt
 dI0 = dI[0] + dI[1]
 
@@ -183,7 +188,7 @@ symdisp(r'\frac{di_0}{dt} = \frac{di_1}{dt} + \frac{di_2}{dt} =  ', dI0)
 
 # #### Obtendo a expressão para a indutância equivalente
 
-# +
+# + hide_input=false
 # indutância equivalente: vL = Leq*di0/dt -> Leq = vL/di0/dt
 Leq = vL/dI0
 
