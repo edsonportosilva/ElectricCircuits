@@ -154,7 +154,7 @@ symdisp('ΔE = ', round_expr(ΔE,2), 'J')
 L1, L2, M, vL, t = sp.symbols('L_1, L_2, M, v_L, t', real=True)
 
 
-# + hide_input=true
+# + hide_input=false
 i1 = sp.Function('i_1')(t)
 i2 = sp.Function('i_2')(t)
 
@@ -177,7 +177,7 @@ sp.Eq(V, A*dI)
 
 # #### Determinado a inversa da matriz de indutâncias $A$
 
-# + hide_input=false
+# + hide_input=true
 # matriz inversa de A
 symdisp('A^{-1} = ' , A**-1)
 # -

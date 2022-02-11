@@ -7,15 +7,22 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.11.3
+#       jupytext_version: 1.13.0
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
 
+# +
 from IPython.core.display import HTML
 from IPython.display import Image
+
+import numpy as np
+import sympy as sp
+from sympy import oo
+from utils import symplot, symdisp, round_expr
+
 HTML("""
 <style>
 .output_png {
@@ -25,6 +32,7 @@ HTML("""
 }
 </style>
 """)
+# -
 
 # # *Circuitos Elétricos I - Semana 6*
 
@@ -90,95 +98,73 @@ HTML("""
 #   
 # Para o circuito abaixo, determine $v_{C1}$, $v_{C2}$ e $i_{L}$ assumindo que o circuito encontra-se em regime estacionário.
 #
-
-Image("./figures/J9C1.png", width=600)
+# <img src="./figures/J9C1.png" width="600">
 
 # ### Problema 2
 #   
 # No circuito abaixo, sabe-se que $i_0(t)= 50e^{-8000t}[\cos(6000t)+2\mathrm{sen}(6000t)]$ mA, para $t\geq 0^+$. Determine $v_{C}(0^+)$, $v_{L}(0^+)$ e $v_{R}(0^+)$.
 #
-
-Image("./figures/J9C2.png", width=600)
+#
+# <img src="./figures/J9C2.png" width="600">
 
 # +
-import matplotlib.pyplot as plt
-import numpy as np
-from sympy import *
+# define variável tempo 
+t = sp.symbols('t', real=True)
 
+# expressão para a corrente no circuito
+i0 = 50*sp.exp(-8000*t)*(sp.cos(6000*t)+2*sp.sin(6000*t))*1e-3
+
+# plota gráfico da corrente
 tmax = 1e-3
-t    = np.linspace(0, tmax, num = 1000)
-i0   = 50*np.exp(-8000*t)*(np.cos(6000*t)+2*np.sin(6000*t))*1e-3
-
-plt.plot(t, i0)
-plt.xlim(0, tmax)
-plt.grid()
-plt.xlabel('t [s]')
-plt.ylabel('i0(t) [A]')
-plt.show()
+intervalo  = np.linspace(0, tmax, num = 1000)
+symplot(t, i0, intervalo, funLabel='$i_0(t)$')
 # -
 
-# valores
+# valores dos parâmetros do circuito
 R = 320
 L = 20e-3
 C = 0.5e-6
 
 # +
-# define variáveis 
-t, τ = symbols('t, τ')
-
-# define i0(t)
-i0 = 50*exp(-8000*t)*(cos(6000*t)+2*sin(6000*t))*1e-3
-i0
-
-# +
 # calcula tensão no indutor
-vL = L*diff(i0, t)
-vL = simplify(vL)
+vL = L*sp.diff(i0, t)
+vL = sp.simplify(vL)
 
 print('Tensão no indutor:')
-print('vL(t) = ', vL , ' V')
+symdisp('v_L(t) = ', vL, 'V')
 # -
 
-print('vL(0+) = %.2f V' %vL.evalf(subs={t:0}))
+symdisp('v_L(0^+) = ', vL.evalf(subs={t:0}), 'V')
 
 # +
 # calcula tensão no resistor
 vR = R*i0
-#vR = simplify(vR)
+vR = sp.simplify(vR)
 
 print('Tensão no resistor:')
-print('vR(t) = ', vR , ' V')
+symdisp('v_R(t) = ', vR, 'V')
 # -
 
-print('vR(0+) = %.2f V' %vR.evalf(subs={t:0}))
+symdisp('v_R(0^+) = ', vR.evalf(subs={t:0}), 'V')
 
 # +
 # calcula tensão no capacitor (LKT)
 vC = vR + vL
-vC = simplify(vC)
+vC = sp.simplify(vC)
 
 print('Tensão no capacitor:')
-print('vC(t) = ', vC , ' V')
+symdisp('v_C(t) = ', vC, 'V')
 # -
 
-print('vC(0+) = %.2f V' %vC.evalf(subs={t:0}))
+symdisp('v_C(0^+) = ', vC.evalf(subs={t:0}), 'V')
 
 # +
 # checagem de vC(t) via integração de i0
 
-i0 = 50*exp(-8000*τ)*(cos(6000*τ)+2*sin(6000*τ))*1e-3
+vC = -(1/C)*sp.integrate(i0, (t, 0, t)) + 20
+vC = sp.simplify(vC)
 
-vC = -(1/C)*integrate(i0, (τ, 0, t)) + 20
-vC = simplify(vC)
-
-print('vC(t) = ', vC , ' V')
+symdisp('v_C(t) = ', vC, 'V')
 # -
 
-p = plot(vC, vR, vL, (t,0,6e-4), ylim = (-20,20), show=False, legend=True)
-p[0].line_color = 'red'
-p[1].line_color = 'blue'
-p[2].line_color = 'black'
-p[0].label = 'vC'
-p[1].label = 'vR'
-p[2].label = 'vL'
-p.show()
+symplot(t, [vC, vR, vL], intervalo, funLabel=['$v_C(t)$ ','$v_R(t)$','$v_L(t)$'])
