@@ -141,6 +141,8 @@ symdisp('ΔE = ', round_expr(ΔE,2), 'J')
 #
 # <img src="./figures/J8C2.png" width="700">
 
+# #### Associação em paralelo
+
 # $$
 # \begin{aligned}
 # &v_L = L_{1} \frac{d i_{1}}{d t}+M \frac{d i_{2}}{d t}\\
@@ -155,10 +157,21 @@ L1, L2, M, vL, t = sp.symbols('L_1, L_2, M, v_L, t', real=True)
 
 
 # + hide_input=false
+# define a variável tempo 
+t = sp.symbols('t', real=True)
+
+# define as indutâncias
+L1, L2, M = sp.symbols('L_1, L_2, M', real=True, positive=True)
+
+# define as correntes i1 e i2
 i1 = sp.Function('i_1')(t)
 i2 = sp.Function('i_2')(t)
 
-A  = sp.Matrix([[L1, M],[M, L2]])
+# define a tensão vL
+vL = sp.Function('v_L')(t)
+
+# define as equações do circuito no formato matricial
+A  = sp.Matrix([[L1, -M],[-M, L2]])
 V  = sp.Matrix([[vL],[vL]])
 
 I  = sp.Matrix([[i1],[i2]])
@@ -173,11 +186,11 @@ symdisp(r'\frac{dI}{dt} = ', dI)
 
 # + hide_input=false
 sp.Eq(V, A*dI)
-# -
 
+# + [markdown] hide_input=true
 # #### Determinado a inversa da matriz de indutâncias $A$
 
-# + hide_input=true
+# + hide_input=false
 # matriz inversa de A
 symdisp('A^{-1} = ' , A**-1)
 # -
@@ -209,3 +222,9 @@ symdisp(r'\frac{di_0}{dt} = \frac{di_1}{dt} + \frac{di_2}{dt} =  ', dI0)
 Leq = vL/dI0
 
 symdisp('L_{eq} = ', Leq.simplify())
+# -
+
+# Exemplos de circuitos com indutância mútua:
+#
+# Em paralelo: https://tinyurl.com/y9zo85wm \
+# Em série: https://tinyurl.com/y7jrvv2y
