@@ -24,11 +24,12 @@ Este repositório contém material de apoio (jupyter notebooks, simulações em 
 10. [Circuitos divisores com indutores e capacitores](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%207.1.ipynb)
 11. [Exercícios: circuitos RL e RC](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%208.1.ipynb)
 12. [Exercícios: circuito RL com associação de indutores](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%2010.ipynb)
-13. [Tranformada de Laplace com Python](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%2011.1.ipynb)
-14. [Exercícios: resolução de circuito no domínio de Laplace](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%2011.2.ipynb)
-15. [Exercícios: teorema do valor final, teorema do valor inicial, função de transferência](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%2012.1.ipynb)
-16. [Exercícios: integral de convolução](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%2012.2.ipynb)
-17. [Visualizando graficamente a convolução](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Visualize%20convolution.ipynb)
+13. [Exercícios: circuitos RLC (paralelo/série)](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%208.2.ipynb)
+14. [Tranformada de Laplace com Python](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%2011.1.ipynb)
+15. [Exercícios: resolução de circuito no domínio de Laplace](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%2011.2.ipynb)
+16. [Exercícios: teorema do valor final, teorema do valor inicial, função de transferência](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%2012.1.ipynb)
+17. [Exercícios: integral de convolução](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20Eletricos%20I%20-%20Semana%2012.2.ipynb)
+18. [Visualizando graficamente a convolução](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Visualize%20convolution.ipynb)
 
 ## Contato
 * e-mail: edson.silva@dee.ufcg.edu.br
