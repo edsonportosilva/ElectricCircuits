@@ -7,15 +7,23 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.11.3
+#       jupytext_version: 1.13.0
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
 
+# +
 from IPython.core.display import HTML
 from IPython.display import Image
+import ipywidgets as widgets
+import IPython.display as display
+
+import sympy as sp
+import numpy as np
+from utils import symplot, symdisp, round_expr
+
 HTML("""
 <style>
 .output_png {
@@ -25,14 +33,15 @@ HTML("""
 }
 </style>
 """)
+# -
 
 # # *Circuitos Elétricos I - Semana 8*
 
 # ### Circuitos RL e RC de primeira ordem
 #
 # Os quatro tipos possíveis de circuitos de primeira ordem estão ilustrados na figura abaixo.
-
-Image("./figures/J11C1.png", width=700)
+#
+# <img src="./figures/J11C1.png" width="700">
 
 # Lembrando que um circuito de primeira ordem qualquer, com vários resistores e fontes, por exemplo, pode ser reduzido a um dos quatro circuitos acima fazendo $R=R_{th}$, $v_s=v_{th}$ e $i_s=i_{N}$. Logo, desde que o circuito contenha apenas um elemento indutor ou capacitor, a análise de um circuito de primeira ordem deve ser feita primeiramente determinando-se o circuito equivalente de Thévenin ou de Norton conectado aos terminais do elemento em questão.
 
@@ -112,17 +121,15 @@ Image("./figures/J11C1.png", width=700)
 # d. A corrente no indutor para $t\geq20^+ms$.\
 # e. A tensão nos terminais do indutor em $t=20^+ms$.
 #
-
-Image("./figures/J11C2.png", width=600)
+#
+# <img src="./figures/J11C2.png" width="600">
 
 # Simulação do circuito disponível no link: https://tinyurl.com/yfs69qqu
 #
-# #### Visualização das curvas $i_L(t)$ e $v_L(t)$
+# #### Visualização das curvas $i_L(t)$, $v_L(t)$ e $p_L(t)$
 
 # +
-from utils import genGIF
-import numpy as np
-
+# parâmetros do circuito
 L   = 1
 vth = -80e-3
 Rth = 18
@@ -130,28 +137,47 @@ Rth = 18
 iL_inf = vth/Rth # iL(infinito)
 iL_t0  = 2.9e-3  # iL(t0+)
 
-τ = L/Rth   # constante de tempo do circuito RL
-t0  = 0
+τ = L/Rth  # constante de tempo do circuito RL
+t0  = 0    # instante inicial
 
-t  = np.linspace(t0-2*τ, t0+8*τ, 200)
-iL = np.zeros(t.size)
+t = sp.symbols('t', real=True) # define a variável tempo
 
-iL[t<t0] = iL_t0                                             # iL(t) para t<t0-
-iL[t>t0] = iL_inf + (iL_t0 - iL_inf)*np.exp(-(t[t>t0]-t0)/τ) # iL(t) para t>t0+
+iL = sp.Piecewise( (iL_t0, t<0),                                              # iL(t) para t<t0-
+                   (iL_inf + (iL_t0 - iL_inf)*sp.exp(-(t-t0)/τ), t>=0) )*1000 # iL(t) para t>t0+
 
-figName = './figures/J11C2a.gif'
-genGIF(t, iL*1000, figName, xlabel = 'tempo (s)', ylabel = '$i_L(t)$ [mA]', fram=t.size, inter=25)
-# -
+symdisp('i_L(t) =', round_expr(iL.simplify(), 3), 'mA')
 
-Image('./figures/J11C2a.gif')
+intervalo  = np.linspace(t0-2*τ, t0+8*τ, 400)
+symplot(t, iL, intervalo, funLabel = '$i_L(t)$ [mA]')
 
 # +
-vL = L*np.diff(iL)/np.diff(t) # vL = L*diL/dt tensão aplicada aos terminais do indutor
-vL = np.append(vL, vL[0])
+vL = L*sp.diff(iL,t)
+vL = vL.simplify()
 
-figName = './figures/J11C2b.gif'
-genGIF(t, vL*1000, figName, xlabel = 'tempo (s)', ylabel = '$v_L(t)$ [mV]', fram=t.size, inter=25)
-Image('./figures/J11C2b.gif')
+symdisp('v_L(t) = ', vL, ' mV')
+
+symplot(t, vL, intervalo, funLabel = '$v_L(t)$ [mV]')
+
+# +
+pL = vL*iL
+pL = pL.simplify()
+
+symdisp('p_L(t) = ', round_expr(pL,3), ' μW')
+
+symplot(t, pL, intervalo, funLabel = '$p_L(t)$ [μW]')
+
+# + hide_input=false
+import ipywidgets as widgets
+import IPython.display as display
+
+img1 = open('./figures/J11C2a.gif', 'rb').read()
+img2 = open('./figures/J11C2b.gif', 'rb').read()
+
+wi1 = widgets.Image(value=img1, format='gif', width=600, height=400)
+wi2 = widgets.Image(value=img2, format='gif', width=600, height=400)
+
+sidebyside = widgets.HBox([wi1, wi2])
+display.display(sidebyside)
 # -
 
 # ### Problema 2
@@ -161,7 +187,7 @@ Image('./figures/J11C2b.gif')
 # a. O circuito equivalente de Thévenin do ponto de vista dos terminais do capacitor.\
 # b. A tensão no capacitor $v_C(t)$ para $t\geq 0^+s$.\
 # c. A tensão $v_x(t)$ para $t\geq 0^+s$. 
-
-Image("./figures/J11C3.png", width=600)
+#
+# <img src="./figures/J11C3.png" width="600">
 
 # Simulação do circuito disponível no link: https://tinyurl.com/yzhty8w3
