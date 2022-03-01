@@ -134,6 +134,7 @@ L   = 1
 vth = -80e-3
 Rth = 18
 
+# informações obtidas pela análise do circuito
 iL_inf = vth/Rth # iL(infinito)
 iL_t0  = 2.9e-3  # iL(t0+)
 
