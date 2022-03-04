@@ -7,9 +7,9 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.11.3
+#       jupytext_version: 1.13.0
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
@@ -33,6 +33,8 @@ HTML("""
 # ## Circuito RLC em paralelo
 #
 # <img src="./figures/J12C2.png" width="800">
+#
+# Simulação: https://tinyurl.com/ycnkjnot
 #
 # ### Aplicação das Leis de Kirchhoff 
 #
@@ -162,9 +164,7 @@ import numpy as np
 import sympy as sp
 from utils import round_expr, symdisp, symplot
 
-help(symdisp)
-
-# ### Resolvendo o problema com o código em Python
+# ### Resolvendo o problema com o Python
 #
 # **Resolução item (a):**
 #
@@ -177,8 +177,8 @@ L = 6e-3
 C = 0.5e-3
 
 # calculando α e ω0
-α  = 1/(2*R*C)
-ω0 = 1/np.sqrt(L*C)
+α  = 1/(2*R*C)       # Frequência de Neper do circuito RLC em paralelo
+ω0 = 1/np.sqrt(L*C)  # Frequência de ressonância do circuito RLC
 
 symdisp('α =', round(α, 2), ' rad/s')
 symdisp('ω_0 =', round(ω0, 2), ' rad/s')
@@ -289,8 +289,8 @@ ts = sp.solveset(eq1, t).args[0]
 # calcula o valor de vC(t) para t = ts
 vC_ts = vC.evalf(subs={t:ts})
 
-print('ts = %.2e s'%ts)
-print('vC(ts) = %.2f V'%vC_ts)
+symdisp('t_s = ', round(ts*1000,2), 'ms')
+symdisp('v_C(t_s) = ', round(vC_ts,2), 'V')
 # -
 
 # **Resolução item (c):**
@@ -302,8 +302,8 @@ L = 6e-3
 C = 0.5e-3
 
 # calculando α e ω0
-α  = 1/(2*R*C)
-ω0 = 1/np.sqrt(L*C)
+α  = 1/(2*R*C)       # Frequência de Neper do circuito RLC em paralelo
+ω0 = 1/np.sqrt(L*C)  # Frequência de ressonância do circuito RLC
 
 symdisp('α =', round(α, 2), ' rad/s')
 symdisp('ω_0 =', round(ω0, 2), ' rad/s')
@@ -318,8 +318,9 @@ t0 = 0 # instante do chaveamento
 
 # +
 # define a frequência de oscilação amortecida
-ωd =np.sqrt(ω0**2-α**2)
+ωd = np.sqrt(ω0**2 - α**2)
 
+print('Frequência de oscilação amortercida:')
 symdisp('ω_d =', round(ωd, 2), ' rad/s')
 
 # define variáveis da solução geral
