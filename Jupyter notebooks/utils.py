@@ -69,14 +69,15 @@ def symdisp(expr, var, unit=' '):
     display(Math(expr+sp.latex(var)+'\;'+unit))
     
 # Função para plot de funções do sympy
-def symplot(t, F, interval, funLabel):
+def symplot(t, F, interval, funLabel, yLabel=''):
     '''
     Create plots of sympy symbolic functions
     
     :param t: sympy variable
     :param F: sympy function F(t)
     :param interval: array of values of t where F should be evaluated [np.array]
-    :funLabel: curve label be displayed in the plot [string].    
+    :param funLabel: curve label be displayed in the plot [string]
+    :param yLabel: scale of the plot    
     '''
     fig = plt.figure()
     if type(F) == list:
@@ -89,6 +90,7 @@ def symplot(t, F, interval, funLabel):
             plt.legend();
             plt.xlim([min(interval), max(interval)]);
             plt.xlabel('tempo [s]');
+            plt.ylabel(yLabel)
             indLabel += 1
     else:        
         func  = lambdify(t, F, modules=['numpy', {'Heaviside': lambda t:np.heaviside(t,0)}])
@@ -97,7 +99,8 @@ def symplot(t, F, interval, funLabel):
         plt.plot(interval, f_num, label=funLabel)
         plt.legend(loc="upper right");
         plt.xlim([min(interval), max(interval)]);
-        plt.xlabel('tempo [s]');            
+        plt.xlabel('tempo [s]');  
+        plt.ylabel(yLabel)          
     
     plt.grid();
     plt.close();
