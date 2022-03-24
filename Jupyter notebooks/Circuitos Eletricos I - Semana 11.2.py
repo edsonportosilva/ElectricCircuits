@@ -7,9 +7,9 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.11.3
+#       jupytext_version: 1.13.0
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
@@ -24,24 +24,6 @@ HTML("""
 }
 </style>
 """)
-
-# # *Circuitos Elétricos I - Semana 11*
-
-# ### A integral de Laplace
-#
-# Seja $f(t)$ uma função definida no intervalo $0\leq t \leq \infty$, com $t$ e $f(t)$ reais, então a função $F(s)$, definida pela integral de Laplace
-#
-# $$\large
-# \begin{equation}
-# F(s)=\mathcal{L}\{f(t)\}=\int_{0}^{\infty} f(t) e^{-s t} dt,\;\; s \in \mathbb{C},
-# \end{equation}
-# $$
-#
-# é conhecida como a transformada de Laplace de $f(t)$.
-#
-# Para informações sobre como utilizar o Sympy para o cálculo da transformada de Laplace:
-#
-# https://dynamics-and-control.readthedocs.io/en/latest/1_Dynamics/3_Linear_systems/Laplace%20transforms.html
 
 # +
 import matplotlib.pyplot as plt
@@ -93,23 +75,51 @@ t, s  = sp.symbols('t, s')
 a     = sp.symbols('a', real=True, positive=True)
 omega = sp.symbols('omega', real=True)
 
-# ## Gere sua tabela de transformadas
+# # *Circuitos Elétricos I - Semana 11*
 
-func = [1,
-         t,
-         sp.exp(-a*t),
-         t*sp.exp(-a*t),
-         t**2*sp.exp(-a*t),
-         sp.sin(omega*t),
-         sp.cos(omega*t),
-         1 - sp.exp(-a*t),
-         sp.exp(-a*t)*sp.sin(omega*t),
-         sp.exp(-a*t)*sp.cos(omega*t),
-         ]
-func
+# ### A integral de Laplace
+#
+# Seja $f(t)$ uma função definida no intervalo $0\leq t \leq \infty$, com $t$ e $f(t)$ reais, então a função $F(s)$, definida pela integral de Laplace
+#
+# $$\large
+# \begin{equation}
+# F(s)=\mathcal{L}\{f(t)\}=\int_{0}^{\infty} f(t) e^{-s t} dt,\;\; s \in \mathbb{C},
+# \end{equation}
+# $$
+#
+# é conhecida como a transformada de Laplace de $f(t)$.
 
-Fs = [L(f,t,s) for f in func]
-Fs
+# ## Leis de Kirchhoff no domínio de Laplace
+#
+#
+# ### Lei de Kirchhoff das tensões (LKT)
+#
+# Para qualquer malha fechada no circuito:
+#
+# Domínio do tempo: $$v_{1}(t)+v_{2}(t)+\cdots+v_{n}(t)=0$$
+#
+# Domínio de Laplace: $$V_{1}(s)+V_{2}(s)+\cdots+V_{n}(s)=0$$
+#
+# ### Lei de Kirchhoff das correntes (LKC)
+#
+# Para qualquer nó no circuito:
+#
+# Domínio do tempo: $$i_{1}(t)+i_{2}(t)+\cdots+i_{n}(t)=0$$
+#
+# Domínio de Laplace: $$I_{1}(s)+I_{2}(s)+\cdots+I_{n}(s)=0$$
+#
+
+# ## Representação de elementos ideais de circuitos no domínio de Laplace
+#
+# $$
+# \begin{array}{|c|c|c|c|} 
+# \hline
+# \text{Elemento ideal} & \text{ Tensão vs corrente (tempo) } & \text{ Tensão vs corrente (Laplace)} & \text{Impedância } Z(s) = V(s)/I(s)\\
+# \hline \text{Resistor} & v(t)=R i(t) & V(s)=R I(s) & Z_{R}(s)=R \\
+# \text{Indutor} & v(t)=L \frac{d i(t)}{d t} & V(s)=L[s I(s)-i(0)] & Z_{L}(s)=s L \\
+# \text{Capacitor} & v(t)=\frac{1}{C} \int_{0}^{t} i(t)+v(0) & V(s)=\frac{I(s)}{s C}+\frac{v(0)}{s} & Z_{C}(s)=\frac{1}{s C} \\ \hline
+# \end{array}
+# $$
 
 # ### Problema 1
 #
