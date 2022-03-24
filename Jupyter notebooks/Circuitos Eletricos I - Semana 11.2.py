@@ -116,7 +116,7 @@ omega = sp.symbols('omega', real=True)
 # \hline
 # \text{Elemento ideal} & \text{ Tensão vs corrente (tempo) } & \text{ Tensão vs corrente (Laplace)} & \text{Impedância } Z(s) = V(s)/I(s)\\
 # \hline \text{Resistor} & v(t)=R i(t) & V(s)=R I(s) & Z_{R}(s)=R \\
-# \text{Indutor} & v(t)=L \frac{d i(t)}{d t} & V(s)=L[s I(s)-i(0)] & Z_{L}(s)=s L \\
+# \text{Indutor} & v(t)=L \frac{d i(t)}{d t} & V(s)=s L I(s)-L i(0) & Z_{L}(s)=s L \\
 # \text{Capacitor} & v(t)=\frac{1}{C} \int_{0}^{t} i(t)+v(0) & V(s)=\frac{I(s)}{s C}+\frac{v(0)}{s} & Z_{C}(s)=\frac{1}{s C} \\ \hline
 # \end{array}
 # $$
