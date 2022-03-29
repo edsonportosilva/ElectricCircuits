@@ -7,9 +7,9 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.11.3
+#       jupytext_version: 1.13.0
 #   kernelspec:
-#     display_name: Python 3
+#     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
@@ -84,6 +84,8 @@ infty = sp.oo
 #
 # <img src="./figures/J15C1.png" width="600">
 #
+# Simulação do circuito: https://tinyurl.com/y84pozs3
+#
 # a. Determine $I_0(s)$ e $I_1(s)$.\
 # b. Verifique a consistência das respostas do item a. com os teoremas do valor inicial e do valor final.\
 # c. Determine a função de transferência $H_0(s)$ entre $V(s)$ e $I_0(s)$.\
@@ -96,7 +98,7 @@ infty = sp.oo
 # a. Determinando $I_0(s)$ e $I_1(s)$:
 
 # +
-I0, I1, s = sp.symbols('I0, I1, s')
+I0, I1, s = sp.symbols('I_0, I_1, s')
 
 # define os sistema de equações
 eq1 = sp.Eq((-2*s**2)*I0 + (2*s**2 + 10*s + 250)*I1, 2.4*s + 12)             
@@ -166,12 +168,17 @@ symdisp('V_c(s) =', adjustCoeff(Vc).simplify(), 'Vs')
 
 np.roots([1, 35, 375, 3125, 0])
 
-partFrac(Vc, 4)
+partFrac(Vc, 3)
 
 # +
-vc = invL(partFrac(Vc, 4), s, t)
+#vc = invL(partFrac(Vc,4), s, t)
 
-symdisp('v_c(t) = ', vc, ' V')
+#symdisp('v_c(t) = ', vc, ' V')
+
+# +
+vc = (12 + sp.exp(-5*t)*( -15*sp.cos(10*t) + 30*sp.sin(10*t) ) + 3*sp.exp(-25*t) )*sp.Heaviside(t)
+
+symdisp('v_c(t) = ', vc, 'V')
 # -
 
 # plota funções no domínio do tempo
@@ -221,13 +228,15 @@ symdisp('V_c(s) =', Vc.simplify(), ' Vs')
 # +
 # função auxiliar Va(s)
 P = (25*s**2 + 875*s + 3125)/(s**4 + 35*s**3 + 375*s**2 + 3125*s)
-P = partFrac(P, 10)
+#P = partFrac(P, 10)
 
+symdisp('P(s) =', partFrac(P, 10), ' Vs')
+
+# +
 # encontra va(t)
-p = invL(P, s, t)
+p = invL(P.apart(), s, t)
 p = p.expand()
 
-symdisp('P(s) =', P , ' Vs')
 symdisp('p(t) =', p, ' V')
 
 # +
