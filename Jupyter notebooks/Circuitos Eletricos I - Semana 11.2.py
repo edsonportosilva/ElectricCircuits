@@ -301,5 +301,3 @@ symdisp('v_0(t) =', v0)
 # plota funções no domínio do tempo
 intervalo = np.arange(-4, 10, 0.05)
 symplot(t, v0, intervalo, 'v0(t)')
-
-
