@@ -16,8 +16,8 @@
 
 import sympy as sp
 import numpy as np
-from utils import symdisp, symplot
-from IPython.display import Math, Latex, display
+from utils import symdisp
+from IPython.display import display
 
 # # *Transformações Y - $\Delta$ e $\Delta$ - Y*
 #
