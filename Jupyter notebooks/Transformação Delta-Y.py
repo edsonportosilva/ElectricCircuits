@@ -42,9 +42,9 @@ Ra, Rb, Rc = sp.symbols('R_a, R_b, R_c', real=True, positive=True)
 
 # +
 # define os sistema de equações
-eq1 = sp.Eq(R1 + R2, Rc * ( Ra + Rb ) / ( Ra + Rb + Rc ) )             
-eq2 = sp.Eq(R2 + R3, Ra * ( Rb + Rc ) / ( Ra + Rb + Rc ) )    
-eq3 = sp.Eq(R3 + R1, Rb * ( Ra + Rc ) / ( Ra + Rb + Rc ) )    
+eq1 = sp.Eq( R1 + R2, Rc * ( Ra + Rb ) / ( Ra + Rb + Rc ) )             
+eq2 = sp.Eq( R2 + R3, Ra * ( Rb + Rc ) / ( Ra + Rb + Rc ) )    
+eq3 = sp.Eq( R3 + R1, Rb * ( Ra + Rc ) / ( Ra + Rb + Rc ) )    
 
 print('Sistema de equações lineares:')
 display(eq1, eq2, eq3) 
@@ -52,7 +52,7 @@ display(eq1, eq2, eq3)
 
 # ## Transformação Y-$\Delta$
 #
-# Resolvendo o sistema de equações lineares para $R_a$, $R_b$, $R_c$ em função de $R_1$, $R_2$, $R_3$.
+# Resolvendo o sistema de equações lineares para obter $R_a$, $R_b$, $R_c$ em função de $R_1$, $R_2$, $R_3$.
 
 # +
 # resolve o sistema
@@ -71,7 +71,7 @@ symdisp('R_c =', Rc.cancel())
 
 # ## Transformação $\Delta$-Y
 #
-# Resolvendo o sistema de equações lineares para $R_1$, $R_2$, $R_3$ em função de $R_a$, $R_b$, $R_c$.
+# Resolvendo o sistema de equações lineares para obter $R_1$, $R_2$, $R_3$ em função de $R_a$, $R_b$, $R_c$.
 
 # +
 # resolve o sistema
