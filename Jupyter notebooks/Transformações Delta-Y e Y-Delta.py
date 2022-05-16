@@ -41,7 +41,7 @@ Ra, Rb, Rc = sp.symbols('R_a, R_b, R_c', real=True, positive=True) # resistênci
 # Para que as duas configurações sejam completamente equivalentes, a resistência medida em quaisquer dois pares de terminais deve ser a mesma na configuração $Y$ ou na configuração $\Delta$. Logo, analisando as relações de resistência equivalente para os três nós do circuito, temos que as seguintes equações devem ser válidas para que haja equivalência entre a configuração $Y$ e a configuração $\Delta$:
 
 # +
-# define os sistema de equações
+# define o sistema de equações
 eq1 = sp.Eq( R1 + R2, Rc * ( Ra + Rb ) / ( Ra + Rb + Rc ) ) # para os terminais a e b             
 eq2 = sp.Eq( R2 + R3, Ra * ( Rb + Rc ) / ( Ra + Rb + Rc ) ) # para os terminais b e c  
 eq3 = sp.Eq( R3 + R1, Rb * ( Ra + Rc ) / ( Ra + Rb + Rc ) ) # para os terminais c e a  
