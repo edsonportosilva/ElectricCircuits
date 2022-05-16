@@ -19,7 +19,7 @@ import numpy as np
 from utils import symdisp, symplot
 from IPython.display import Math, Latex, display
 
-# # *Transformação Delta -Y*
+# # *Transformações Y - $\Delta$ e $\Delta$ - Y*
 #
 
 # + [markdown] toc=true
@@ -35,16 +35,16 @@ from IPython.display import Math, Latex, display
 # Primeiramente definimos as variáveis indicando os valores das resistências da configuração $Y$ ($R_1$, $R_2$, $R_3$) e os valores da configuração $\Delta$ ($R_a$, $R_b$, $R_c$).
 
 # definindo as variáveis:
-R1, R2, R3 = sp.symbols('R_1, R_2, R_3', real=True, positive=True)
-Ra, Rb, Rc = sp.symbols('R_a, R_b, R_c', real=True, positive=True)
+R1, R2, R3 = sp.symbols('R_1, R_2, R_3', real=True, positive=True) # resistências da configuração Y
+Ra, Rb, Rc = sp.symbols('R_a, R_b, R_c', real=True, positive=True) # resistências da configuração Δ
 
 # Para que as duas configurações sejam completamente equivalentes, a resistência medida em quaisquer dois pares de terminais deve ser a mesma na configuração $Y$ ou na configuração $\Delta$. Logo, analisando as relações de resistência equivalente para os três nós do circuito, temos que as seguintes equações devem ser válidas para que haja equivalência entre a configuração $Y$ e a configuração $\Delta$:
 
 # +
 # define os sistema de equações
-eq1 = sp.Eq( R1 + R2, Rc * ( Ra + Rb ) / ( Ra + Rb + Rc ) )             
-eq2 = sp.Eq( R2 + R3, Ra * ( Rb + Rc ) / ( Ra + Rb + Rc ) )    
-eq3 = sp.Eq( R3 + R1, Rb * ( Ra + Rc ) / ( Ra + Rb + Rc ) )    
+eq1 = sp.Eq( R1 + R2, Rc * ( Ra + Rb ) / ( Ra + Rb + Rc ) ) # para os terminais a e b             
+eq2 = sp.Eq( R2 + R3, Ra * ( Rb + Rc ) / ( Ra + Rb + Rc ) ) # para os terminais b e c  
+eq3 = sp.Eq( R3 + R1, Rb * ( Ra + Rc ) / ( Ra + Rb + Rc ) ) # para os terminais c e a  
 
 print('Sistema de equações lineares:')
 display(eq1, eq2, eq3) 
