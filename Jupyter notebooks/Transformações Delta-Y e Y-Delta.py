@@ -86,3 +86,32 @@ print('Solução do sistema:')
 symdisp('R_1 =', R1.cancel())
 symdisp('R_2 =', R2.cancel())
 symdisp('R_3 =', R3.cancel())
+
+
+# +
+def YΔ(R1, R2, R3):
+    p = R1*R2 + R2*R3 + R3*R1
+    
+    Ra = p/R1
+    Rb = p/R2
+    Rc = p/R3
+    
+    return Ra, Rb, Rc
+
+def ΔY(Ra, Rb, Rc):
+    s = Ra + Rb + Rc
+    
+    R1 = Rb*Rc/s
+    R2 = Ra*Rc/s
+    R3 = Ra*Rb/s
+    
+    return R1, R2, R3
+
+
+# -
+
+YΔ(4, 2, 4)
+
+YΔ(1, 3, 6)
+
+ΔY(16, 8, 8)
