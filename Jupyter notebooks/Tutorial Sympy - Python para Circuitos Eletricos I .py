@@ -140,7 +140,7 @@ if sinal_d2 > 0:
     print('sinal da derivada segunda: positivo (ponto de extremo é um mínimo)')
 elif sinal_d2 < 0:
     print('sinal da derivada segunda: negativo (ponto de extremo é um máximo)')
-    
+
 symdisp('p(t) = ', p)
 symdisp('t_{ext} =', round(text,3))    
 symdisp('p_{ext} =', round(pext,3))

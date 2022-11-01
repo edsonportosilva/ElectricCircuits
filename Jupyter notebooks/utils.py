@@ -5,7 +5,7 @@ from matplotlib.animation import FuncAnimation
 from IPython.display import Math, display
 from sympy import lambdify
 
-def genGIF(x, y, figName, xlabel=[], ylabel=[], fram=200, inter=20):    
+def genGIF(x, y, figName, xlabel=[], ylabel=[], fram=200, inter=20):
     '''
     Create and save a plot animation as GIF
      
@@ -25,19 +25,19 @@ def genGIF(x, y, figName, xlabel=[], ylabel=[], fram=200, inter=20):
     ax.grid()  
 
     indx = np.arange(0, len(x), int(len(x)/fram))
-    
+
     if len(xlabel): 
            plt.xlabel(xlabel)
-            
+
     if len(ylabel): 
            plt.ylabel(ylabel)
-        
+
     def init():        
         line.set_data([], [])
         return line,
 
     def animate(i):
-        line.set_data(x[0:indx[i]], y[0:indx[i]])
+        line.set_data(x[:indx[i]], y[:indx[i]])
         return line,
 
     anim = FuncAnimation(figAnin, animate, init_func=init, frames=fram, interval=inter, blit=True)
@@ -81,33 +81,31 @@ def symplot(t, F, interval, funLabel, yLabel=''):
     '''
     fig = plt.figure()
     if type(F) == list:
-        indLabel = 0
-        for f in F:
+        for indLabel, f in enumerate(F):
             func  = lambdify(t, f, modules=['numpy', {'Heaviside': lambda t:np.heaviside(t,0)}])
             f_num = func(interval)
-            
+
             plt.plot(interval, f_num, label=funLabel[indLabel])
             plt.legend();
             plt.xlim([min(interval), max(interval)]);
             plt.xlabel('tempo [s]');
             plt.ylabel(yLabel)
-            indLabel += 1
     else:        
         func  = lambdify(t, F, modules=['numpy', {'Heaviside': lambda t:np.heaviside(t,0)}])
         f_num = func(interval)           
-                    
+
         plt.plot(interval, f_num, label=funLabel)
         plt.legend(loc="upper right");
         plt.xlim([min(interval), max(interval)]);
         plt.xlabel('tempo [s]');  
         plt.ylabel(yLabel)          
-    
+
     plt.grid();
     plt.close();
     return fig
 
 
-def genConvGIF(x, h, t, totalTime, ti, tf, figName, xlabel=[], ylabel=[], fram=200, inter=20, plotConv=False):    
+def genConvGIF(x, h, t, totalTime, ti, tf, figName, xlabel=[], ylabel=[], fram=200, inter=20, plotConv=False):
     '''
     Create and save a convolution plot animation as GIF
      
@@ -126,11 +124,11 @@ def genConvGIF(x, h, t, totalTime, ti, tf, figName, xlabel=[], ylabel=[], fram=2
     '''
     x_func = lambdify(t, x, modules=['numpy', {'Heaviside': lambda t:np.heaviside(t,0)}])
     h_func = lambdify(t, h, modules=['numpy', {'Heaviside': lambda t:np.heaviside(t,0)}])
-    
+
     x_num  = x_func(totalTime)
-    h_num  = h_func(totalTime)    
+    h_num  = h_func(totalTime)
     dt = totalTime[1]-totalTime[0]
-    
+
     if plotConv:
         y_num  = np.convolve(h_num, x_num, 'same')*dt
         ymax = np.max([x_num, h_num, y_num])
@@ -138,16 +136,16 @@ def genConvGIF(x, h, t, totalTime, ti, tf, figName, xlabel=[], ylabel=[], fram=2
     else:
         ymax = np.max([x_num, h_num])
         ymin = np.min([x_num, h_num])
-    
+
     figAnim = plt.figure()
     ax      = plt.axes(xlim=(totalTime.min(), totalTime.max()),ylim=(ymin-0.1*np.abs(ymax), ymax+0.1*np.abs(ymax)))
     line1, line2, line3 = ax.plot([], [], [], [], [], [])
     line1.set_label(ylabel[0])
     line2.set_label(ylabel[1])
-    
+
     if plotConv:
         line3.set_label(ylabel[2])
-        
+
     ax.grid()
     ax.legend(loc="upper right");
 
@@ -156,31 +154,31 @@ def genConvGIF(x, h, t, totalTime, ti, tf, figName, xlabel=[], ylabel=[], fram=2
 
     if len(xlabel): 
            plt.xlabel(xlabel)            
-        
+
     def init():        
         line1.set_data(figh.get_axes()[0].lines[0].get_data())
         return line1,
 
     plt.close(figh)
-    
+
     delays = totalTime[::int(len(totalTime)/fram)]
     ind    = np.arange(0, len(totalTime), int(len(totalTime)/fram))
-    
+
     ind    = ind[delays > ti]
     delays = delays[delays > ti]
-    
-    ind    = ind[delays < tf]   
+
+    ind    = ind[delays < tf]
     delays = delays[delays < tf]
-    
+
     totalFrames = len(delays)
-    
+
     def animate(i):
         figx = symplot(t, x.subs({t:delays[i]-t}), totalTime, 'x(t-τ)')
         line2.set_data(figx.get_axes()[0].lines[0].get_data())
-        
+
         if plotConv:
-            line3.set_data(totalTime[0:ind[i]], y_num[0:ind[i]])
-            
+            line3.set_data(totalTime[:ind[i]], y_num[:ind[i]])
+
         plt.close(figx)
         return line2, line3
 

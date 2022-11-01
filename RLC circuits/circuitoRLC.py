@@ -5,6 +5,7 @@ Created on Tue Feb  4 21:21:44 2020
 @author: Edson Porto da Silva
 """
 
+
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import integrate
@@ -40,7 +41,7 @@ x[0]  = I0/C     # condição inicial da derivada vc'(t)
 deltaT    = t[1]-t[0] # passo de integração
 numPoints = len(t)-1
 
-for kk in range(0, numPoints):
+for kk in range(numPoints):
     vC[kk+1] = vC[kk]+x[kk]*deltaT                                # calcula vc(t+deltaT)
     x[kk+1]  = x[kk]+(-R/L*x[kk]-1/(L*C)*(vC[kk]-Vs[kk]))*deltaT  # calcula vc'(t+deltaT)
 

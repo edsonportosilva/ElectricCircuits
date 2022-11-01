@@ -76,7 +76,7 @@ for k, RL in enumerate(R):
     else:
         Vy[k] = ( Ry/( Rx * (Ry/RL + 1) + Ry ) )*Vs
         iL[k] = Vy[k]/RL
-        
+
     Vx[k] = Vs-Vy[k]
 
 plt.figure(figsize=(12,5))
