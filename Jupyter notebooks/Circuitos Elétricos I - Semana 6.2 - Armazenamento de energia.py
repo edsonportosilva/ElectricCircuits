@@ -14,9 +14,17 @@
 #     name: python3
 # ---
 
-# +
+# + [markdown] id="view-in-github" colab_type="text"
+# <a href="https://colab.research.google.com/github/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20El%C3%A9tricos%20I%20-%20Semana%206.2%20-%20Armazenamento%20de%20energia.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# + id="V0TybBSFVso4" outputId="8c20c740-7d66-4081-ca26-db62d9bed6d2"
 from IPython.core.display import HTML
 from IPython.display import Image
+
+if 'google.colab' in str(get_ipython()):    
+    # ! git clone -b master https://github.com/edsonportosilva/ElectricCircuits
+    from os import chdir as cd
+    cd('/content/ElectricCircuits/Jupyter notebooks')
 
 import numpy as np
 import sympy as sp
@@ -32,10 +40,11 @@ HTML("""
 }
 </style>
 """)
-# -
 
+# + [markdown] id="kSCA8lFBVso7"
 # # *Circuitos Elétricos I - Semana 6*
 
+# + [markdown] id="pkWoIwntVso8"
 # ## Elementos armazenadores de energia
 #
 # Comparação entre capacitores convencionais, supercapacitores e baterias de lítio. A tabela abaixo mostra as especificações  necessários para cada dispositivo armazenar ∼1 megajoule (MJ) de energia (300 watts-hora). 1 MJ de energia irá alimentar um laptop com um consumo médio de 50 W por 6 horas. Observe na primeira coluna que uma bateria de íon de lítio pode conter 1000 vezes mais energia do que um capacitor convencional.
@@ -94,20 +103,22 @@ HTML("""
 # \end{array}
 # $$
 
+# + [markdown] id="zphv7eY7Vso9"
 # ### Problema 1
 #   
 # Para o circuito abaixo, determine $v_{C1}$, $v_{C2}$ e $i_{L}$ assumindo que o circuito encontra-se em regime estacionário.
 #
-# <img src="./figures/J9C1.png" width="600">
+# <img src="https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/figures/J9C1.png?raw=1" width="600">
 
+# + [markdown] id="raSjAxVcVso-"
 # ### Problema 2
 #   
 # No circuito abaixo, sabe-se que $i_0(t)= 50e^{-8000t}[\cos(6000t)+2\mathrm{sen}(6000t)]$ mA, para $t\geq 0^+$. Determine $v_{C}(0^+)$, $v_{L}(0^+)$ e $v_{R}(0^+)$.
 #
 #
-# <img src="./figures/J9C2.png" width="600">
+# <img src="https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/figures/J9C2.png?raw=1" width="600">
 
-# +
+# + id="pHY9ieYPVso-" outputId="d48b1d62-5be0-477e-b2bc-a21c7b132cb6"
 # define variável tempo 
 t = sp.symbols('t', real=True)
 
@@ -118,53 +129,53 @@ i0 = 50*sp.exp(-8000*t)*(sp.cos(6000*t)+2*sp.sin(6000*t))*1e-3
 tmax = 1e-3
 intervalo  = np.linspace(0, tmax, num = 1000)
 symplot(t, i0, intervalo, funLabel='$i_0(t)$')
-# -
 
+# + id="ghmDGHJMVso_"
 # valores dos parâmetros do circuito
 R = 320
 L = 20e-3
 C = 0.5e-6
 
-# +
+# + id="ulZfzRFWVso_" outputId="131424e4-776d-4fea-b576-ab858b33f81a"
 # calcula tensão no indutor
 vL = L*sp.diff(i0, t)
 vL = sp.simplify(vL)
 
 print('Tensão no indutor:')
 symdisp('v_L(t) = ', vL, 'V')
-# -
 
+# + id="CBTmQEaMVspA" outputId="41959fed-a8cd-4245-e527-5049fffe850b"
 symdisp('v_L(0^+) = ', vL.evalf(subs={t:0}), 'V')
 
-# +
+# + id="grQEH9t3VspA" outputId="f8277c6c-6c58-4767-bd19-840c997fdee2"
 # calcula tensão no resistor
 vR = R*i0
 vR = sp.simplify(vR)
 
 print('Tensão no resistor:')
 symdisp('v_R(t) = ', vR, 'V')
-# -
 
+# + id="_nnVZ53OVspB" outputId="5634bfb7-dd0a-4edb-ee2c-7157c11ab03a"
 symdisp('v_R(0^+) = ', vR.evalf(subs={t:0}), 'V')
 
-# +
+# + id="Y2JBVNXpVspB" outputId="3bce8a6d-944e-405e-c8f4-91c3a3907fd6"
 # calcula tensão no capacitor (LKT)
 vC = vR + vL
 vC = sp.simplify(vC)
 
 print('Tensão no capacitor:')
 symdisp('v_C(t) = ', vC, 'V')
-# -
 
+# + id="SDkH_uCJVspC" outputId="d6d49626-0081-4475-b343-e4ae90a4f4b4"
 symdisp('v_C(0^+) = ', vC.evalf(subs={t:0}), 'V')
 
-# +
+# + id="TSTrhSSoVspC" outputId="c0e54e5a-f671-4cd7-a0cf-aed5f53d15f9"
 # checagem de vC(t) via integração de i0
 
 vC = -(1/C)*sp.integrate(i0, (t, 0, t)) + 20
 vC = sp.simplify(vC)
 
 symdisp('v_C(t) = ', vC, 'V')
-# -
 
+# + id="tvYylxPdVspC" outputId="2f219a67-2017-453e-91f5-c8e39a3500b6"
 symplot(t, [vC, vR, vL], intervalo, funLabel=['$v_C(t)$ ','$v_R(t)$','$v_L(t)$'])

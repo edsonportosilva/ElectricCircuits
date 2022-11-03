@@ -14,6 +14,10 @@
 #     name: python3
 # ---
 
+# + [markdown] id="view-in-github" colab_type="text"
+# <a href="https://colab.research.google.com/github/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20El%C3%A9tricos%20I%20-%20Semana%201%20-%20Conven%C3%A7%C3%B5es%20para%20aplica%C3%A7%C3%A3o%20das%20Leis%20de%20Kirchhoff.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# + id="O1lt6sYYCmTJ"
 from IPython.core.display import HTML
 from IPython.display import Image
 HTML("""
@@ -26,16 +30,26 @@ HTML("""
 </style>
 """)
 
+if 'google.colab' in str(get_ipython()):    
+    # ! git clone -b master https://github.com/edsonportosilva/ElectricCircuits
+    from os import chdir as cd
+    cd('/content/ElectricCircuits/Jupyter notebooks')
+
+
+# + [markdown] id="shtPIZVVCmTM"
 # # *Circuitos Elétricos I*
 
+# + [markdown] id="Mj2FFoAECmTN"
 # ## Semana 1 - Convenções para aplicação das Leis de Kirchhoff na análise de circuitos
 #
 #
 #
 # ### Caso 1
 
+# + id="VhzNUPc_CmTO" outputId="d7b4f321-d39d-4f47-caa8-d6dc67ad1972" colab={"base_uri": "https://localhost:8080/", "height": 228}
 Image("./figures/J1C1.png", width=500)
 
+# + [markdown] id="qvVFL19qCmTO"
 # #### Lei de Kirchhoff das tensões (LKT) 
 #
 # Em qualquer malha frechada do circuito $\sum_k v_k = 0$
@@ -51,6 +65,7 @@ Image("./figures/J1C1.png", width=500)
 # \end{align}
 # $$
 
+# + [markdown] id="T3sRg4keCmTP"
 # #### Lei de Kirchhoff das correntes (LKC)
 #
 # Em qualquer nó do circuito $\sum_k i_k = 0$
@@ -68,6 +83,7 @@ Image("./figures/J1C1.png", width=500)
 # \end{align}
 # $$
 
+# + [markdown] id="Vq1WhDihCmTP"
 # #### Lei de Ohm (+convenção passiva)
 #
 # `Convenção passiva (3): qualquer expressão que relacione as grandezas de tensão e corrente num elemento ideal de dois terminais deve ser escrita de acordo com a convenção passiva.`
@@ -91,6 +107,7 @@ Image("./figures/J1C1.png", width=500)
 # \end{align}
 # $$
 
+# + [markdown] id="vjPAI94iCmTQ"
 # Logo:
 #
 # $$ 
@@ -111,12 +128,14 @@ Image("./figures/J1C1.png", width=500)
 # \end{align}
 # $$
 
+# + [markdown] id="-sasV6DzCmTQ"
 # ### Solução das equações
 
+# + id="rElDlGS1CmTR"
 import sympy as sp
 import numpy as np
 
-# +
+# + id="KWO5-o2oCmTR"
 # define as N variáveis desconhecidas
 i1, i2, v4 = sp.symbols('i1, i2, v4')
 
@@ -134,11 +153,11 @@ v4 = np.array([sol[v4] for sol in soluc])
 i3 = -0.5
 
 print('Solução do sistema:\n\n i1 = %.2f A,\n i2 = %.2f A,\n i3 = %.2f A,\n v4 = %.2f V.' %(i1, i2, i3, v4))
-# -
 
+# + [markdown] id="2awvSU-WCmTS"
 # #### Cálculo das potências
 
-# +
+# + id="vscVpbhhCmTS"
 # expressões para a Lei de Ohm (convenção passiva)
 v1 = 
 v2 = 
@@ -152,18 +171,21 @@ p3   =
 p4   = 
 
 print('Potências:\n\n p10V = %.2f W\n p1 = %.2f W,\n p2 = %.2f W,\n p3 = %.2f W,\n p4 = %.2f W\n' %(p10V, p1, p2, p3, p4))
-# -
 
+# + id="UbNfxF_iCmTS"
 # calcula somatório das potências
 print('Somatório das potências : %.2f W\n' %(p10V+p1+p2+p3+p4))
 
+# + [markdown] id="dGf532npCmTS"
 # Simulação do circuito: https://tinyurl.com/yfbwd4vz
 
+# + [markdown] id="LBCCr4w9CmTT"
 # ### Caso 2
 
+# + id="0e9Jy_b0CmTT"
 Image("./figures/J1C2.png", width=500)
 
-# +
+# + id="C_diAtOtCmTT"
 # define as N variáveis desconhecidas
 i1, i2, v4 = sp.symbols('i1, i2, v4')
 
@@ -182,7 +204,7 @@ i3 = 0.5
 
 print('Solução do sistema:\n\n i1 = %.2f A,\n i2 = %.2f A,\n i3 = %.2f A,\n v4 = %.2f V.' %(i1, i2, i3, v4))
 
-# +
+# + id="HMW4WuAlCmTT"
 # expressões para a Lei de Ohm (convenção passiva)
 v1 = 
 v2 = 
@@ -196,13 +218,14 @@ p3   =
 p4   = 
 
 print('Potências:\n\n p10V = %.2f W\n p1 = %.2f W,\n p2 = %.2f W,\n p3 = %.2f W,\n p4 = %.2f W\n' %(p10V, p1, p2, p3, p4))
-# -
 
+# + [markdown] id="ZQwR6ITFCmTT"
 # ### Caso 3
 
+# + id="UuV0DcDXCmTU"
 Image("./figures/J1C3.png", width=500)
 
-# +
+# + id="7rDK5wfdCmTU"
 # define as N variáveis desconhecidas
 i1, i2, v4 = sp.symbols('i1, i2, v4')
 
@@ -221,7 +244,7 @@ i3 = 0.5
 
 print('Solução do sistema:\n\n i1 = %.2f A,\n i2 = %.2f A,\n i3 = %.2f A,\n v4 = %.2f V.' %(i1, i2, i3, v4))
 
-# +
+# + id="nhtHWgOjCmTU"
 # expressões para a Lei de Ohm (convenção passiva)
 v1 = 
 v2 = 

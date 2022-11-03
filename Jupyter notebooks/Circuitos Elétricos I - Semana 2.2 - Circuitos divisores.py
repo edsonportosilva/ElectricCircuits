@@ -14,6 +14,10 @@
 #     name: python3
 # ---
 
+# + [markdown] id="view-in-github" colab_type="text"
+# <a href="https://colab.research.google.com/github/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20El%C3%A9tricos%20I%20-%20Semana%202.2%20-%20Circuitos%20divisores.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# + colab={"base_uri": "https://localhost:8080/"} id="OfuiPHiPQqq5" outputId="37a38c5b-797c-418e-b5df-ebccc8315d6a"
 from IPython.core.display import HTML
 from IPython.display import Image
 HTML("""
@@ -26,16 +30,24 @@ HTML("""
 </style>
 """)
 
+if 'google.colab' in str(get_ipython()):    
+    # ! git clone -b master https://github.com/edsonportosilva/ElectricCircuits
+    from os import chdir as cd
+    cd('/content/ElectricCircuits/Jupyter notebooks')
+
+# + [markdown] id="9m9bFv8LQqq8"
 # # *Circuitos Elétricos I*
 
+# + [markdown] id="hitqk_k0Qqq-"
 # ## Semana 2 - Circuitos divisores
 #
 # ### Carregamento de um circuito de alimentação
 #
 # Quando uma fonte de tensão fornece energia a um dado elemento de circuito, diz-se que a fonte encontra-se *carregada*, ou que o elemento conectado à fonte é uma *carga* que está sendo alimentada pela fonte. De maneira geral, o carregamento de um circuito é o processo de introdução de elementos que extrairão corrente do circuito. Quanto maior for a  magnitude da corrente drenada, maior será o efeito de carregamento.
 #
-# <img src="./figures/J3C0.png" width="300">
+# <img src="https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/figures/J3C0.png?raw=1" width="300">
 
+# + [markdown] id="TUTGAg8YQqq-"
 # Da relação do divisor de tensão, temos que:
 #
 # $$ \begin{align} v_x &= \frac{R_x}{R_{eq}}v_s = \frac{R_x}{R_x+R_y}v_s\\
@@ -51,9 +63,10 @@ HTML("""
 #
 # Note que, se $R_L \gg R_y$, a tensão $v_y$ com a carga conectada aproxima-se da tensão obtida com os terminais em aberto.
 
+# + [markdown] id="WHgRiSNKQqq_"
 # ### Visualizando o comportamento do circuito alimentador em função da carga conectada
 
-# +
+# + colab={"base_uri": "https://localhost:8080/", "height": 860} id="E5kbpMB_Qqq_" outputId="500e9a7d-f23d-41ab-8f0e-29c85021cf8e"
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -99,10 +112,11 @@ plt.ylabel('$i_L$ [A]')
 plt.grid();
 
 Image("figures/J3C0.png", width=300)
-# -
 
+# + [markdown] id="W97_6IN6QqrA"
 # **Pergunta**: como os gráficos acima podem ser utilizados para explicar os riscos de conectar diversos equipamentos elétricos numa mesma tomada?
 
+# + [markdown] id="WihDRnatQqrB"
 # ## Exercícios
 #
 # ### Exercício 1: 
@@ -111,10 +125,11 @@ Image("figures/J3C0.png", width=300)
 #
 # b. Determine o valor das tensões nos terminais indicados considerando que cada um deles alimenta uma carga de 20 $\Omega$.
 #
-# <img src="./figures/J3C1.png" width="400">
+# <img src="https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/figures/J3C1.png?raw=1" width="400">
 
+# + [markdown] id="ShM4dDouQqrB"
 # ### Exercício 2: 
 #
 # Determine o valor de $R_1$, $R_2$ e $R_3$ no circuito divisor de tensão ilustrado na figura seguinte. O circuito pode ser projetado utilizando resistores de 2 W?
 #
-# <img src="./figures/J3C2.png" width="600">
+# <img src="https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/figures/J3C2.png?raw=1" width="600">

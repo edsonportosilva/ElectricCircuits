@@ -14,6 +14,10 @@
 #     name: python3
 # ---
 
+# + [markdown] id="view-in-github" colab_type="text"
+# <a href="https://colab.research.google.com/github/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20El%C3%A9tricos%20I%20-%20Semana%203%20-%20An%C3%A1lise%20nodal%20e%20an%C3%A1lise%20de%20malhas%20(tens%C3%B5es%20de%20n%C3%B3%20e%20correntes%20de%20malha).ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# + id="EUGlOHljRuEv" outputId="15499b6e-97bd-4b49-84ff-98ef48471424"
 from IPython.core.display import HTML
 from IPython.display import Image
 HTML("""
@@ -26,8 +30,15 @@ HTML("""
 </style>
 """)
 
+if 'google.colab' in str(get_ipython()):    
+    # ! git clone -b master https://github.com/edsonportosilva/ElectricCircuits
+    from os import chdir as cd
+    cd('/content/ElectricCircuits/Jupyter notebooks')
+
+# + [markdown] id="NCN78FeZRuE3"
 # # *Circuitos Elétricos I - Semana 3*
 
+# + [markdown] id="N4R7G-U0RuE5"
 # ## Resolução de circuitos utilizando análise nodal: método das tensões de nó.
 #
 #
@@ -48,14 +59,16 @@ HTML("""
 #
 # Aplicando o método das tensões de nó, determine todas as correntes e potências desenvolvidas por cada elemento no circuito a seguir:
 #
-# <img src="./figures/J4C1.png" width="500">
+# <img src="https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/figures/J4C1.png?raw=1" width="500">
 
+# + [markdown] id="jLxc-NiARuE6"
 # ### Solução das equações
 
+# + id="CfOI7gfQRuE7"
 from utils import symdisp
 import sympy as sp
 
-# +
+# + id="75b-vmokRuE7" outputId="b7d0961f-c575-476a-e8bb-cd8a9bbcfa05"
 # define as N variáveis desconhecidas
 va, vb, vc, vd = sp.symbols('va, vb, vc, vd')
 
@@ -79,11 +92,11 @@ symdisp('v_a = ', round(va, 2), ' V')
 symdisp('v_b = ', round(vb, 2), ' V')
 symdisp('v_c = ', round(vc, 2), ' V')
 symdisp('v_d = ', round(vd, 2), ' V')
-# -
 
+# + [markdown] id="_ZOLCzZARuE8"
 # ### Cálculo das correntes
 
-# +
+# + id="Etz8sTSfRuE9"
 i2 = 
 ix = 
 i3 = 
@@ -100,11 +113,11 @@ symdisp('i_4 = ', round(i4, 2), ' A')
 symdisp('i_5 = ', round(i5, 2), ' A')
 symdisp('i_6 = ', round(i6, 2), ' A')
 symdisp('i_x = ', round(ix, 2), ' A')
-# -
 
+# + [markdown] id="rhCCkb0VRuE9"
 # ### Cálculo das potências
 
-# +
+# + id="TJ9wWRKURuE9"
 pR = 
 p10V = 
 p05A = 
@@ -113,8 +126,8 @@ p2ix =
 
 # calcula somatório das potências
 print('Somatório das potências : %.2f W\n' %(pR+p10V+p05A+p12V+p2ix))
-# -
 
+# + [markdown] id="vJ9Ya0saRuE-"
 # ## Resolução de circuitos utilizando análise de malhas: correntes de malha.
 #
 #
@@ -132,11 +145,12 @@ print('Somatório das potências : %.2f W\n' %(pR+p10V+p05A+p12V+p2ix))
 #
 # Aplicando o método das correntes de malha, determine todas as correntes e potências desenvolvidas por cada elemento no circuito a seguir:
 #
-# <img src="./figures/J4C2.png" width="500">
+# <img src="https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/figures/J4C2.png?raw=1" width="500">
 
+# + [markdown] id="FJ2auVYVRuE_"
 # ### Solução das equações
 
-# +
+# + id="YNvXOEL_RuE_" outputId="3bc928d0-d60a-4ce3-8b6d-8b8b72677ac3"
 # define as N variáveis desconhecidas
 Ia, Ib, Ic, Id = sp.symbols('ia, ib, ic, id')
 
@@ -160,11 +174,11 @@ symdisp('i_a = ', round(Ia, 2), ' A')
 symdisp('i_b = ', round(Ib, 2), ' A')
 symdisp('i_c = ', round(Ic, 2), ' A')
 symdisp('i_d = ', round(Id, 2), ' A')
-# -
 
+# + [markdown] id="7wKdN2LNRuE_"
 # ### Cálculo das correntes
 
-# +
+# + id="L5-tBYmURuFA"
 i2 = 
 ix = 
 i3 = 
@@ -181,11 +195,11 @@ symdisp('i_4 = ', round(i4, 2), ' A')
 symdisp('i_5 = ', round(i5, 2), ' A')
 symdisp('i_6 = ', round(i6, 2), ' A')
 symdisp('i_x = ', round(ix, 2), ' A')
-# -
 
+# + [markdown] id="8A4ncDbDRuFA"
 # ### Cálculo das potências
 
-# +
+# + id="y-6wu7-SRuFA"
 pR = 
 p10V = 
 p05A = 

@@ -14,7 +14,15 @@
 #     name: python3
 # ---
 
-# +
+# + [markdown] id="view-in-github" colab_type="text"
+# <a href="https://colab.research.google.com/github/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20El%C3%A9tricos%20I%20-%20Semana%208.1%20-%20Circuitos%20RL%20e%20RC%20de%20primeira%20ordem.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# + id="eGDmQZQVUZwD"
+if 'google.colab' in str(get_ipython()):    
+    # ! git clone -b master https://github.com/edsonportosilva/ElectricCircuits
+    from os import chdir as cd
+    cd('/content/ElectricCircuits/Jupyter notebooks')
+    
 from IPython.core.display import HTML
 from IPython.display import Image
 import ipywidgets as widgets
@@ -33,18 +41,21 @@ HTML("""
 }
 </style>
 """)
-# -
 
+# + [markdown] id="rQfAMN5SUZwF"
 # # *Circuitos Elétricos I - Semana 8*
 
+# + [markdown] id="9STHy2_7UZwG"
 # ### Circuitos RL e RC de primeira ordem
 #
 # Os quatro tipos possíveis de circuitos de primeira ordem estão ilustrados na figura abaixo.
 #
-# <img src="./figures/J11C1.png" width="700">
+# <img src="https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/figures/J11C1.png?raw=1" width="700">
 
+# + [markdown] id="jZgtzIpcUZwH"
 # Lembrando que um circuito de primeira ordem qualquer, com vários resistores e fontes, por exemplo, pode ser reduzido a um dos quatro circuitos acima fazendo $R=R_{th}$, $v_s=v_{th}$ e $i_s=i_{N}$. Logo, desde que o circuito contenha apenas um elemento indutor ou capacitor, a análise de um circuito de primeira ordem deve ser feita primeiramente determinando-se o circuito equivalente de Thévenin ou de Norton conectado aos terminais do elemento em questão.
 
+# + [markdown] id="K6fMqJMxUZwH"
 # ### EDO linear homogênea
 #
 # Seja para a corrente passando pelo indutor (circuito RL) ou para a tensão aplicada aos terminais do capacitor (circuito RC), a aplicação das leis de Kirchhoff e da **convenção passiva** nos circuitos RL e RC sempre levarão a uma EDO homogênea separável de primeira ordem do tipo
@@ -57,6 +68,7 @@ HTML("""
 #
 # Logo, a solução da EDO homogênea será dada por  $$ \begin{equation} \large x(t) = x(t_0^+)e^{-\frac{(t-t_0^+)}{\tau}}. \end{equation} $$
 
+# + [markdown] id="pNI0WCVnUZwI"
 # ### Resposta natural
 #
 # A resposta natural de circuitos RL/RC corresponderá a solução da EDO homogênea, ou seja,
@@ -69,6 +81,7 @@ HTML("""
 #
 # com $\tau = RC$ para o circuito RC.
 
+# + [markdown] id="65hXUnWEUZwI"
 # ### Resposta ao degrau
 #
 # A resposta ao degrau de circuitos RL/RC corresponderá a solução da EDO homogênea adicionada da solução particular (ou solução de regime estacionário). Logo,
@@ -93,6 +106,7 @@ HTML("""
 # $$\large{\begin{align} v_C(t_0^+) &= v_C(\infty) + A_0e^{-\frac{(t_0^+-t_0^+)}{\tau}}\nonumber\\ &= v_C(\infty) + A_0 \nonumber\\ \Rightarrow A_0 &= v_C(t_0^+)- v_C(\infty)\nonumber
 # \end{align} }$$
 
+# + [markdown] id="-bfuip0EUZwJ"
 # ### Resposta geral
 #
 # A resposta geral de circuitos RL/RC corresponderá às expressões,
@@ -111,6 +125,7 @@ HTML("""
 #
 # com $\tau$ sendo a constante de tempo associada a este circuito.
 
+# + [markdown] id="UBO6eAquUZwK"
 # ### Problema 1
 #
 # Para circuito da figura abaixo, a chave encontra-se conectada ao terminal $a$ há muito tempo. Em $t=0s$, posição da chave muda do ponto $a$ para o ponto $b$. Em $t=20 ms$, a chave é desconectada do ponto $b$, permanecendo aberta. Determine:
@@ -122,13 +137,14 @@ HTML("""
 # e. A tensão nos terminais do indutor em $t=20^+ms$.
 #
 #
-# <img src="./figures/J11C2.png" width="600">
+# <img src="https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/figures/J11C2.png?raw=1" width="600">
 
+# + [markdown] id="3r9Qc1cqUZwK"
 # Simulação do circuito disponível no link: https://tinyurl.com/yfs69qqu
 #
 # #### Visualização das curvas $i_L(t)$, $v_L(t)$ e $p_L(t)$
 
-# +
+# + id="iPBgNrgyUZwK" outputId="50d65953-ccdb-4c15-84f9-8c1ef652b462"
 # parâmetros do circuito
 L   = 1
 vth = -80e-3
@@ -151,7 +167,7 @@ symdisp('i_L(t) =', round_expr(iL.simplify(), 3), 'mA')
 intervalo  = np.linspace(t0-2*τ, t0+8*τ, 400)
 symplot(t, iL, intervalo, funLabel = '$i_L(t)$ [mA]')
 
-# +
+# + id="FnJUZornUZwL" outputId="2483d723-c6e9-4e5b-cf90-877c5799ec95"
 vL = L*sp.diff(iL,t)
 vL = vL.simplify()
 
@@ -159,7 +175,7 @@ symdisp('v_L(t) = ', vL, ' mV')
 
 symplot(t, vL, intervalo, funLabel = '$v_L(t)$ [mV]')
 
-# +
+# + id="Ilmv-VP1UZwM" outputId="552435a4-6064-4359-94dc-c58a5011009c"
 pL = vL*iL
 pL = pL.simplify()
 
@@ -167,7 +183,7 @@ symdisp('p_L(t) = ', round_expr(pL,3), ' μW')
 
 symplot(t, pL, intervalo, funLabel = '$p_L(t)$ [μW]')
 
-# + hide_input=false
+# + hide_input=false id="g4RQT4S1UZwM"
 import ipywidgets as widgets
 import IPython.display as display
 
@@ -179,8 +195,8 @@ wi2 = widgets.Image(value=img2, format='gif', width=600, height=400)
 
 sidebyside = widgets.HBox([wi1, wi2])
 display.display(sidebyside)
-# -
 
+# + [markdown] id="XmOdCPiOUZwM"
 # ### Problema 2
 #
 # No circuito da figura abaixo, antes de conectado ao circuito, o capacitor possui uma tensão inicial de $v_C=10~V$. Em $t=0s$, o capacitor é conectado ao circuito. Determine:
@@ -189,6 +205,7 @@ display.display(sidebyside)
 # b. A tensão no capacitor $v_C(t)$ para $t\geq 0^+s$.\
 # c. A tensão $v_x(t)$ para $t\geq 0^+s$. 
 #
-# <img src="./figures/J11C3.png" width="600">
+# <img src="https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/figures/J11C3.png?raw=1" width="600">
 
+# + [markdown] id="nTTHi5x-UZwM"
 # Simulação do circuito disponível no link: https://tinyurl.com/yzhty8w3

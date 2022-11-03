@@ -14,6 +14,10 @@
 #     name: python3
 # ---
 
+# + [markdown] id="view-in-github" colab_type="text"
+# <a href="https://colab.research.google.com/github/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20El%C3%A9tricos%20I%20-%20Semana%207.1%20-%20Divisores%20de%20tens%C3%A3o%20e%20corrente%20com%20indutores%20e%20capacitores.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+
+# + id="3uzb6VL-UJIa" outputId="b5bf4980-01d9-472a-eb43-2765f594541e"
 from IPython.core.display import HTML
 from IPython.display import Image
 HTML("""
@@ -26,8 +30,15 @@ HTML("""
 </style>
 """)
 
+if 'google.colab' in str(get_ipython()):    
+    # ! git clone -b master https://github.com/edsonportosilva/ElectricCircuits
+    from os import chdir as cd
+    cd('/content/ElectricCircuits/Jupyter notebooks')
+
+# + [markdown] id="36HOXmmFUJId"
 # # *Circuitos Elétricos I - Semana 7*
 
+# + [markdown] id="NlT4HvoVUJIe"
 #
 # ## Resumo dos elementos passivos ideais de dois terminais
 #
@@ -46,9 +57,11 @@ HTML("""
 # \end{array}
 # $$
 
+# + [markdown] id="Kpk0iX3KUJIf"
 # ### Divisores de tensão e corrente com indutores e capacitores
 #   
 # Determine as expressões para os circuitos divisores de tensão e corrente ilustrados na figura abaixo.
 #
 
+# + id="aiCwk3jWUJIf" outputId="b77869d8-a01f-43e0-bb9d-44b55300b2c5"
 Image("./figures/J10C1.png", width=700)
