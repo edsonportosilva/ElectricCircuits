@@ -30,6 +30,11 @@ Este repositório contém material de apoio (jupyter notebooks, simulações em 
 16. [Exercícios: teorema do valor final, teorema do valor inicial, função de transferência](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20El%C3%A9tricos%20I%20-%20Semana%2012.1%20-%20Exerc%C3%ADcios%20com%20fun%C3%A7%C3%A3o%20de%20transfer%C3%AAncia%20e%20integral%20de%20convolu%C3%A7%C3%A3o.ipynb)
 17. [Exercícios: integral de convolução](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20El%C3%A9tricos%20I%20-%20Semana%2012.2%20-%20Integral%20de%20convolu%C3%A7%C3%A3o.ipynb)
 18. [Visualizando graficamente a convolução](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Visualize%20convolution.ipynb)
-
+## Instalação
+```
+$ git clone https://github.com/edsonportosilva/ElectriCircuits.git
+$ cd ElectriCircuits
+$ python setup.py install
+```
 ## Contato
 * e-mail: edson.silva@dee.ufcg.edu.br
