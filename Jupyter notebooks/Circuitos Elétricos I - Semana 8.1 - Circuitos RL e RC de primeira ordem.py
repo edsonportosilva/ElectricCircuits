@@ -7,7 +7,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.8
+#       jupytext_version: 1.14.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -30,7 +30,7 @@ import IPython.display as display
 
 import sympy as sp
 import numpy as np
-from utils import symplot, symdisp, round_expr
+from circuit.utils import symplot, symdisp, round_expr
 
 HTML("""
 <style>
