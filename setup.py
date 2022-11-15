@@ -58,3 +58,4 @@ setup(
         'Topic :: Software Development',
     ],
     python_requires='>=3.2',
+    )
