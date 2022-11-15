@@ -7,7 +7,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.8
+#       jupytext_version: 1.14.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -178,7 +178,7 @@ if 'google.colab' in str(get_ipython()):
 # + id="uxLDMS0ySgC0"
 import numpy as np
 import sympy as sp
-from utils import round_expr, symdisp, symplot
+from circuit.utils import round_expr, symdisp, symplot
 
 # + [markdown] id="TS7Si0UGSgC0"
 # ### Resolvendo o problema com o Python
