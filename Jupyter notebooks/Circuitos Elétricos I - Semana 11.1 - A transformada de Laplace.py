@@ -32,7 +32,8 @@ HTML("""
 if 'google.colab' in str(get_ipython()):    
     # ! git clone -b master https://github.com/edsonportosilva/ElectricCircuits
     from os import chdir as cd
-    cd('/content/ElectricCircuits/Jupyter notebooks')
+    cd('/content/ElectricCircuits/')
+    # ! pip install -e .
 
 # + [markdown] id="qbT6MNGLWast"
 # # *Circuitos Elétricos I - Semana 11*

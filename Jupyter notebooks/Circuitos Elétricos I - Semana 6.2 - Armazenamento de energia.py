@@ -7,7 +7,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.8
+#       jupytext_version: 1.14.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -16,20 +16,21 @@
 
 # + [markdown] id="view-in-github" colab_type="text"
 # <a href="https://colab.research.google.com/github/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20El%C3%A9tricos%20I%20-%20Semana%206.2%20-%20Armazenamento%20de%20energia.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
-
-# + id="V0TybBSFVso4" outputId="8c20c740-7d66-4081-ca26-db62d9bed6d2"
-from IPython.core.display import HTML
-from IPython.display import Image
+# -
 
 if 'google.colab' in str(get_ipython()):    
     # ! git clone -b master https://github.com/edsonportosilva/ElectricCircuits
     from os import chdir as cd
-    cd('/content/ElectricCircuits/Jupyter notebooks')
+    cd('/content/ElectricCircuits/')
+    # ! pip install -e .
 
+# + id="V0TybBSFVso4" outputId="8c20c740-7d66-4081-ca26-db62d9bed6d2"
+from IPython.core.display import HTML
+from IPython.display import Image
 import numpy as np
 import sympy as sp
 from sympy import oo
-from utils import symplot, symdisp, round_expr
+from circuit.utils import symplot, symdisp, round_expr
 
 HTML("""
 <style>

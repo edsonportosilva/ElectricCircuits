@@ -7,7 +7,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.8
+#       jupytext_version: 1.14.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -33,7 +33,8 @@ HTML("""
 if 'google.colab' in str(get_ipython()):    
     # ! git clone -b master https://github.com/edsonportosilva/ElectricCircuits
     from os import chdir as cd
-    cd('/content/ElectricCircuits/Jupyter notebooks')
+    cd('/content/ElectricCircuits/')
+    # ! pip install -e .
 
 # + [markdown] id="36HOXmmFUJId"
 # # *Circuitos Elétricos I - Semana 7*

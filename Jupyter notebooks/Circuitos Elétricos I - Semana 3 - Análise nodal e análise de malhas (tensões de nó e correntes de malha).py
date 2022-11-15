@@ -7,7 +7,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.8
+#       jupytext_version: 1.14.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -33,7 +33,8 @@ HTML("""
 if 'google.colab' in str(get_ipython()):    
     # ! git clone -b master https://github.com/edsonportosilva/ElectricCircuits
     from os import chdir as cd
-    cd('/content/ElectricCircuits/Jupyter notebooks')
+    cd('/content/ElectricCircuits/')
+    # ! pip install -e .
 
 # + [markdown] id="NCN78FeZRuE3"
 # # *Circuitos Elétricos I - Semana 3*
@@ -65,7 +66,7 @@ if 'google.colab' in str(get_ipython()):
 # ### Solução das equações
 
 # + id="CfOI7gfQRuE7"
-from utils import symdisp
+from circuit.utils import symdisp
 import sympy as sp
 
 # + id="75b-vmokRuE7" outputId="b7d0961f-c575-476a-e8bb-cd8a9bbcfa05"

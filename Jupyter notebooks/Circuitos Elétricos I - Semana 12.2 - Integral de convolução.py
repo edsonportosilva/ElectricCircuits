@@ -7,7 +7,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.8
+#       jupytext_version: 1.14.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -35,13 +35,14 @@ if 'google.colab' in str(get_ipython()):
     # ! sudo apt update
     # ! sudo apt install imagemagick
     from os import chdir as cd
-    cd('/content/ElectricCircuits/Jupyter notebooks')
+    cd('/content/ElectricCircuits/')
+    # ! pip install -e .
 
 # + id="vV0TawY8U5Fv"
 import matplotlib.pyplot as plt
 import numpy as np
 import sympy as sp
-from utils import round_expr, symdisp, symplot, genConvGIF, genGIF
+from circuit.utils import round_expr, symdisp, symplot, genConvGIF, genGIF
 from sympy import oo as inf
 
 from sympy.polys.partfrac import apart

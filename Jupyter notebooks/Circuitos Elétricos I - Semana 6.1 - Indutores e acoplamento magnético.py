@@ -7,7 +7,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.8
+#       jupytext_version: 1.14.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -18,11 +18,18 @@
 # <a href="https://colab.research.google.com/github/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20El%C3%A9tricos%20I%20-%20Semana%206.1%20-%20Indutores%20e%20acoplamento%20magn%C3%A9tico.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 # + id="rXANr_QORwkc"
+if 'google.colab' in str(get_ipython()):    
+    # ! git clone -b master https://github.com/edsonportosilva/ElectricCircuits
+    from os import chdir as cd
+    cd('/content/ElectricCircuits/')
+    # ! pip install -e .
+
+# +
 from IPython.core.display import HTML
 
 import sympy as sp
 from sympy import oo
-from utils import symplot, symdisp, round_expr
+from circuit.utils import symplot, symdisp, round_expr
 import numpy as np
 
 HTML("""
@@ -34,11 +41,6 @@ HTML("""
 }
 </style>
 """)
-
-if 'google.colab' in str(get_ipython()):    
-    # ! git clone -b master https://github.com/edsonportosilva/ElectricCircuits
-    from os import chdir as cd
-    cd('/content/ElectricCircuits/Jupyter notebooks')
 
 # + [markdown] id="d3FbA-ZURwkf"
 # # *Circuitos Elétricos I - Semana 6*

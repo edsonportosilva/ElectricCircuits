@@ -7,7 +7,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.8
+#       jupytext_version: 1.14.1
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -32,7 +32,8 @@ HTML("""
 if 'google.colab' in str(get_ipython()):    
     # ! git clone -b master https://github.com/edsonportosilva/ElectricCircuits
     from os import chdir as cd
-    cd('/content/ElectricCircuits/Jupyter notebooks')
+    cd('/content/ElectricCircuits/')
+    # ! pip install -e .
 
 # + [markdown] id="ZSGbDF-6Qppg"
 # # *Circuitos Elétricos I*
@@ -58,7 +59,7 @@ if 'google.colab' in str(get_ipython()):
 
 # + id="TiSCR6n-Qppi"
 import sympy as sp
-from utils import symdisp
+from circuit.utils import symdisp
 
 # + id="9oBpqWEoQppj"
 # define as N variáveis desconhecidas
