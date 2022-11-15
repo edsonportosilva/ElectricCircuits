@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 import sympy as sp
 import matplotlib.pyplot as plt
@@ -5,6 +6,63 @@ from matplotlib.animation import FuncAnimation
 from IPython.display import Math, display
 from sympy import lambdify
 
+
+def symdisp(expr, var, unit=" "):
+    """
+    Display sympy expressions in Latex style.
+
+    :param expr: expression in latex [string]
+    :param var: sympy variable, function, expression.
+    :param unit: string indicating unit of var [string]
+    """
+    display(Math(expr + sp.latex(var) + "\;" + unit))
+
+
+# função para arredondamento de floats em expressões simbólicas
+def round_expr(expr, numDig):
+    """
+    Rounds numerical values in sympy expressions
+
+    :param expr: sympy symbolic expression
+    :param numDig: number of rounding decimals
+
+    :return: rounded expression
+    """
+    return expr.xreplace({n: round(n, numDig) for n in expr.atoms(sp.Number)})
+
+
+# Função para plot de funções do sympy
+def symplot(t, F, interval, funLabel, xlabel="tempo [s]", ylabel=""):
+    """
+    Create plots of sympy symbolic functions.
+
+    :param t: sympy variable
+    :param F: sympy function F(t)
+    :param interval: array of values of t where F should be evaluated [np.array]
+    :funLabel: curve label be displayed in the plot [string].
+    """
+    fig = plt.figure()
+    if type(F) == list:
+        for indLabel, f in enumerate(F):
+            plotFunc(t, f, interval, funLabel[indLabel], xlabel, ylabel)
+    else:
+        plotFunc(t, F, interval, funLabel, xlabel, ylabel)
+    plt.grid()
+    plt.close()
+    return fig
+
+
+def plotFunc(t, F, interval, funLabel, xlabel, ylabel):
+    func = lambdify(
+        t, F, modules=["numpy", {"Heaviside": lambda t: np.heaviside(t, 0)}]
+    )
+    f_num = func(interval)
+
+    plt.plot(interval, f_num, label=funLabel)
+    plt.legend(loc="upper right")
+    plt.xlim([min(interval), max(interval)])
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
 
 def genGIF(x, y, figName, xlabel=[], ylabel=[], fram=200, inter=20):
     """
@@ -57,79 +115,6 @@ def genGIF(x, y, figName, xlabel=[], ylabel=[], fram=200, inter=20):
 
     anim.save(figName, dpi=200, writer="imagemagick")
     plt.close()
-
-
-# função para arredondamento de floats em expressões simbólicas
-def round_expr(expr, numDig):
-    """
-    Rounds numerical values in sympy expressions
-
-    :param expr: sympy symbolic expression
-    :param numDig: number of rounding decimals
-
-    :return: rounded expression
-    """
-    return expr.xreplace({n: round(n, numDig) for n in expr.atoms(sp.Number)})
-
-
-# função para print de expressões simbólicas
-def symdisp(expr, var, unit=" "):
-    """
-    Latex style display of sympy expressions
-
-    :param expr: expression in latex [string]
-    :param var: sympy variable, function, expression.
-    :param unit: string indicating unit of var [string]
-    """
-    display(Math(expr + sp.latex(var) + "\;" + unit))
-
-
-# Função para plot de funções do sympy
-def symplot(t, F, interval, funLabel, yLabel=""):
-    """
-    Create plots of sympy symbolic functions
-
-    :param t: sympy variable
-    :param F: sympy function F(t)
-    :param interval: array of values of t where F should be evaluated [np.array]
-    :param funLabel: curve label be displayed in the plot [string]
-    :param yLabel: scale of the plot
-    """
-    fig = plt.figure()
-    if type(F) == list:
-        indLabel = 0
-        for f in F:
-            func = lambdify(
-                t,
-                f,
-                modules=["numpy", {"Heaviside": lambda t: np.heaviside(t, 0)}],
-            )
-            f_num = func(interval)
-
-            plt.plot(interval, f_num, label=funLabel[indLabel])
-            plt.legend()
-            plt.xlim([min(interval), max(interval)])
-            plt.xlabel("tempo [s]")
-            plt.ylabel(yLabel)
-            indLabel += 1
-    else:
-        func = lambdify(
-            t,
-            F,
-            modules=["numpy", {"Heaviside": lambda t: np.heaviside(t, 0)}],
-        )
-        f_num = func(interval)
-
-        plt.plot(interval, f_num, label=funLabel)
-        plt.legend(loc="upper right")
-        plt.xlim([min(interval), max(interval)])
-        plt.xlabel("tempo [s]")
-        plt.ylabel(yLabel)
-
-    plt.grid()
-    plt.close()
-    return fig
-
 
 def genConvGIF(
     x,
@@ -239,3 +224,305 @@ def genConvGIF(
 
     anim.save(figName, dpi=200, writer="imagemagick")
     plt.close()
+
+def responseRL(i_t0, i_inf, t0, R, L):
+    """
+    Symbolically solves the transient response of an RL circuit
+
+    :param R: resistance.
+    :param L: inductance.
+    :param t0: initial time instant.
+    :param i_t0: inductor's current value at t0.
+    :param i_inf: inductor's current final value.
+    
+    :return iL(t): inductor's current.
+    :return vL(t): inductor's voltage.
+    :return τ: RL circuit time constant.
+    :return t: symbolic time variable.
+    
+    """
+    t = sp.symbols("t", real=True)
+    τ = L / R
+
+    iL = i_inf + (i_t0 - i_inf) * sp.exp(-t / τ)
+
+    vL = L * sp.diff(iL, t)
+
+    iL = iL.subs(t, sp.UnevaluatedExpr(t - t0))
+    vL = vL.subs(t, sp.UnevaluatedExpr(t - t0))
+
+    iL = sp.Piecewise((i_t0, t < t0), (iL, True))
+    vL = sp.Piecewise((0, t < t0), (vL, True))
+
+    return iL, vL, τ, t
+
+
+def responseRC(v_t0, v_inf, t0, R, C):
+    """
+    Symbolically solves the transient response of an RC circuit
+
+    :param R: resistance.
+    :param C: capacitance.
+    :param t0: initial time instant.
+    :param v_t0: capacitor's voltage value at t0.
+    :param v_inf: capacitor's voltage final value.
+    
+    :return vC(t): capacitor's voltage.
+    :return iC(t): capacitor's current.
+    :return τ: RC circuit time constant.
+    :return t: symbolic time variable.
+    
+    """
+    t = sp.symbols("t", real=True)
+    τ = R * C
+
+    vC = v_inf + (v_t0 - v_inf) * sp.exp(-t / τ)
+
+    iC = C * sp.diff(vC, t)
+
+    iC = iC.subs(t, sp.UnevaluatedExpr(t - t0))
+    vC = vC.subs(t, sp.UnevaluatedExpr(t - t0))
+
+    iC = sp.Piecewise((0, t < t0), (iC, True))
+    vC = sp.Piecewise((v_t0, t < t0), (vC, True))
+
+    return vC, iC, τ, t
+
+
+def responseRLCpar(vC_t0, iL_t0, iL_inf, t0, R, L, C):
+    """
+    Symbolically solves the transient response of a parallel RLC circuit
+
+    :param R: resistance.
+    :param L: inductance.
+    :param C: capacitance.
+    :param t0: initial time instant.
+    :param vC_t0: capacitor's voltage value at t0.
+    :param iL_t0: inductor's current value at t0.
+    :param i_inf: inductor's current final value.
+    
+    :return α: Neper's frequency.
+    :return ω0: resonant frequency.
+    :return iL(t): inductor's current.
+    :return vC(t): capacitor's voltage.
+    :return resp.: type of response.
+    
+    """
+    α = 1 / (2 * R * C)
+    ω0 = 1 / np.sqrt(L * C)
+
+    t = sp.symbols("t", real=True)
+
+    if np.isclose(α, ω0, rtol=1e-05, atol=1e-4):
+        resp = "resp. critic. amortecida"
+    elif α > ω0:
+        resp = "resp. superamortecida"
+    else:
+        resp = "resp. subamortecida"
+
+    if not np.isclose(α, ω0, rtol=1e-05, atol=1e-4):
+        if α > ω0:
+            s1 = -α + np.sqrt(α ** 2 - ω0 ** 2)
+            s2 = -α - np.sqrt(α ** 2 - ω0 ** 2)
+        elif α < ω0:
+            s1 = -α + 1j * np.sqrt(ω0 ** 2 - α ** 2)
+            s2 = -α - 1j * np.sqrt(ω0 ** 2 - α ** 2)
+
+        A1, A2 = sp.symbols("A1, A2")
+
+        # define os sistema de equações com as condições iniciais
+        eq1 = sp.Eq(A1 + A2 + iL_inf, iL_t0)
+        eq2 = sp.Eq(s1 * A1 + s2 * A2, vC_t0 / L)
+
+        # resolve o sistema
+        soluc = sp.solve((eq1, eq2), dict=True)
+        A1 = np.array([sol[A1] for sol in soluc])
+        A2 = np.array([sol[A2] for sol in soluc])
+
+        A1 = A1[0]
+        A2 = A2[0]
+
+        iL = A1 * sp.exp(s1 * t) + A2 * sp.exp(s2 * t)
+        iL = sp.re(iL)
+    else:
+        s1 = -α
+        s2 = -α
+
+        D1, D2 = sp.symbols("D1, D2")
+
+        # define os sistema de equações com as condições iniciais
+        eq1 = sp.Eq(D1 + iL_inf, iL_t0)
+        eq2 = sp.Eq(-α * D1 + D2, vC_t0 / L)
+
+        # resolve o sistema
+        soluc = sp.solve((eq1, eq2), dict=True)
+        D1 = np.array([sol[D1] for sol in soluc])
+        D2 = np.array([sol[D2] for sol in soluc])
+
+        D1 = D1[0]
+        D2 = D2[0]
+
+        iL = D1 * sp.exp(s1 * t) + D2 * t * sp.exp(s2 * t)
+    iL = sp.simplify(iL) + iL_inf
+    vC = L * sp.diff(iL, t)
+    vC = sp.simplify(vC)
+
+    iL = iL.subs(t, sp.UnevaluatedExpr(t - t0))
+    vC = vC.subs(t, sp.UnevaluatedExpr(t - t0))
+
+    iL = sp.Piecewise((iL_t0, t < t0), (iL, True))
+    vC = sp.Piecewise((vC_t0, t < t0), (vC, True))
+
+    return α, ω0, iL, vC, resp, t
+
+
+def responseRLCser(vC_t0, iL_t0, vC_inf, t0, R, L, C):
+    """
+    Symbolically solves the transient response of a series RLC circuit
+
+    :param R: resistance.
+    :param L: inductance.
+    :param C: capacitance.
+    :param t0: initial time instant.
+    :param vC_t0: capacitor's voltage value at t0.
+    :param iL_t0: inductor's current value at t0.
+    :param vC_inf: capacitor's voltage final value.
+    
+    :return vC(t): capacitor's voltage.
+    :return iL(t): inductor's current.
+    :return resp.: type of response. 
+    :return α: Neper's frequency.
+    :return ω0: resonant frequency.
+    
+    """
+    α = R / (2 * L)
+    ω0 = 1 / np.sqrt(L * C)
+
+    t = sp.symbols("t", real=True)
+
+    if np.isclose(α, ω0, rtol=1e-05, atol=1e-4):
+        resp = "resp. critic. amortecida"
+    elif α > ω0:
+        resp = "resp. superamortecida"
+    else:
+        resp = "resp. subamortecida"
+
+    if not np.isclose(α, ω0, rtol=1e-05, atol=1e-4):
+        if α > ω0:
+            s1 = -α + np.sqrt(α ** 2 - ω0 ** 2)
+            s2 = -α - np.sqrt(α ** 2 - ω0 ** 2)
+        elif α < ω0:
+            s1 = -α + 1j * np.sqrt(ω0 ** 2 - α ** 2)
+            s2 = -α - 1j * np.sqrt(ω0 ** 2 - α ** 2)
+
+        A1, A2 = sp.symbols("A1, A2")
+
+        # define os sistema de equações com as condições iniciais
+        eq1 = sp.Eq(A1 + A2 + vC_inf, vC_t0)
+        eq2 = sp.Eq(s1 * A1 + s2 * A2, iL_t0 / C)
+
+        # resolve o sistema
+        soluc = sp.solve((eq1, eq2), dict=True)
+        A1 = np.array([sol[A1] for sol in soluc])
+        A2 = np.array([sol[A2] for sol in soluc])
+
+        A1 = A1[0]
+        A2 = A2[0]
+
+        vC = A1 * sp.exp(s1 * t) + A2 * sp.exp(s2 * t)
+        vC = sp.re(vC)
+    else:
+        s1 = -α
+        s2 = -α
+
+        D1, D2 = sp.symbols("D1, D2")
+
+        # define os sistema de equações com as condições iniciais
+        eq1 = sp.Eq(D1 + vC_inf, vC_t0)
+        eq2 = sp.Eq(-α * D1 + D2, iL_t0 / C)
+
+        # resolve o sistema
+        soluc = sp.solve((eq1, eq2), dict=True)
+        D1 = np.array([sol[D1] for sol in soluc])
+        D2 = np.array([sol[D2] for sol in soluc])
+
+        D1 = D1[0]
+        D2 = D2[0]
+
+        vC = D1 * sp.exp(s1 * t) + D2 * t * sp.exp(s2 * t)
+    vC = sp.simplify(vC) + vC_inf
+    iL = C * sp.diff(vC, t)
+    iL = sp.simplify(iL)
+
+    iL = iL.subs(t, sp.UnevaluatedExpr(t - t0))
+    vC = vC.subs(t, sp.UnevaluatedExpr(t - t0))
+
+    iL = sp.Piecewise((iL_t0, t < t0), (iL, True))
+    vC = sp.Piecewise((vC_t0, t < t0), (vC, True))
+
+    return α, ω0, iL, vC, resp, t
+
+
+def responseRLCser_num(R, L, C, vC_t0, iL_t0, Vs, t):
+    """
+    Numerically solves the transient response of a series RLC circuit
+
+    :param R: resistance.
+    :param L: inductance.
+    :param C: capacitance.
+    :param vC_t0: capacitor's voltage value at t0.
+    :param iL_t0: inductor's current value at t0.
+    :param Vs: numpy array with the voltage source amplitude from t0 to t_final.
+    :param t: numpy array with time values from t0 to t_final.
+
+    :return i(t):  numpy array with the circuit's current.
+    :return vR(t): numpy array with the resistor's voltage.
+    :return vL(t): numpy array with the inductor's voltage.
+    :return vC(t): numpy array with the capacitor's voltage.
+        
+    """
+
+    vC = np.zeros(t.shape)
+    x = np.zeros(t.shape)
+
+    # EDO da tensão sobre o capacitor: vc''(t)+(R/L)vc'(t)+vc(t)/LC = vs(t)/LC
+
+    # Solução numérica:
+    vC[0] = vC_t0  # condição incial de vc
+    x[0] = iL_t0 / C  # condição inicial da derivada vc'(t)
+
+    # Integração numérica via método de Euler:
+    deltaT = t[1] - t[0]  # passo de integração
+
+    for kk in range(len(t) - 1):
+        vC[kk + 1] = vC[kk] + x[kk] * deltaT  # calcula vc(t+deltaT)
+        x[kk + 1] = (
+            x[kk] + (-R / L * x[kk] - 1 / (L * C) * (vC[kk] - Vs[kk])) * deltaT
+        )  # calcula vc'(t+deltaT)
+
+    # cálculo das tensões e da corrente partir de vc(t):
+    i = np.append(iL_t0, C * np.diff(vC) / np.diff(t))  # corrente no circuito
+    vR = R * i  # tensão sobre o resistor
+    vL = Vs - vR - vC  # tensão sobre o indutor(LKT)
+
+    return i, vR, vL, vC
+
+
+def YΔ(R1, R2, R3):
+
+    x = R1 * R2 + R2 * R3 + R3 * R1
+    Ra = x / R1
+    Rb = x / R2
+    Rc = x / R3
+
+    return Ra, Rb, Rc
+
+
+def ΔY(Ra, Rb, Rc):
+
+    x = Ra + Rb + Rc
+    R1 = (Rb * Rc) / x
+    R2 = (Ra * Rc) / x
+    R3 = (Rb * Ra) / x
+
+    return R1, R2, R3
