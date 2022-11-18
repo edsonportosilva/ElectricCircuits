@@ -59,7 +59,7 @@ HTML("""
 # + [markdown] id="K6fMqJMxUZwH"
 # ### EDO linear homogênea
 #
-# Aplicando as leis de Kirchhoff juntamente com a **convenção passiva** , obtém-se as seguintes EDOs para a corrente no indutor no circuito RL e para a tensão no capacitor no circuito RC, respectivamente:
+# Aplicando as leis de Kirchhoff juntamente com a **convenção passiva** , obtém-se as seguintes EDOs para a corrente passando pelo indutor no circuito RL e para a tensão nos terminais do capacitor no circuito RC, respectivamente:
 #
 # $$ \begin{equation}\label{edoRL}  \frac{di_L(t)}{dt} + \frac{R}{L}i_L(t) = \frac{v_s}{R}, \end{equation}$$ 
 #
@@ -68,11 +68,11 @@ HTML("""
 #
 # Para encontrar soluções para as EDOs não-homogêneas ($\ref{edoRL}$) e ($\ref{edoRC}$) é necessário resolver primeiro uma EDO homogênea separável do tipo
 #
-# $$ \begin{equation}\label{edoGenHomo}  \frac{dx(t)}{dt} + \frac{1}{\tau}x(t) = 0, \end{equation}$$ 
+# $$ \begin{equation}\label{edoGenHomo}\large  \frac{dx(t)}{dt} + \frac{1}{\tau}x(t) = 0, \end{equation}$$ 
 #
 # com $\tau$ sendo a constante de tempo do circuito. Podemos resolver (\ref{edoGenHomo}) via integração fazendo
 #
-# $$ \begin{equation}  \int_{x\left(t_{0}^+\right)}^{x(t)} \frac{d u}{u}=-\frac{1}{\tau} \int_{t_{0}^+}^{t} d v \end{equation}$$.
+# $$ \begin{equation}\large  \int_{x\left(t_{0}^+\right)}^{x(t)} \frac{d u}{u}=-\frac{1}{\tau} \int_{t_{0}^+}^{t} d v \end{equation}$$.
 #
 # Logo, a solução da EDO homogênea será dada por  $$ \begin{equation}\large x(t) = x(t_0^+)e^{-\frac{(t-t_0^+)}{\tau}}. \end{equation} $$
 
