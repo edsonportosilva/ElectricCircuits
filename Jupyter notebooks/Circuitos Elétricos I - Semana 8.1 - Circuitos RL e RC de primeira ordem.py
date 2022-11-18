@@ -59,15 +59,22 @@ HTML("""
 # + [markdown] id="K6fMqJMxUZwH"
 # ### EDO linear homogênea
 #
-# Seja para a corrente passando pelo indutor (circuito RL) ou para a tensão aplicada aos terminais do capacitor (circuito RC), a aplicação das leis de Kirchhoff e da **convenção passiva** nos circuitos RL e RC sempre levarão a uma EDO homogênea separável de primeira ordem do tipo
+# Aplicando as leis de Kirchhoff juntamente com a **convenção passiva** , obtém-se as seguintes EDOs para a corrente no indutor no circuito RL e para a tensão no capacitor no circuito RC, respectivamente:
 #
-# $$ \begin{equation}\label{eq1} \large \frac{dx(t)}{dt} = -\frac{1}{\tau}x(t), \end{equation}$$ 
+# $$ \begin{equation}\label{edoRL}  \frac{di_L(t)}{dt} + \frac{R}{L}i_L(t) = \frac{v_s}{R}, \end{equation}$$ 
 #
-# com $\tau$ sendo a constante de tempo do circuito. A solução de (\ref{eq1}) pode ser obtida via integração fazendo
 #
-# $$ \begin{equation}  \large \int_{x\left(t_{0}^+\right)}^{x(t)} \frac{d u}{u}=-\frac{1}{\tau} \int_{t_{0}^+}^{t} d v \end{equation}$$.
+# $$ \begin{equation}\label{edoRC} \frac{dv_C(t)}{dt} + \frac{1}{RC}v_C(t) = \frac{v_s}{RC}. \end{equation}$$ 
 #
-# Logo, a solução da EDO homogênea será dada por  $$ \begin{equation} \large x(t) = x(t_0^+)e^{-\frac{(t-t_0^+)}{\tau}}. \end{equation} $$
+# Para encontrar soluções para as EDOs não-homogêneas ($\ref{edoRL}$) e ($\ref{edoRC}$) é necessário resolver primeiro uma EDO homogênea separável do tipo
+#
+# $$ \begin{equation}\label{edoGenHomo}  \frac{dx(t)}{dt} + \frac{1}{\tau}x(t) = 0, \end{equation}$$ 
+#
+# com $\tau$ sendo a constante de tempo do circuito. Podemos resolver (\ref{edoGenHomo}) via integração fazendo
+#
+# $$ \begin{equation}  \int_{x\left(t_{0}^+\right)}^{x(t)} \frac{d u}{u}=-\frac{1}{\tau} \int_{t_{0}^+}^{t} d v \end{equation}$$.
+#
+# Logo, a solução da EDO homogênea será dada por  $$ \begin{equation}\large x(t) = x(t_0^+)e^{-\frac{(t-t_0^+)}{\tau}}. \end{equation} $$
 
 # + [markdown] id="pNI0WCVnUZwI"
 # ### Resposta natural
@@ -85,7 +92,7 @@ HTML("""
 # + [markdown] id="65hXUnWEUZwI"
 # ### Resposta ao degrau
 #
-# A resposta ao degrau de circuitos RL/RC corresponderá a solução da EDO homogênea adicionada da solução particular (ou solução de regime estacionário). Logo,
+# A resposta ao degrau de circuitos RL/RC corresponderá a solução completa das equações (\ref{edoRL}) e (\ref{edoRC}), obtidas combinando a solução da EDO homogênea com a solução particular (ou solução de regime estacionário) de cada circuito. Logo,
 #
 # $$
 # \begin{equation}
@@ -118,7 +125,7 @@ HTML("""
 # + [markdown] id="-bfuip0EUZwJ"
 # ### Resposta geral
 #
-# A resposta geral de circuitos RL/RC corresponderá às expressões,
+# De acordo com o exposto acima, a resposta geral de circuitos RL/RC pode ser resumida nas expressões
 #
 # $$ \begin{equation} \large i_L(t) = i_L(\infty) + \left[i_L(t_0^+)- i_L(\infty)\right]e^{-\frac{(t-t_0^+)}{\tau}},\end{equation} $$
 #
