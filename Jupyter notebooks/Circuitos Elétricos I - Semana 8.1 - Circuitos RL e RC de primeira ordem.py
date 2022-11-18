@@ -7,7 +7,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.14.1
+#       jupytext_version: 1.13.8
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -87,25 +87,33 @@ HTML("""
 #
 # A resposta ao degrau de circuitos RL/RC corresponderá a solução da EDO homogênea adicionada da solução particular (ou solução de regime estacionário). Logo,
 #
-# $$\large i_L(t) = i_L(\infty) + A_0e^{-\frac{(t-t_0^+)}{\tau}}, $$
+# $$
+# \begin{equation}
+# \large i_L(t) = i_L(\infty) + A i_L(t_0^+)e^{-\frac{(t-t_0^+)}{\tau}}, \label{RL1}
+# \end{equation}
+# $$
 #
 # com $\tau = L/R$ para o circuito RL e
 #
-# $$\large v_C(t) = v_C(\infty) + A_0e^{-\frac{(t-t_0^+)}{\tau}}, $$
+# $$
+# \begin{equation} 
+# \large v_C(t) = v_C(\infty) + Av_C(t_0^+)e^{-\frac{(t-t_0^+)}{\tau}},\label{RC1} 
+# \end{equation}
+# $$
 #
-# com $\tau = RC$ para o circuito RC.
+# com $\tau = RC$ para o circuito RC, sendo $A$ a constante da solução geral da EDO.
 #
-# A constante $A_o$ da resposta ao degrau pode ser determinada utilizando as condições iniciais de corrente no indutor ou tensão no capacitor. 
+# O valor da constante $A$ pode ser determinado considerando o problema de valor inicial, ou seja, utilizando as condições iniciais de corrente no indutor ou tensão no capacitor (condições de contorno). Desse modo, para o circuito RL como sabemos que $t\to t_0^+\;s \Rightarrow i_L(t)\to i_L(t_0^+)$, temos que
 #
-# Desse modo, para o circuito RL
-#
-# $$\large{\begin{align} i_L(t_0^+) &= i_L(\infty) + A_0e^{-\frac{(t_0^+-t_0^+)}{\tau}}\nonumber\\ &= i_L(\infty) + A_0 \nonumber\\ \Rightarrow A_0 &= i_L(t_0^+)- i_L(\infty)\nonumber
+# $$\large{\begin{align} i_L(t_0^+) &= i_L(\infty) + A i_L(t_0^+) e^{-\frac{(t_0^+-t_0^+)}{\tau}}\nonumber\\ &= i_L(\infty) + A i_L(t_0^+) \nonumber\\ \Rightarrow A &= \frac{i_L(t_0^+)- i_L(\infty)}{i_L(t_0^+)}\nonumber
 # \end{align} }$$
 #
-# e para o circuito RC
+# e para o circuito RC sabemos que $t\to t_0^+\;s \Rightarrow v_C(t)\to v_C(t_0^+)$, logo
 #
-# $$\large{\begin{align} v_C(t_0^+) &= v_C(\infty) + A_0e^{-\frac{(t_0^+-t_0^+)}{\tau}}\nonumber\\ &= v_C(\infty) + A_0 \nonumber\\ \Rightarrow A_0 &= v_C(t_0^+)- v_C(\infty)\nonumber
+# $$\large{\begin{align} v_C(t_0^+) &= v_C(\infty) + A v_C(t_0^+)e^{-\frac{(t_0^+-t_0^+)}{\tau}}\nonumber\\ &= v_C(\infty) + A v_C(t_0^+) \nonumber\\ \Rightarrow A &= \frac{v_C(t_0^+)- v_C(\infty)}{v_C(t_0^+)}\nonumber
 # \end{align} }$$
+#
+# Substituindo os valores encontrados de $A$ nas equações ($\ref{RL1}$) e ($\ref{RC1}$) obtemos as expressões para a solução geral dos circuitos de primeira ordem.
 
 # + [markdown] id="-bfuip0EUZwJ"
 # ### Resposta geral
