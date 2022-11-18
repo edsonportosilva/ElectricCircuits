@@ -77,7 +77,7 @@ HTML("""
 # Logo, a solução da EDO homogênea será dada por  $$ \begin{equation}\large x(t) = x(t_0^+)e^{-\frac{(t-t_0^+)}{\tau}}. \end{equation} $$
 
 # + [markdown] id="pNI0WCVnUZwI"
-# ### Resposta natural
+# ### Resposta natural ($v_s = 0$)
 #
 # A resposta natural de circuitos RL/RC corresponderá a solução da EDO homogênea, ou seja,
 #
@@ -90,7 +90,7 @@ HTML("""
 # com $\tau = RC$ para o circuito RC.
 
 # + [markdown] id="65hXUnWEUZwI"
-# ### Resposta ao degrau
+# ### Resposta ao degrau ($v_s \neq 0$)
 #
 # A resposta ao degrau de circuitos RL/RC corresponderá a solução completa das equações (\ref{edoRL}) e (\ref{edoRC}), obtidas combinando a solução da EDO homogênea com a solução particular (ou solução de regime estacionário) de cada circuito. Logo,
 #
@@ -123,7 +123,7 @@ HTML("""
 # Substituindo os valores encontrados de $A$ nas equações ($\ref{RL1}$) e ($\ref{RC1}$) obtemos as expressões para a solução geral dos circuitos de primeira ordem.
 
 # + [markdown] id="-bfuip0EUZwJ"
-# ### Resposta geral
+# ### Resposta geral ($v_s = 0$ ou $v_s \neq 0$)
 #
 # De acordo com o exposto acima, a resposta geral de circuitos RL/RC pode ser resumida nas expressões
 #
