@@ -120,18 +120,18 @@ HTML("""
 # $$\large{\begin{align} v_C(t_0^+) &= v_C(\infty) + A v_C(t_0^+)e^{-\frac{(t_0^+-t_0^+)}{\tau}}\nonumber\\ &= v_C(\infty) + A v_C(t_0^+) \nonumber\\ \Rightarrow A &= \frac{v_C(t_0^+)- v_C(\infty)}{v_C(t_0^+)}\nonumber
 # \end{align} }$$
 #
-# Substituindo os valores encontrados de $A$ nas equações ($\ref{RL1}$) e ($\ref{RC1}$) obtemos as expressões para a solução geral dos circuitos de primeira ordem.
+# Substituindo os valores encontrados de $A$ nas equações ($\ref{RL1}$) e ($\ref{RC1}$) obtemos as expressões ($\ref{solucRL}$) e ($\ref{solucRC}$) para a solução geral dos circuitos de primeira ordem.
 
 # + [markdown] id="-bfuip0EUZwJ"
 # ### Resposta geral ($v_s = 0$ ou $v_s \neq 0$)
 #
 # De acordo com o exposto acima, a resposta geral de circuitos RL/RC pode ser resumida nas expressões
 #
-# $$ \begin{equation} \large i_L(t) = i_L(\infty) + \left[i_L(t_0^+)- i_L(\infty)\right]e^{-\frac{(t-t_0^+)}{\tau}},\end{equation} $$
+# $$ \begin{equation}\label{solucRL} \large  i_L(t) = i_L(\infty) + \left[i_L(t_0^+)- i_L(\infty)\right]e^{-\frac{(t-t_0^+)}{\tau}},\end{equation} $$
 #
 # com $\tau = L/R$ para o circuito RL e
 #
-# $$ \begin{equation} \large v_C(t) = v_C(\infty) + \left[v_C(t_0^+)- v_C(\infty)\right]e^{-\frac{(t-t_0^+)}{\tau}},\end{equation} $$
+# $$ \begin{equation} \label{solucRC} \large v_C(t) = v_C(\infty) + \left[v_C(t_0^+)- v_C(\infty)\right]e^{-\frac{(t-t_0^+)}{\tau}},\end{equation} $$
 #
 # com $\tau = RC$ para o circuito RC.
 #
