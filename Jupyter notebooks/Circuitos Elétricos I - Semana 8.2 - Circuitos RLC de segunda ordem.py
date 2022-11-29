@@ -7,7 +7,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.14.1
+#       jupytext_version: 1.13.0
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -44,7 +44,7 @@ if 'google.colab' in str(get_ipython()):
 # + [markdown] id="O85zBEOVSgCx"
 # ## Circuito RLC em paralelo
 #
-# <img src="https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/figures/J12C2.png?raw=1" width="800">
+# <img src="./figures/J12C2.png?raw=1" width="800">
 #
 # Simulação: https://tinyurl.com/ycnkjnot
 #
@@ -167,7 +167,7 @@ if 'google.colab' in str(get_ipython()):
 #
 # Para o circuito a seguir, as chaves $ch1$ e $ch2$ estiveram abertas por um longo intervalo de tempo. 
 #
-# <img src="https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/figures/J12C3.png?raw=1" width="700">
+# <img src="./figures/J12C3.png?raw=1" width="700">
 #
 #
 # a. Considerando que apenas $ch1$ fecha em $t_0=0$s, determine a tensão sobre o capacitor $v_C(t)$ para $t\geq 0^+$.\
@@ -404,7 +404,7 @@ symplot(t, [iL, vC], intervalo, ['iL(t)', 'vC(t)'])
 # ## Circuito RLC em série
 
 # + [markdown] id="zgBsE64OSgC8"
-# <img src="https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/figures/J12C1.png?raw=1" width="800">
+# <img src="./figures/J12C1.png?raw=1" width="800">
 #
 # ### Aplicação das Leis de Kirchhoff 
 #
@@ -521,7 +521,7 @@ symplot(t, [iL, vC], intervalo, ['iL(t)', 'vC(t)'])
 #
 # No circuito da figura a seguir, a chave $ch1$ estive aberta por um longo intervalo de tempo antes de fechar, no instante $t_0=0$s.
 #
-# <img src="https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/figures/J12C4.png?raw=1" width="500">
+# <img src="./figures/J12C4.png?raw=1" width="500">
 #
 # a. Para qual valor de $R_x$ o circuito exibe uma resposta criticamente amortecida para $t\geq 0^+$?\
 # b. Considerando que $R_x$ vale exatamente o valor calculado em (a), determine a tensão sobre o capacitor $v_C(t)$ para $t\geq 0^+$.\
