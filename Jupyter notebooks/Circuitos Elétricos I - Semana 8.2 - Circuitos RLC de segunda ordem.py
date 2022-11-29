@@ -35,6 +35,10 @@ if 'google.colab' in str(get_ipython()):
     from os import chdir as cd
     cd('/content/ElectricCircuits/')
     # ! pip install -e .
+    
+import numpy as np
+import sympy as sp
+from circuit.utils import round_expr, symdisp, symplot
 
 # + [markdown] id="zdja3GqYSgCw"
 # # *Circuitos Elétricos I - Semana 8*
@@ -175,11 +179,6 @@ if 'google.colab' in str(get_ipython()):
 # c. Considerando que apenas $ch2$ fecha em $t_0=0$s, determine a tensão sobre o capacitor $v_C(t)$ para $t\geq 0^+$.
 #
 # Link para a simulação do circuito: https://tinyurl.com/yf8pj57t
-
-# + id="uxLDMS0ySgC0"
-import numpy as np
-import sympy as sp
-from circuit.utils import round_expr, symdisp, symplot
 
 # + [markdown] id="TS7Si0UGSgC0"
 # ### Resolvendo o problema com o Python
