@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
 from IPython.display import Math, display
 from sympy import lambdify
-
+from sympy.polys.partfrac import apart
 
 def symdisp(expr, var, unit=" "):
     """
@@ -526,3 +526,60 @@ def ΔY(Ra, Rb, Rc):
     R3 = (Rb * Ra) / x
 
     return R1, R2, R3
+
+
+# funções para auxílio na expansão em frações parciais
+def adjustCoeff(expr, s):
+    """
+    Adjust coefficients of a rational function in s
+
+    Parameters
+    ----------
+    expr : TYPE
+        DESCRIPTION.
+    s : TYPE
+        DESCRIPTION.
+
+    Returns
+    -------
+    TYPE
+        DESCRIPTION.
+
+    """
+    coeff = expr.as_numer_denom()
+    c0 = sp.poly(coeff[1].cancel(), s).coeffs()[0]
+      
+    return (coeff[0].cancel()/c0).simplify()/(coeff[1].cancel()/c0).simplify()
+
+
+def partFrac(expr, s, Ndigits):
+    expr = expr.cancel()
+    expr = apart(adjustCoeff(expr, s), s, full=True).doit()
+    
+    return sp.N(expr, Ndigits)
+
+
+def expandDenom(expr, s, Ndigits=10):
+    
+    coeff = sp.N(adjustCoeff(expr, s), Ndigits).cancel().as_numer_denom()   
+    poles = sp.roots(coeff[1], s)  
+            
+    denom = 1
+    for p in poles:
+        if Ndigits:
+            r = round_expr(p, Ndigits)
+        else:
+            r = p
+        denom *= (s-r)
+                    
+    return coeff[0]/denom
+
+
+# Laplace transform
+def Lap(f,t,s):
+    return sp.laplace_transform(f, t, s, noconds=True)
+
+
+# inverse Laplace transform
+def invLap(F,s,t):
+    return sp.re(sp.inverse_laplace_transform(F, s, t, noconds=True))
