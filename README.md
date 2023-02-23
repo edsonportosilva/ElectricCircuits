@@ -5,7 +5,7 @@ Este repositório contém material de apoio (jupyter notebooks, simulações em 
 
 ## Algumas informações úteis
 * [Tutorial básico](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Tutorial%20Sympy%20-%20Python%20para%20Circuitos%20Eletricos%20I%20.ipynb) ilustrando as funcionalidas do pacote [SymPy](https://www.sympy.org/pt/index.html) que são úteis na análise de circuitos elétricos:
-  * Avaliação de funções.
+  * Avaliação de funções e plot de gráficos.
   * Cálculo de limites.
   * Cálculo de integrais e derivadas.
   * Determinação de máximos e mínimos de funções.
