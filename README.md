@@ -4,7 +4,13 @@ Python code to support the lectures of the Electric Circuits I course at the Ele
 Este repositório contém material de apoio (jupyter notebooks, simulações em MATLAB/Octave) utilizado nas minhas aulas da disciplina Circuitos Elétricos I na Universidade Federal de Campina Grande UFCG. 
 
 ## Algumas informações úteis
-* [Tutorial básico](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Tutorial%20Sympy%20-%20Python%20para%20Circuitos%20Eletricos%20I%20.ipynb) ilustrando as funcionalidas do pacote [SymPy](https://www.sympy.org/pt/index.html) que são úteis na análise de circuitos elétricos.
+* [Tutorial básico](https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Tutorial%20Sympy%20-%20Python%20para%20Circuitos%20Eletricos%20I%20.ipynb) ilustrando as funcionalidas do pacote [SymPy](https://www.sympy.org/pt/index.html) que são úteis na análise de circuitos elétricos:
+  * Avaliação de funções.
+  * Cálculo de limites.
+  * Cálculo de integrais e derivadas.
+  * Determinação de máximos e mínimos de funções.
+  * Resolução de sistemas lineares.
+
 * [Playlist no YouTube](https://www.youtube.com/playlist?list=PLCdbPtPv2u2qrtZAyDACc0v0fOb3j9pWD) com resolução de exercícios utilizando o material deste repositório.
 * Clique aqui no ícone abaixo para rodar os notebooks no [Binder](https://mybinder.org/).
 
