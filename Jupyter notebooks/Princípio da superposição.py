@@ -89,7 +89,7 @@ symdisp('v = ', v)
 symdisp('A^{-1} = ', A.inv())
 
 # +
-A_ = A.subs({R1:1, R2:1, R3:1, R4:1, R5:1})
+A_ = A.subs({R1:10, R2:10, R3:10, R4:10, R5:10})
 
 symdisp('A = ', A_)
 symdisp('A^{-1} = ', A_.inv())
