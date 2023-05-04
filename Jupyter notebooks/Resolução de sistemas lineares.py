@@ -7,7 +7,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.8
+#       jupytext_version: 1.14.5
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -29,7 +29,7 @@ if 'google.colab' in str(get_ipython()):
 
 import sympy as sp
 import numpy as np
-from utils import symdisp, symplot
+from circuit.utils import symdisp, symplot
 from IPython.display import Math, Latex, display
 
 # + [markdown] id="hfuhqHyAXyfO"
@@ -118,25 +118,31 @@ symdisp('v_3 =', sp.N(v3,2), 'V')
 
 # + id="HjKwx-rPXyfU" outputId="3b4cbcfa-d360-4a1a-bce4-73d2e651f40e"
 # define as N variáveis desconhecidas
-ia, ib, ic = sp.symbols('i_a, i_b, i_c')
+ia, ib, ic, i_d = sp.symbols('i_a, i_b, i_c, i_d')
 
 # define os sistema de N equações
-eq1 = sp.Eq(50*ia - 15*ib - 20*ic, 1)             
-eq2 = sp.Eq(30*ia + 60*ib, -0.25)  
-eq3 = sp.Eq(ia + 60*ib, 0.1)  
+eq1 = sp.Eq(-10 + 5*(ia-i_d) + 5*(ia-ib), 0)             
+eq2 = sp.Eq(-5*(ia-ib) + 25*(ib-ic) + 2*(ia-i_d), 0)  
+eq3 = sp.Eq(20*i_d + 5*i_d + 15*ic + 12 -25*(ib-ic) - 5*(ia-i_d), 0)
+eq4 = sp.Eq(ic - i_d, 0.5)
 
 print('Sistema de equações lineares:')
-display(eq1, eq2, eq3) 
+display(eq1, eq2, eq3, eq4) 
 
 # resolve o sistema
-soluc = sp.solve((eq1, eq2, eq3), dict=True)
+soluc = sp.solve((eq1, eq2, eq3, eq4), dict=True)
 soluc = soluc[0]
 
 ia = soluc[ia]
 ib = soluc[ib]
 ic = soluc[ic]
+i_d = soluc[i_d]
 
 print('Solução do sistema:')
 symdisp('i_a =', sp.N(ia,2), 'A')
 symdisp('i_b =', sp.N(ib,2), 'A')
 symdisp('i_c =', sp.N(ic,2), 'A')
+symdisp('i_d =', sp.N(i_d,2), 'A')
+# -
+
+
