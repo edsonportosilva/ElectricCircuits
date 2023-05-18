@@ -7,7 +7,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.0
+#       jupytext_version: 1.13.8
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -18,6 +18,17 @@
 # <a href="https://colab.research.google.com/github/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20El%C3%A9tricos%20I%20-%20Semana%208.2%20-%20Circuitos%20RLC%20de%20segunda%20ordem.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 # + id="q2oERC9xSgCt" outputId="e4fa07da-12ec-4151-ccee-732e9387e59b"
+if 'google.colab' in str(get_ipython()):    
+    # ! git clone -b master https://github.com/edsonportosilva/ElectricCircuits
+    from os import chdir as cd
+    cd('/content/ElectricCircuits/')
+    # ! pip install -e .
+    
+import numpy as np
+import sympy as sp
+from circuit.utils import round_expr, symdisp, symplot
+# -
+
 from IPython.core.display import HTML
 from IPython.display import Image
 HTML("""
@@ -29,16 +40,6 @@ HTML("""
 }
 </style>
 """)
-
-if 'google.colab' in str(get_ipython()):    
-    # ! git clone -b master https://github.com/edsonportosilva/ElectricCircuits
-    from os import chdir as cd
-    cd('/content/ElectricCircuits/')
-    # ! pip install -e .
-    
-import numpy as np
-import sympy as sp
-from circuit.utils import round_expr, symdisp, symplot
 
 # + [markdown] id="zdja3GqYSgCw"
 # # *Circuitos Elétricos I - Semana 8*
@@ -53,6 +54,8 @@ from circuit.utils import round_expr, symdisp, symplot
 # Simulação: https://tinyurl.com/ycnkjnot
 #
 # ### Aplicação das Leis de Kirchhoff 
+#
+# Podemos resolver o circuito determinando qualquer corrente ($i_R$, $i_L$, $i_C$) ou a tensão $v$, que é a mesma para todos os elementos. Sem nenhuma razão particular, vamos escolher a corrente no indutor $i_L$ como sendo a nossa grandeza de interesse. Aplicando LKC, temos que:
 #
 # $$\begin{align}
 #    i_R + i_L + i_C &= i_s\\
@@ -165,6 +168,84 @@ from circuit.utils import round_expr, symdisp, symplot
 # D_{2} &= \frac{1}{L} v_C(t_0^+)+\alpha\left[i_L(t_0^+)-i_L(\infty)\right]
 # \end{align}
 # $$
+# -
+
+# ### Gráficos das respostas
+
+# + hide_input=true
+from math import isclose
+import numpy as np
+import matplotlib.pyplot as plt
+
+def RLCpar(R, L, C, vC_0, iL_0, iL_inf, t):    
+    α = 1/(2*R*C)
+    ω0 = 1/np.sqrt(L*C)
+
+    if isclose(α, ω0, abs_tol=1e-6):
+        D1 = iL_0 - iL_inf 
+        D2 = (1/L)*vC_0 + α*(iL_0 - iL_inf)        
+        iL = D1*np.exp(-α*t) + D2*t*np.exp(-α*t) + iL_inf
+        case = '$α = ω_0$: criticamente amortecido'
+    else:
+        s1 = -α + np.sqrt(α**2 - ω0**2 + 1j*0)
+        s2 = -α - np.sqrt(α**2 - ω0**2 + 1j*0)
+        
+        A1 = ( (1/L)*vC_0 - s2*(iL_0 - iL_inf) )/(s1 - s2)
+        A2 = (-(1/L)*vC_0 + s1*(iL_0 - iL_inf) )/(s1 - s2)
+        
+        iL = A1*np.exp(s1*t) + A2*np.exp(s2*t) + iL_inf
+        iL = np.real(iL)
+        
+        if α > ω0:
+            case = '$α > ω_0$: superamortecido'
+        else:
+            case = '$α < ω_0$: subamortecido'       
+        
+    iL_env = iL_inf + (iL_0 - iL_inf)*np.exp(-α*t)
+        
+    return iL, iL_env, case
+ 
+
+C = 400e-6
+L = 250e-3
+vC_0 = 10
+iL_0 = 0
+iL_inf = 1
+
+t = np.linspace(0, 0.25, 1000)
+
+for R in [50, 12.5, 5]:
+    iL, iL_env, case = RLCpar(R, L, C, vC_0, iL_0, iL_inf, t)
+    plt.plot(t, iL,'-', label=case, linewidth = 3 )    
+
+plt.xlim(min(t), max(t))
+plt.grid()
+plt.xlabel('tempo [s]')
+plt.ylabel('$i_L(t)$ [A]');
+plt.legend(loc='lower right');
+
+# + [markdown] hide_input=true
+# ### As várias maneiras de resolver o circuito RLC em paralelo
+#
+# Na tabela a seguir, temos listadas as equações diferenciais para todas as grandezas de tensão e corrente do circuito. Perceba que a forma da EDO homogênea é a mesma em todos os casos, o que implica que todas as soluções terão comportamentos similares, mudando apenas as condições iniciais de cada grandezas.
+#
+# $$
+# \begin{array}{|c|c|c|}
+# \hline \\
+# \text{Grandeza} & \text{EDO} & \text{Tipo}  & \text{Condições iniciais extraídas do circuito}\\
+# \hline
+# v(t) = v_R(t) = v_L(t) = v_C(t) & \frac{d^2 v}{d t^2}+2 \alpha \frac{d v}{d t}+\omega_0^2 v= 0 & \text{homogênea} & v(t_0^+) = v_C(t_0^+),\; \frac{dv(t_0^+)}{dt} = \frac{i_s}{C}-\frac{v_C(t_0^+)}{RC}-\frac{i_L(t_0^+)}{C} \\
+# \hline
+# i_R(t) & \frac{d^2 i_R}{d t^2}+2 \alpha \frac{d i_R}{d t}+\omega_0^2 i_R = 0 & \text{homogênea} & i_R(t_0^+) = \frac{v_C(t_0^+)}{R},\; \frac{di_R(t_0^+)}{dt} = \frac{1}{RC}[i_s - i_L(t_0^+) - \frac{v_C(t_0^+)}{R}] \\
+# \hline
+# i_C(t) & \frac{d^2 i_C}{d t^2}+2 \alpha \frac{d i_C}{d t}+\omega_0^2 i_C = 0 & \text{homogênea}& i_C(t_0^+) = i_s-\frac{v_C(t_0^+)}{R}-i_L(t_0^+),\; \frac{di_C(t_0^+)}{dt} = -\frac{v_C(t_0^+)}{L}-\frac{di_R(t_0^+)}{dt} \\
+# \hline
+# i_L(t) & \frac{d^2 i_L}{d t^2}+2 \alpha \frac{d i_L}{d t}+\omega_0^2 i_L=i_{\mathrm{s}} \omega_0^2 & \text{não-homogênea}& i_L(t_0^+) = i_L(t_0^+),\; \frac{di_L(t_0^+)}{dt} = \frac{v_C(t_0^+)}{L}\\
+# \hline
+# \end{array}
+# $$
+#
+# Uma vez que a EDO para $i_L(t)$ é a que apresenta as expressões mais simples para as condições iniciais, resolver circuitos RLC em paralelo tende a ser menos trabalhoso se buscarmos determinar sua solução a partir da corrente no indutor.
 
 # + [markdown] id="hLRcb9zCSgCz"
 # ### Problema 1
