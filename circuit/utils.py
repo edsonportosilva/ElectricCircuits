@@ -101,7 +101,7 @@ def genGIF(x, y, figName, xlabel=[], ylabel=[], fram=200, inter=20):
         return (line,)
 
     def animate(i):
-        line.set_data(x[0 : indx[i]], y[0 : indx[i]])
+        line.set_data(x[:indx[i]], y[:indx[i]])
         return (line,)
 
     anim = FuncAnimation(
@@ -208,7 +208,7 @@ def genConvGIF(
         line2.set_data(figx.get_axes()[0].lines[0].get_data())
 
         if plotConv:
-            line3.set_data(totalTime[0 : ind[i]], y_num[0 : ind[i]])
+            line3.set_data(totalTime[:ind[i]], y_num[:ind[i]])
 
         plt.close(figx)
         return line2, line3
@@ -527,59 +527,6 @@ def ΔY(Ra, Rb, Rc):
 
     return R1, R2, R3
 
-
-# funções para auxílio na expansão em frações parciais
-def adjustCoeff(expr, s):
-    """
-    Adjust coefficients of a rational function in s
-
-    Parameters
-    ----------
-    expr : TYPE
-        DESCRIPTION.
-    s : TYPE
-        DESCRIPTION.
-
-    Returns
-    -------
-    TYPE
-        DESCRIPTION.
-
-    """
-    coeff = expr.as_numer_denom()
-    c0 = sp.poly(coeff[1].cancel(), s).coeffs()[0]
-      
-    return (coeff[0].cancel()/c0).simplify()/(coeff[1].cancel()/c0).simplify()
-
-
-def partFrac(expr, s, Ndigits):
-    expr = expr.cancel()
-    expr = apart(adjustCoeff(expr, s), s, full=True).doit()
-    
-    return sp.N(expr, Ndigits)
-
-
-def expandDenom(expr, s, Ndigits=10):
-    
-    coeff = sp.N(adjustCoeff(expr, s), Ndigits).cancel().as_numer_denom()   
-    poles = sp.roots(coeff[1], s)  
-            
-    denom = 1
-    for p in poles:
-        if Ndigits:
-            r = round_expr(p, Ndigits)
-        else:
-            r = p
-        denom *= (s-r)
-                    
-    return coeff[0]/denom
-
-
-# Laplace transform
-def Lap(f,t,s):
-    return sp.laplace_transform(f, t, s, noconds=True)
-
-
-# inverse Laplace transform
-def invLap(F,s,t):
-    return sp.re(sp.inverse_laplace_transform(F, s, t, noconds=True))
+def par(*R):
+    r = sum(1/u for u in R)
+    return 1/r
