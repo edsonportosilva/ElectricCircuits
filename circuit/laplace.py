@@ -11,9 +11,9 @@ def adjustCoeff(expr):
     return (coeff[0].cancel()/c0)/(coeff[1].cancel()/c0)
 
 def expandDenom(expr,  Ndigits):
-    s = sp.symbols('s')
+    s = list(expr.free_symbols)[0]
     coeff = sp.N(adjustCoeff(expr), 20).cancel().as_numer_denom()      
-    poles = sp.roots(coeff[1], s)        
+    poles = sp.nroots(coeff[1])        
         
     denom = 1
     for p in poles:
@@ -23,7 +23,7 @@ def expandDenom(expr,  Ndigits):
     return coeff[0]/denom
 
 def partFrac(expr, Ndigits):
-    s = sp.symbols('s')
+    s = list(expr.free_symbols)[0]
     expr = expr.cancel()
     expr = apart(adjustCoeff(expr), s, full=True).doit()
 
