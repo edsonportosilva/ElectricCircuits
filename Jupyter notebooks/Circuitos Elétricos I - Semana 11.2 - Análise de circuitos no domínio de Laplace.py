@@ -53,28 +53,31 @@ plt.rcParams['legend.fontsize'] = 13
 plt.rcParams['lines.linewidth'] = 2
 plt.rcParams['axes.grid'] = False
 
-
 # + id="Dw_2I2F8V8mM"
-# transformada de Laplace
-def L(f,t,s):
-    return sp.laplace_transform(f, t, s, noconds=True)
+from circuit.laplace import adjustCoeff, expandDenom, partFrac
+from circuit.laplace import laplaceT as L
+from circuit.laplace import invLaplaceT as invL
 
-# transformada inversa de Laplace
-def invL(F,s,t):
-    return sp.re(sp.inverse_laplace_transform(F, s, t, noconds=True))
+# # transformada de Laplace
+# def L(f,t,s):
+#     return sp.laplace_transform(f, t, s, noconds=True)
 
-# funções para auxílio na expansão em frações parciais
-def adjustCoeff(expr):    
-    coeff = expr.as_numer_denom()
-    c0 = sp.poly(coeff[1].cancel()).coeffs()[0]
+# # transformada inversa de Laplace
+# def invL(F,s,t):
+#     return sp.re(sp.inverse_laplace_transform(F, s, t, noconds=True))
+
+# # funções para auxílio na expansão em frações parciais
+# def adjustCoeff(expr):    
+#     coeff = expr.as_numer_denom()
+#     c0 = sp.poly(coeff[1].cancel()).coeffs()[0]
     
-    return (coeff[0].cancel()/c0)/(coeff[1].cancel()/c0)
+#     return (coeff[0].cancel()/c0)/(coeff[1].cancel()/c0)
 
-def partFrac(expr, Ndigits):
-    expr = expr.cancel()
-    expr = apart(adjustCoeff(expr), s, full=True).doit()
+# def partFrac(expr, Ndigits):
+#     expr = expr.cancel()
+#     expr = apart(adjustCoeff(expr), s, full=True).doit()
     
-    return sp.N(expr, Ndigits)
+#     return sp.N(expr, Ndigits)
 
 sp.init_printing()
 
@@ -82,9 +85,10 @@ sp.init_printing()
 # #### Definindo algumas variáveis simbólicas de interesse
 
 # + id="ku-GxaZAV8mO"
-t, s  = sp.symbols('t, s')
-a     = sp.symbols('a', real=True, positive=True)
+s  = sp.symbols('s')
+a, t = sp.symbols('a, t', real=True)
 omega = sp.symbols('omega', real=True)
+u = sp.Heaviside(t)
 
 # + [markdown] id="9aIpp0HdV8mP"
 # # *Circuitos Elétricos I - Semana 11*
@@ -197,7 +201,7 @@ symdisp('I_b(s) =', Ib.simplify(), 'As')
 symdisp('I_a(s) =', Ia.apart(), 'As')
 
 # + id="v00DIDXmV8mU" outputId="a3a83404-7355-401c-c378-da8ab660d3bb"
-t = sp.symbols('t',real=True)
+t = sp.symbols('t',real=True, positive=True)
 
 ia = invL(Ia.apart(),s,t)
 
@@ -236,19 +240,21 @@ symdisp('V_c(s) =', Vc.apart(), 'Vs')
 # d. Determinando $v_a(t)$, $v_b(t)$ e $v_c(t)$.
 
 # + id="nl4SxN48V8mY" outputId="e79c9ac4-49e9-4e2e-e72e-14bd193589ae"
-va = ((-400/9)*sp.exp(-6*t) + (400/9) + (400/3)*t)*sp.Heaviside(t)
+va = invL(Va, s, t)
+va = round_expr(va,2)*u
 
 symdisp('v_a(t) =', round_expr(va,2), 'V')
 
 # + id="vVQqhyUPV8mY" outputId="f65bacb2-667c-4659-c305-1da5225c0434"
-vb = ((800/9)*sp.exp(-6*t) - (800/9) + (400/3)*t)*sp.Heaviside(t)
+vb = invL(Vb, s, t)
+vb = round_expr(vb,2)*u
 
-symdisp('v_b(t) =', round_expr(vb,2), 'V')
+symdisp('v_b(t) =', vb, 'V')
 
 # + id="-yZQ4Q3aV8mY" outputId="3f4612e7-908d-4d4c-fc1b-3dfa41ccc465"
 vc = va
 
-symdisp('v_c(t) =', round_expr(vc,2), 'V')
+symdisp('v_c(t) =', vc, 'V')
 
 # + id="sjtr_EYmV8mY" outputId="9e9983f6-d5c4-4035-9a08-99b6c3d3c08f"
 # plota funções no domínio do tempo
@@ -314,13 +320,14 @@ j = sp.I
 
 F = K/(s + σ + ω*j) + sp.conjugate(K)/(s + σ - ω*j)
 
-symdisp('F(s) =', F)
+symdisp('F(s) =', F.simplify())
 
 # + id="YqiiFk5IV8mb" outputId="226ad186-5ae7-4717-abd1-aab4c8644272"
-symdisp('f(t) =', invL(F,s,t))
+symdisp('f(t) =', sp.re(sp.inverse_laplace_transform(F, s, t).simplify()))
 
 # + id="LjlGrdWkV8mb" outputId="808ed847-ca7e-4271-a4bf-cb2b585dce0d"
-v0 = (35 + sp.exp(-t)*(-5.6*sp.cos(7*t)-1.2*sp.sin(7*t)))*sp.Heaviside(t)
+v0 = invL(V0, s, t)
+v0 = round_expr(v0,2)*u
 
 symdisp('v_0(t) =', v0)
 
@@ -328,3 +335,6 @@ symdisp('v_0(t) =', v0)
 # plota funções no domínio do tempo
 intervalo = np.arange(-4, 10, 0.05)
 symplot(t, v0, intervalo, 'v0(t)')
+# -
+
+
