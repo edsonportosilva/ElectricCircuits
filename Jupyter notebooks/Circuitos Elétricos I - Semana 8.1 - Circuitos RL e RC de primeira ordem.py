@@ -7,7 +7,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.0
+#       jupytext_version: 1.13.8
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -199,10 +199,7 @@ symdisp('p_L(t) = ', round_expr(pL,3), ' μW')
 
 symplot(t, pL, intervalo, funLabel = '$p_L(t)$ [μW]')
 
-# + hide_input=false id="g4RQT4S1UZwM"
-import ipywidgets as widgets
-import IPython.display as display
-
+# + hide_input=true id="g4RQT4S1UZwM"
 img1 = open('./figures/J11C2a.gif', 'rb').read()
 img2 = open('./figures/J11C2b.gif', 'rb').read()
 
