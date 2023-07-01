@@ -2,22 +2,22 @@
 import sympy as sp
 import circuit.utils as cp
 from sympy.polys.partfrac import apart
-        
+from sympy import oo as infty
+
 # funções para auxílio na expansão em frações parciais
 def adjustCoeff(expr):    
-    coeff = expr.as_numer_denom()
-    c0 = sp.poly(coeff[1].cancel()).coeffs()[0]
-    
+    coeff = expr.as_numer_denom()    
+    c0 = sp.poly(coeff[1].cancel()).coeffs()[0]  
     return (coeff[0].cancel()/c0)/(coeff[1].cancel()/c0)
 
 def expandDenom(expr,  Ndigits):
     s = list(expr.free_symbols)[0]
-    coeff = sp.N(adjustCoeff(expr), 20).cancel().as_numer_denom()      
+    coeff = sp.N(adjustCoeff(expr), Ndigits).cancel().as_numer_denom()      
     poles = sp.nroots(coeff[1])        
         
     denom = 1
     for p in poles:
-        r =  cp.round_expr(sp.N(p, 20),  Ndigits)
+        r =  cp.round_expr(sp.N(p, Ndigits),  Ndigits)
         denom *= (s-r)
                     
     return coeff[0]/denom
@@ -26,9 +26,10 @@ def partFrac(expr, Ndigits):
     s = list(expr.free_symbols)[0]
     expr = expr.cancel()
     expr = apart(adjustCoeff(expr), s, full=True).doit()
+    # for f in expr.args:
+    #     g = sum(adjustCoeff(f) )
 
-    g = sum(adjustCoeff(f) for f in expr.args)
-    return sp.N(g, Ndigits)
+    return sp.N(expr, Ndigits)
 
 sp.init_printing()
 
@@ -51,3 +52,11 @@ def invLaplaceT(F, s, t):
             pass    
 
     return f
+
+def tvi(expr):
+    s = list(expr.free_symbols)[0]    
+    return sp.limit(s*expr, s, infty)
+
+def tvf(expr):
+    s = list(expr.free_symbols)[0]    
+    return sp.limit(s*expr, s, 0)
