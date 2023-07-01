@@ -58,27 +58,6 @@ from circuit.laplace import adjustCoeff, expandDenom, partFrac
 from circuit.laplace import laplaceT as L
 from circuit.laplace import invLaplaceT as invL
 
-# # transformada de Laplace
-# def L(f,t,s):
-#     return sp.laplace_transform(f, t, s, noconds=True)
-
-# # transformada inversa de Laplace
-# def invL(F,s,t):
-#     return sp.re(sp.inverse_laplace_transform(F, s, t, noconds=True))
-
-# # funções para auxílio na expansão em frações parciais
-# def adjustCoeff(expr):    
-#     coeff = expr.as_numer_denom()
-#     c0 = sp.poly(coeff[1].cancel()).coeffs()[0]
-    
-#     return (coeff[0].cancel()/c0)/(coeff[1].cancel()/c0)
-
-# def partFrac(expr, Ndigits):
-#     expr = expr.cancel()
-#     expr = apart(adjustCoeff(expr), s, full=True).doit()
-    
-#     return sp.N(expr, Ndigits)
-
 sp.init_printing()
 
 # + [markdown] id="P36uXgAVV8mN"
@@ -335,6 +314,3 @@ symdisp('v_0(t) =', v0)
 # plota funções no domínio do tempo
 intervalo = np.arange(-4, 10, 0.05)
 symplot(t, v0, intervalo, 'v0(t)')
-# -
-
-
