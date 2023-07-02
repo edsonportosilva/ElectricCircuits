@@ -222,7 +222,7 @@ symdisp('V_c(s) =', Vc.apart(), 'Vs')
 va = invL(Va, s, t)
 va = round_expr(va,2)*u
 
-symdisp('v_a(t) =', round_expr(va,2), 'V')
+symdisp('v_a(t) =', va, 'V')
 
 # + id="vVQqhyUPV8mY" outputId="f65bacb2-667c-4659-c305-1da5225c0434"
 vb = invL(Vb, s, t)
