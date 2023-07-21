@@ -15,7 +15,7 @@
 # ---
 
 # + [markdown] colab_type="text" id="view-in-github"
-# <a href="https://colab.research.google.com/github/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20El%C3%A9tricos%20I%20-%20Semana%202.1%20-%20Exerc%C3%ADcios%20com%20fontes%20controladas%20.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+# <a href="https://colab.research.google.com/github/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/2.1%20-%20Exercícios%20com%20fontes%20controladas%20.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 # + id="1h_y-WuzQppc"
 from IPython.core.display import HTML
