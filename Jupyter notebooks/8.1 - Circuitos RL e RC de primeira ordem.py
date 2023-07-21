@@ -51,7 +51,7 @@ HTML("""
 #
 # Os quatro tipos possíveis de circuitos de primeira ordem estão ilustrados na figura abaixo.
 #
-# <img src="https://github.com/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/figures/J11C1.png?raw=1" width="700">
+# <img src="./figures/J11C1.png?raw=1" width="700">
 
 # + [markdown] id="jZgtzIpcUZwH"
 # Lembrando que um circuito de primeira ordem qualquer, com vários resistores e fontes, por exemplo, pode ser reduzido a um dos quatro circuitos acima fazendo $R=R_{th}$, $v_s=v_{th}$ e $i_s=i_{N}$. Logo, desde que o circuito contenha apenas um elemento indutor ou capacitor, a análise de um circuito de primeira ordem deve ser feita primeiramente determinando-se o circuito equivalente de Thévenin ou de Norton conectado aos terminais do elemento em questão.
