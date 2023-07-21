@@ -7,14 +7,14 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.0
+#       jupytext_version: 1.13.8
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
 
-# + [markdown] id="view-in-github" colab_type="text"
+# + [markdown] colab_type="text" id="view-in-github"
 # <a href="https://colab.research.google.com/github/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20El%C3%A9tricos%20I%20-%20Semana%2010%20-%20Exerc%C3%ADcio%20circuito%20RL%20equivalente.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 # + id="ILDj89ZbXcXp"
@@ -27,7 +27,7 @@ if 'google.colab' in str(get_ipython()):
 # + [markdown] id="QyZiYz1zXbe0"
 # # *Circuitos Elétricos I - Semana 10*
 
-# + [markdown] id="1Xabg8wNXbe3"
+# + [markdown] id="1Xabg8wNXbe3" hide_input=true
 # ### Problema 1
 #   
 # (Problema 7.19 - Nilsson) Para o circuito abaixo, pede-se:
