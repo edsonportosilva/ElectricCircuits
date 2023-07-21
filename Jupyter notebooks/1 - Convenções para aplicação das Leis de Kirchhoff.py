@@ -42,7 +42,7 @@ if 'google.colab' in str(get_ipython()):
 # + [markdown] id="Mj2FFoAECmTN"
 # ## 1 - Convenções para aplicação das Leis de Kirchhoff na análise de circuitos
 #
-# Neste notebook faremos um exercício comparativo entre as diferentes convenções que utilizamos na aplicação das Leis de Kirchhoff na análise de circuitos lineares. 
+# Neste notebook, faremos um exercício comparativo entre as diferentes convenções que utilizamos na aplicação das **Leis de Kirchhoff** na análise de circuitos lineares. 
 #
 # Em particular veremos que:
 #
