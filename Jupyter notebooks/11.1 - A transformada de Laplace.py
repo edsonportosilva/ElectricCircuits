@@ -15,7 +15,7 @@
 # ---
 
 # + [markdown] colab_type="text" id="view-in-github"
-# <a href="https://colab.research.google.com/github/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20El%C3%A9tricos%20I%20-%20Semana%2011.1%20-%20A%20transformada%20de%20Laplace.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+# <a href="https://colab.research.google.com/github/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/11.1%20-%20A%20transformada%20de%20Laplace.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 # + id="vJ8NIW-RWasq" outputId="765ec4bf-59fc-4929-fed8-2a5332bb42c2"
 from IPython.core.display import HTML
