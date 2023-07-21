@@ -15,7 +15,7 @@
 # ---
 
 # + [markdown] id="view-in-github" colab_type="text"
-# <a href="https://colab.research.google.com/github/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/Circuitos%20El%C3%A9tricos%20I%20-%20Semana%201%20-%20Conven%C3%A7%C3%B5es%20para%20aplica%C3%A7%C3%A3o%20das%20Leis%20de%20Kirchhoff.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+# <a href="https://colab.research.google.com/github/edsonportosilva/ElectricCircuits/blob/master/Jupyter%20notebooks/1%20-%20Convenções%20para%20aplicação%20das%20Leis%20de%20Kirchhoff.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
 
 # + id="O1lt6sYYCmTJ" outputId="5ad5be9c-8d7c-4992-8832-543efca882c6" colab={"base_uri": "https://localhost:8080/"}
 from IPython.core.display import HTML
