@@ -64,7 +64,7 @@ def plotFunc(t, F, interval, funLabel, xlabel, ylabel):
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
 
-def genGIF(x, y, figName, xlabel=[], ylabel=[], fram=200, inter=20):
+def genGIF(x, y, figName, xlabel=[], ylabel=[], title=[], fram=200, inter=20):
     """
     Create and save a plot animation as GIF
 
@@ -95,6 +95,9 @@ def genGIF(x, y, figName, xlabel=[], ylabel=[], fram=200, inter=20):
 
     if len(ylabel):
         plt.ylabel(ylabel)
+
+    if len(title):
+        plt.title(title)
 
     def init():
         line.set_data([], [])
