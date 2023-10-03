@@ -64,7 +64,7 @@ def plotFunc(t, F, interval, funLabel, xlabel, ylabel):
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
 
-def genGIF(x, y, figName, xlabel=[], ylabel=[], title=[], fram=200, inter=20):
+def genGIF(x, y, figName, xlabel=[], ylabel=[], title=[], plotcols=[], centralAxes=False, squareAxes=False, fram=200, inter=20):
     """
     Create and save a plot animation as GIF
 
@@ -78,15 +78,76 @@ def genGIF(x, y, figName, xlabel=[], ylabel=[], title=[], fram=200, inter=20):
 
     """
     figAnin = plt.figure()
-    ax = plt.axes(
-        xlim=(np.min(x), np.max(x)),
-        ylim=(
-            np.min(y) - 0.1 * np.max(np.abs(y)),
-            np.max(y) + 0.1 * np.max(np.abs(y)),
-        ),
-    )
-    (line,) = ax.plot([], [])
+    
+    #if squareAxes:
+    #plt.axis('square')
+
+    May = np.max(np.abs(y))
+    min_y = np.min(y)
+    max_y = np.max(y)
+
+    Max = np.max(np.abs(x))
+    min_x = np.min(x)
+    max_x = np.max(x)
+
+
+    Max_xy = np.max([np.abs(x), np.abs(y)])
+    min_xy = np.min([x, y])
+    max_xy = np.max([x, y])
+
+    if squareAxes:
+        #plt.axis('equal')
+        ax = plt.axes(            
+            ylim=(
+                 min_xy - 0.1 * Max_xy,
+                 max_xy + 0.1 * Max_xy,
+            ),
+            xlim=(
+                 min_xy - 0.1 * Max_xy,
+                 max_xy + 0.1 * Max_xy,
+            ),
+        )
+    else:
+        ax = plt.axes(
+            xlim=(min_x, max_x),
+            ylim=(
+                min_y - 0.1 * May,
+                max_y + 0.1 * May,
+            ),
+        )
+
+    if not len(plotcols):
+        prop_cycle = plt.rcParams['axes.prop_cycle']
+        colors = prop_cycle.by_key()['color']
+        plotcols= colors[:2]
+    #print(colors)
+
+    lines = []
+    for index in range(2):
+        if index == 0:
+            lobj = ax.plot([],[],lw=2,color=plotcols[index])[0]
+        else:
+            lobj = ax.plot([],[],'o',lw=2,color=plotcols[index])[0]
+        lines.append(lobj)
+
+   # (line,) = ax.plot([], [])
     ax.grid()
+
+    plt.axhline(color='black', lw=1)
+    plt.axvline(color='black', lw=1)
+
+    if centralAxes:
+        # Move left y-axis and bottom x-axis to centre, passing through (0,0)
+        ax.spines['left'].set_position('center')
+        ax.spines['bottom'].set_position('center')
+
+        # Eliminate upper and right axes
+        ax.spines['right'].set_color('none')
+        ax.spines['top'].set_color('none')
+
+        # Show ticks in the left and lower axes only
+        ax.xaxis.set_ticks_position('bottom')
+        ax.yaxis.set_ticks_position('left')
 
     indx = np.arange(0, len(x), int(len(x) / fram))
 
@@ -100,12 +161,18 @@ def genGIF(x, y, figName, xlabel=[], ylabel=[], title=[], fram=200, inter=20):
         plt.title(title)
 
     def init():
-        line.set_data([], [])
-        return (line,)
+        for line in lines:
+            line.set_data([], [])
+        return lines
 
     def animate(i):
-        line.set_data(x[:indx[i]], y[:indx[i]])
-        return (line,)
+        for idx, line in enumerate(lines):
+            if idx == 0:
+                line.set_data(x[:indx[i]], y[:indx[i]])
+            else:
+                line.set_data(x[indx[i]], y[indx[i]])
+
+        return lines
 
     anim = FuncAnimation(
         figAnin,
