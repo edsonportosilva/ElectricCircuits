@@ -32,16 +32,14 @@ def expandDenom(expr,  Ndigits):
 
 #     return sp.N(expr, Ndigits)
 
-def partFrac(F, Ndigits=20, roundPoles=3):
+def partFrac(F, roundPoles=4):
     """
     Expand a rational function in partial fractions.
 
     Parameters
     ----------
     F : sympy expression
-        The rational function to be expanded.
-    Ndigits : int, optional
-        Number of digits to use in numerical evaluation (default is 20).
+        The rational function to be expanded.   
     roundPoles : int, optional
         Number of decimal places to round poles (default is 5).
 
@@ -79,17 +77,17 @@ def partFrac(F, Ndigits=20, roundPoles=3):
     Func = num/den
 
     Fpf = 0
-   
+    
     for ind, p in enumerate(unique_poles):
         if multiplicity[ind] == 1:
             K = (Func*(s-p)).subs({s:p})
-            K = K.simplify()
+            K = K.expand()
             Fpf += K/(s-p)
            
         elif multiplicity[ind] > 1:
             for k in range(multiplicity[ind]):
                 K = sp.diff(Func*(s-p)**multiplicity[ind], s, k).subs({s:p})
-                K = K.simplify()
+                K = K.expand()
                 Fpf += K/(s-p)**(multiplicity[ind]-k)
 
     return Fpf
@@ -101,20 +99,23 @@ def laplaceT(f,t,s):
     return sp.laplace_transform(f, t, s, noconds=True)
 
 # Inverse Laplace transform (via partial fractions)
-def invLaplaceT(F, s, t):
+def invLaplaceT(F, s, t, Ndigits=4):
     
     F = F.simplify()
     F = adjustCoeff(F)
 
-    for Ndigits in range(10, 20):
-        try:
-            F = partFrac(F, Ndigits)
-            f = sum(sp.re(sp.inverse_laplace_transform(u, s, t)) for u in F.args)
-            break
-        except:
-            pass    
+    F = partFrac(F, Ndigits)
+    f = sum(sp.re(sp.inverse_laplace_transform(u, s, t)) for u in F.args)    
 
-    return f
+    # for prec in range(10, 20):
+    #     try:
+    #         F = partFrac(F, prec)
+    #         f = sum(sp.re(sp.inverse_laplace_transform(u, s, t)) for u in F.args)            
+    #         break
+    #     except:
+    #         pass    
+
+    return cp.round_expr(f,Ndigits)
 
 def tvi(expr):
     s = list(expr.free_symbols)[0]    
