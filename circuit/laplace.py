@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import sympy as sp
+import numpy as np
 import circuit.utils as cp
 from sympy.polys.partfrac import apart
 from sympy import oo as infty
@@ -22,14 +23,76 @@ def expandDenom(expr,  Ndigits):
                     
     return coeff[0]/denom
 
-def partFrac(expr, Ndigits):
-    s = list(expr.free_symbols)[0]
-    expr = expr.cancel()
-    expr = apart(adjustCoeff(expr), s, full=True).doit()
-    # for f in expr.args:
-    #     g = sum(adjustCoeff(f) )
+# def partFrac(expr, Ndigits):
+#     s = list(expr.free_symbols)[0]
+#     expr = expr.cancel()
+#     expr = apart(adjustCoeff(expr), s, full=True).doit()
+#     # for f in expr.args:
+#     #     g = sum(adjustCoeff(f) )
 
-    return sp.N(expr, Ndigits)
+#     return sp.N(expr, Ndigits)
+
+def partFrac(F, Ndigits=20, roundPoles=3):
+    """
+    Expand a rational function in partial fractions.
+
+    Parameters
+    ----------
+    F : sympy expression
+        The rational function to be expanded.
+    Ndigits : int, optional
+        Number of digits to use in numerical evaluation (default is 20).
+    roundPoles : int, optional
+        Number of decimal places to round poles (default is 5).
+
+    Returns
+    -------
+    sympy expression
+        The expanded partial fraction form of the input rational function.
+
+    Notes
+    -----
+    This function expands a rational function in partial fractions. It first
+    expands the denominator to identify poles and their multiplicities. Then,
+    it constructs the partial fraction decomposition based on the unique poles
+    and their multiplicities.
+
+    """
+    s = list(F.free_symbols)[0]
+ 
+    num, den = F.as_numer_denom()
+    
+    n = sp.degree(den)    
+    poles = np.round(np.roots(np.asarray(sp.Poly(den.expand(),s).all_coeffs()).astype(np.complex64)), roundPoles)    
+    poles = np.concatenate((poles, np.zeros(n-len(poles))))
+    
+    unique_poles = np.unique(poles)
+    multiplicity = np.zeros(unique_poles.shape, dtype=np.int64)
+        
+    for ind, p in enumerate(unique_poles):
+        multiplicity[ind] = np.count_nonzero(poles==p)
+
+    den = 1
+    for ind, p in enumerate(unique_poles):
+        den *= (s-p)**multiplicity[ind]
+
+    Func = num/den
+
+    Fpf = 0
+   
+    for ind, p in enumerate(unique_poles):
+        if multiplicity[ind] == 1:
+            K = (Func*(s-p)).subs({s:p})
+            K = K.simplify()
+            Fpf += K/(s-p)
+           
+        elif multiplicity[ind] > 1:
+            for k in range(multiplicity[ind]):
+                K = sp.diff(Func*(s-p)**multiplicity[ind], s, k).subs({s:p})
+                K = K.simplify()
+                Fpf += K/(s-p)**(multiplicity[ind]-k)
+
+    return Fpf
 
 sp.init_printing()
 
