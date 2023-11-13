@@ -32,7 +32,7 @@ def expandDenom(expr,  Ndigits):
 
 #     return sp.N(expr, Ndigits)
 
-def partFrac(F, roundPoles=4):
+def partFrac(F, roundPoles=5):
     """
     Expand a rational function in partial fractions.
 
@@ -57,7 +57,8 @@ def partFrac(F, roundPoles=4):
 
     """
     s = list(F.free_symbols)[0]
- 
+
+    F = adjustCoeff(F)
     num, den = F.as_numer_denom()
     
     n = sp.degree(den)    
