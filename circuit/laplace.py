@@ -100,7 +100,7 @@ def laplaceT(f,t,s):
     return sp.laplace_transform(f, t, s, noconds=True)
 
 # Inverse Laplace transform (via partial fractions)
-def invLaplaceT(F, s, t, partialFractions=False, Ndigits=4):
+def invLaplaceT(F, s, t, partialFractions=False, Ndigits=10):
     
     F = F.simplify()
 
