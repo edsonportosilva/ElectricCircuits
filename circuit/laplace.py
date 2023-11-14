@@ -107,6 +107,7 @@ def invLaplaceT(F, s, t, partialFractions=False, Ndigits=4):
     if partialFractions:
         F = adjustCoeff(F)
         F = partFrac(F, Ndigits)
+        F = cp.round_expr(partFrac(F), Ndigits)
         f = sum(sp.re(sp.inverse_laplace_transform(u, s, t)) for u in F.args)
     else:
         try:
