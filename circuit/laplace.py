@@ -100,21 +100,19 @@ def laplaceT(f,t,s):
     return sp.laplace_transform(f, t, s, noconds=True)
 
 # Inverse Laplace transform (via partial fractions)
-def invLaplaceT(F, s, t, Ndigits=4):
+def invLaplaceT(F, s, t, partialFractions=False, Ndigits=4):
     
     F = F.simplify()
-    F = adjustCoeff(F)
 
-    F = partFrac(F, Ndigits)
-    f = sum(sp.re(sp.inverse_laplace_transform(u, s, t)) for u in F.args)    
-
-    # for prec in range(10, 20):
-    #     try:
-    #         F = partFrac(F, prec)
-    #         f = sum(sp.re(sp.inverse_laplace_transform(u, s, t)) for u in F.args)            
-    #         break
-    #     except:
-    #         pass    
+    if partialFractions:
+        F = adjustCoeff(F)
+        F = partFrac(F, Ndigits)
+        f = sum(sp.re(sp.inverse_laplace_transform(u, s, t)) for u in F.args)
+    else:
+        try:
+            f = sp.inverse_laplace_transform(F, s, t, noconds=True)
+        except:
+            f = sp.inverse_laplace_transform(F, s, t)
 
     return cp.round_expr(f,Ndigits)
 
