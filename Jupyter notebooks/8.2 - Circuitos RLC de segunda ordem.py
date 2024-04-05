@@ -113,7 +113,7 @@ HTML("""
 # + [markdown] id="X5_oXX0jSgCy"
 # ### Resposta total 
 #
-# A resposta transiente de circuitos RLC em paralelo, seja ela natural ($i_L(\infty)=0$) ou ao degrau ($i_L(\infty)=i_s$), pode ser classificada nas três casos seguintes. Em todos os casos, assume-se que o transiente teve início no instante $t_0$ (instante do chaveamento).
+# A resposta transiente de circuitos RLC em paralelo, seja ela natural ($i_L(\infty)=0$) ou ao degrau ($i_L(\infty)=i_s$), pode ser classificada nos três casos seguintes. Em todos os casos, assume-se que o transiente teve início no instante $t_0$ (instante do chaveamento) e que imediatamente após a ocorrência do chaveamento são conhecidos a corrente no indutor $i_L(t_0^+)$ e a tensão sobre o capacitor $v_C(t_0^+)$.
 #
 # #### Caso superamortecido ($\alpha>\omega_0\Rightarrow \text{raízes reais e distintas}$):
 #
