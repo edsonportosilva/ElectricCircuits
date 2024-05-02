@@ -7,7 +7,7 @@
 #       extension: .py
 #       format_name: light
 #       format_version: '1.5'
-#       jupytext_version: 1.13.8
+#       jupytext_version: 1.14.5
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
@@ -69,18 +69,20 @@ if 'google.colab' in str(get_ipython()):
 #
 # **Teorema da existência:** se $f(t)$ é uma função contínua por pedaços para $t$ no intervalo $[a,\infty)$ e é exponencial de ordem $\sigma_0$, então a integral de Laplace converge para $\Re{(s)}>a$.
 
-# + id="glp_L3YXWasv"
+# + hide_input=false id="glp_L3YXWasv"
 import matplotlib.pyplot as plt
 import numpy as np
 import sympy as sp
 from circuit.utils import round_expr, symdisp, symplot
+from circuit.laplace import laplaceT as L
+from circuit.laplace import invLaplaceT as invL
 
 # temp workaround
 import warnings
 from matplotlib import MatplotlibDeprecationWarning
 warnings.filterwarnings('ignore', category=MatplotlibDeprecationWarning)
 
-# + id="8HcpowpRWasw"
+# + hide_input=false id="8HcpowpRWasw"
 sp.init_printing()
 
 plt.rcParams['figure.figsize'] = 6, 4
@@ -95,21 +97,10 @@ plt.rcParams['axes.grid'] = False
 t     = sp.symbols('t', real=True)
 s     = sp.symbols('s')
 a     = sp.symbols('a', real=True, positive=True)
-omega = sp.symbols('omega', real=True)
-
+omega = sp.symbols('omega', real=True, positive=True)
 
 # + [markdown] id="8pUxtsHyWasx"
 # ## Transformada de Laplace no Sympy
-
-# + id="l8VpsxZUWasx"
-# transformada de Laplace
-def L(f,t,s):
-    return sp.laplace_transform(f, t, s, noconds=True)
-
-# transformada inversa de Laplace
-def invL(F,s,t):
-    return sp.inverse_laplace_transform(F, s, t, noconds=True)
-
 
 # + id="9F_xzy6TWasy" outputId="1fc41908-c91b-431a-c174-16a69c52d38a"
 help(sp.laplace_transform)
@@ -248,7 +239,7 @@ symdisp('h(t) =', h)
 # + id="CBvHTpl6Was4" outputId="f2e5587e-d043-4b99-9e0e-cea7076c7e61"
 H = L(h,t,s)
 
-symdisp('H(s) =', H)
+symdisp('H(s) =', H.simplify())
 
 # + id="8oh9mcHKWas4" outputId="a981425a-e17e-44e5-de8e-45a9d50fbcc1"
 h1 = invL(H,s,t)
@@ -278,3 +269,207 @@ symdisp('f(t) =', func)
 Fs = [L(f,t,s) for f in func]
 
 symdisp('F(s) =', Fs)
+# -
+
+# ## Proprieadades da transformada de Laplace
+
+# +
+# from circuit.laplace import laplaceT
+
+# +
+f = sp.Function('f', real=True)(t)
+g = sp.Function('g', real=True)(t)
+
+a, b = sp.symbols('a, b', real=True, positive=True)
+n = sp.symbols('n', integer=True, positive=True)
+# -
+
+# ### 1. Linearidade
+
+# + hide_input=false
+H = L(a*f + b*g, t, s)
+
+symdisp('\\mathcal{L}_t[af(t) + bg(t)](s) = ', H)
+
+print('Exemplo:')
+x = sp.exp(-10*t)
+
+y = sp.exp(-2*t)
+
+X = L(x,t,s)
+Y = L(y,t,s)
+
+symdisp('x(t) = ', x)
+symdisp('y(t) = ', y)
+
+symdisp('X(s) = ', X)
+symdisp('Y(s) = ', Y)
+
+symdisp('\\mathcal{L}_t[2x(t) + 3y(t)](s) = ', L(2*x + 3*y,t,s))
+# -
+
+# ### 2. Deslocamento (atraso) no tempo
+
+# + hide_input=true
+a = sp.symbols('a', real=True, positive=True)
+
+H = L(f.subs({t:t-a})*sp.Heaviside(t-a),t,s)
+
+symdisp('\\mathcal{L}_t\\left[f(t-a)\\right](s) = ', H)
+symdisp('a>',0)
+
+print('Exemplo:')
+u = sp.Heaviside(t)
+x = sp.exp(-2*t)*u
+
+y = x.subs({t:t-4})
+
+X = L(x,t,s)
+Y = L(y,t,s)
+
+symdisp('x(t) = ', x)
+symdisp('y(t) = x(t-4) = ', y)
+
+symdisp('X(s) = ', X)
+symdisp('Y(s) = ', Y)
+
+intervalo = np.arange(-1,8, 0.001)
+symplot(t,[x, y], intervalo, ['$x(t)$','$y(t)=x(t-4)u(t-4)$'])
+# -
+
+# ### 3. Amortecimento no tempo
+
+# + hide_input=true
+H = L(sp.exp(-a*t)*f,t,s)
+
+symdisp('\\mathcal{L}_t\\left[e^{-at}f(t)\\right](s) = ', H)
+symdisp('a >',0)
+
+print('Exemplo:')
+u = sp.Heaviside(t)
+x = sp.cos(20*t)*u
+
+y = sp.exp(-t)*x
+
+X = L(x,t,s)
+Y = L(y,t,s)
+
+symdisp('x(t) = ', x)
+symdisp('y(t) = e^{-2t}x(t) = ', y)
+
+symdisp('X(s) = ', X.simplify())
+symdisp('Y(s) = ', Y.simplify())
+
+intervalo = np.arange(-1,8, 0.001)
+symplot(t,[x, y], intervalo, ['$x(t)$','$y(t)=e^{-t}x(t)$'])
+# -
+
+# ### 4. Derivada primeira no tempo
+
+# + hide_input=true
+H = L(sp.diff(f,t,1),t,s)
+
+symdisp('\\mathcal{L}_t\\left[\\frac{df(t)}{dt}\\right](s) = ', H)
+
+print('Exemplo:')
+u = sp.Heaviside(t)
+x = sp.cos(2*t)
+
+y = sp.diff(x,t)
+
+X = L(x,t,s)
+Y = L(y,t,s)
+
+symdisp('x(t) = ', x)
+symdisp('y(t) = \\frac{dx(t)}{dt} = ', y)
+
+symdisp('X(s) = ', X.simplify())
+symdisp('Y(s) = ', Y.simplify())
+
+intervalo = np.arange(-1,8, 0.001)
+symplot(t,[x, y], intervalo, ['$x(t)$','$y(t)=\\frac{dx(t)}{dt}$'])
+# -
+
+# ### 5. Derivada segunda no tempo
+
+# + hide_input=true
+H = L(sp.diff(f,t,2),t,s)
+
+symdisp('\\mathcal{L}_t\\left[\\frac{df^{2}(t)}{dt^{2}}\\right](s) = ', H)
+
+print('Exemplo:')
+u = sp.Heaviside(t)
+x = sp.cos(2*t)
+
+y = sp.diff(x,t,2)
+
+X = L(x,t,s)
+Y = L(y,t,s)
+
+symdisp('x(t) = ', x)
+symdisp('y(t) = \\frac{d^2x(t)}{dt^2} = ', y)
+
+symdisp('X(s) = ', X.simplify())
+symdisp('Y(s) = ', Y.simplify())
+
+intervalo = np.arange(-1,8, 0.001)
+symplot(t,[x, y], intervalo, ['$x(t)$','$y(t)=\\frac{d^2x(t)}{dt^2}$'])
+# -
+
+# ### 6. Mudança de escala no tempo
+
+# + hide_input=true
+a = sp.symbols('a', real=True, positive=True)
+
+H = L(f.subs({t:a*t}),t,s)
+
+symdisp('\\mathcal{L}_t\\left[f(at)\\right](s) = ', H)
+symdisp('a >',0)
+
+print('Exemplo:')
+u = sp.Heaviside(t)
+x = sp.cos(2*t)
+
+y = x.subs({t:5*t})
+
+X = L(x,t,s)
+Y = L(y,t,s)
+
+symdisp('x(t) = ', x)
+symdisp('y(t) = x(5t) = ', y)
+
+symdisp('X(s) = ', X.simplify())
+symdisp('Y(s) = ', Y.simplify())
+
+intervalo = np.arange(-1,8, 0.001)
+symplot(t,[x, y], intervalo, ['$x(t)$','$y(t)=x(5t)$'])
+# -
+
+# ### Expansão em frações parciais
+
+# +
+from circuit.laplace import partFrac
+
+t = sp.symbols('t', real=True, positive=True)
+
+# +
+F = (s+6)/(s*(s + 1)**2*(s + 3))
+
+symdisp('F(s) = ', F)
+
+symdisp('F(s) = ', round_expr(partFrac(F), 2))
+
+f = invL(F, s, t, partialFractions = False).simplify()
+
+symdisp('f(t) = ', round_expr(f,2))
+
+# +
+F = 10*(s+5)/((s+5)**2 + 100)
+
+symdisp('F(s) = ', F)
+
+symdisp('F(s) = ', round_expr(partFrac(F), 2))
+
+f = invL(F, s, t, partialFractions = True).simplify()
+
+symdisp('f(t) = ', round_expr(f,2))
