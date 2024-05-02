@@ -42,8 +42,8 @@ import sympy as sp
 
 from circuit.utils import round_expr, symdisp, symplot
 from circuit.laplace import adjustCoeff, expandDenom, partFrac
-from circuit.laplace import laplaceT as L
-from circuit.laplace import invLaplaceT as invL
+from circuit.laplace import laplaceT as LT
+from circuit.laplace import invLaplaceT as invLT
 
 # temp workaround
 import warnings
@@ -180,7 +180,7 @@ symdisp('I_a(s) =', round_expr(partFrac(Ia),2), 'As')
 # + id="v00DIDXmV8mU" outputId="a3a83404-7355-401c-c378-da8ab660d3bb"
 t = sp.symbols('t',real=True, positive=True)
 
-ia = invL(Ia,s,t, partialFractions=True)
+ia = invLT(Ia,s,t, partialFractions=True)
 
 symdisp('i_a(t) =', round_expr(ia,2), 'A')
 
@@ -188,7 +188,7 @@ symdisp('i_a(t) =', round_expr(ia,2), 'A')
 symdisp('I_b(s) =', round_expr(partFrac(Ib),2), 'As')
 
 # + id="UOF5aQz6V8mU" outputId="84cef58c-4fb4-499e-a20b-17c322da4c56"
-ib = invL(Ib,s,t, partialFractions=True)
+ib = invLT(Ib,s,t, partialFractions=True)
 
 symdisp('i_b(t) =', round_expr(ib,2), 'A')
 
@@ -217,13 +217,13 @@ symdisp('V_c(s) =', round_expr(partFrac(Vc),2), 'Vs')
 # d. Determinando $v_a(t)$, $v_b(t)$ e $v_c(t)$.
 
 # + id="nl4SxN48V8mY" outputId="e79c9ac4-49e9-4e2e-e72e-14bd193589ae"
-va = invL(Va, s, t, partialFractions=True)
+va = invLT(Va, s, t, partialFractions=True)
 va = round_expr(va,2)*u
 
 symdisp('v_a(t) =', va, 'V')
 
 # + id="vVQqhyUPV8mY" outputId="f65bacb2-667c-4659-c305-1da5225c0434"
-vb = invL(Vb, s, t, partialFractions=True)
+vb = invLT(Vb, s, t, partialFractions=True)
 vb = round_expr(vb,2)*u
 
 symdisp('v_b(t) =', vb, 'V')
@@ -303,7 +303,7 @@ symdisp('F(s) =', F.simplify())
 symdisp('f(t) =', sp.re(sp.inverse_laplace_transform(F, s, t).simplify()))
 
 # + id="LjlGrdWkV8mb" outputId="808ed847-ca7e-4271-a4bf-cb2b585dce0d"
-v0 = invL(V0, s, t, partialFractions=True)
+v0 = invLT(V0, s, t, partialFractions=True)
 v0 = round_expr(v0,2)*u
 
 symdisp('v_0(t) =', v0)
@@ -359,11 +359,11 @@ symdisp('V_0(s) =', V2.simplify(), 'Vs')
 V0 = V2
 symdisp('V_0(s) =', partFrac(V0), 'Vs')
 
-# + hide_input=true
-v0 = invL(V0, s, t, partialFractions=True)
+# + hide_input=false
+v0 = invLT(V0, s, t, partialFractions=True)
 symdisp('v_0(t) =', v0, 'V')
 
-# + hide_input=true
+# + hide_input=false
 # plota funções no domínio do tempo
 intervalo = np.arange(-0.25, 2.5, 0.005)
 symplot(t, v0*u, intervalo, '$v_0(t)$')
@@ -412,5 +412,50 @@ V0 = 140 * Ib
 symdisp('V_0(s) = 140I_b(s) = ', V0.simplify(), 'Vs')
 
 # + hide_input=true
-v0 = invL(V0, s, t, partialFractions=True)
+v0 = invLT(V0, s, t, partialFractions=True)
 symdisp('v_0(t) =', v0, 'V')
+# -
+
+# ## Ressonância em circuitos RLC
+
+# +
+s, I = sp.symbols('s, I')
+t = sp.symbols('t', real=True, positive=True)
+
+R = 2
+L = 0.25
+C = 0.25
+
+ω0 = 1/sp.sqrt(L*C)
+
+vg = 10*sp.sin(ω0*t)
+Vg = LT(vg, t, s)
+
+ZL = s*L
+Zc = 1/(s*C)
+
+symdisp('v_g(t) = ', vg)
+symdisp('V_g(s) = ', Vg)
+
+eq = sp.Eq(-Vg + R*I + ZL*I + Zc*I, 0)
+soluc = sp.solve(eq,[I], dict=True)[0]
+
+I = soluc[I]
+symdisp('I(s) =', adjustCoeff(I.simplify()))
+
+# + hide_input=true
+symdisp('I(s) =', round_expr(partFrac(I),5), 'As')
+
+# + hide_input=true
+i = invLT(I, s, t, partialFractions=True)
+vC = invLT(I*Zc, s, t, partialFractions=True)
+vL = invLT(I*ZL, s, t, partialFractions=True)
+
+symdisp('i(t) =', round_expr(i,2), 'A')
+symdisp('v_c(t) =', round_expr(vC,2), 'V')
+symdisp('v_L(t) =', round_expr(vL,2), 'V')
+
+# + hide_input=true
+# plota funções no domínio do tempo
+intervalo = np.arange(-2, 5, 0.05)
+symplot(t, [i*u, vC*u, vL*u], intervalo, ['$i(t)$','$v_C(t)$','$v_L(t)$'])
