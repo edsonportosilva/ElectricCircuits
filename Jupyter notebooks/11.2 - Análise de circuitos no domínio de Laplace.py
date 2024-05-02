@@ -322,7 +322,7 @@ symplot(t, v0, intervalo, '$v_0(t)$')
 
 # **Resolução via tensões de nó**
 
-# +
+# + hide_input=true
 # tensão de nó
 V1, V2, s = sp.symbols('V_1, V_2, s')
 
@@ -346,26 +346,32 @@ soluc = sp.solve([eq1, eq2],[V1, V2], dict=True)[0]
 
 V1 = soluc[V1]
 V2 = soluc[V2]
-# -
 
+# + hide_input=true
+print('Solução do sistema:')
 symdisp('V_1(s) =', V1.simplify(), 'Vs')
 symdisp('V_2(s) =', V2.simplify(), 'Vs')
 
+# + hide_input=true
 symdisp('V_0(s) =', V2.simplify(), 'Vs')
 
+# + hide_input=true
 V0 = V2
 symdisp('V_0(s) =', partFrac(V0), 'Vs')
 
-v0 = invL(V0, s, t, partialFractions=True)*u
+# + hide_input=true
+v0 = invL(V0, s, t, partialFractions=True)
 symdisp('v_0(t) =', v0, 'V')
 
+# + hide_input=true
 # plota funções no domínio do tempo
 intervalo = np.arange(-0.25, 2.5, 0.005)
-symplot(t, v0, intervalo, '$v_0(t)$')
+symplot(t, v0*u, intervalo, '$v_0(t)$')
+# -
 
 #  **Resolução via correntes de malha**
 
-# +
+# + hide_input=true
 # Correntes de malha
 Ia, Ib, Ic, s = sp.symbols('I_a, I_b, I_c, s')
 
@@ -394,14 +400,17 @@ soluc = sp.solve([eq1, eq2, eq3],[Ia, Ib, Ic], dict=True)[0]
 Ia = soluc[Ia]
 Ib = soluc[Ib]
 Ic = soluc[Ic]
-# -
 
+# + hide_input=true
+print('Solução:')
 symdisp('I_a(s) =', Ia.simplify(), 'As')
 symdisp('I_b(s) =', Ib.simplify(), 'As')
 symdisp('I_c(s) =', Ic.simplify(), 'As')
 
+# + hide_input=true
 V0 = 140 * Ib
-symdisp('V_0(s) =', V0.simplify(), 'Vs')
+symdisp('V_0(s) = 140I_b(s) = ', V0.simplify(), 'Vs')
 
-v0 = invL(V0, s, t, partialFractions=True)*u
+# + hide_input=true
+v0 = invL(V0, s, t, partialFractions=True)
 symdisp('v_0(t) =', v0, 'V')
