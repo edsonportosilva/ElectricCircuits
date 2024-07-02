@@ -32,7 +32,7 @@ def round_expr(expr, numDig):
 
 
 # Função para plot de funções do sympy
-def symplot(t, F, interval, funLabel, xlabel="tempo [s]", ylabel=""):
+def symplot(t, F, interval, funLabel, xlabel="tempo [s]", ylabel="", figsize=None):
     """
     Create plots of sympy symbolic functions.
 
@@ -41,7 +41,10 @@ def symplot(t, F, interval, funLabel, xlabel="tempo [s]", ylabel=""):
     :param interval: array of values of t where F should be evaluated [np.array]
     :funLabel: curve label be displayed in the plot [string].
     """
-    fig = plt.figure()
+    if figsize is None:
+        fig = plt.figure()
+    else:
+        fig = plt.figure(figsize=figsize)
     if type(F) == list:
         for indLabel, f in enumerate(F):
             plotFunc(t, f, interval, funLabel[indLabel], xlabel, ylabel)
