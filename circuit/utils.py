@@ -32,7 +32,7 @@ def round_expr(expr, numDig):
 
 
 # Função para plot de funções do sympy
-def symplot(t, F, interval, funLabel, xlabel="tempo [s]", ylabel="", figsize=None):
+def symplot(t, F, interval, funLabel, xlabel=" tempo [s]", ylabel="", figsize=None, xfactor=None, yfactor=None):
     """
     Create plots of sympy symbolic functions.
 
@@ -41,6 +41,12 @@ def symplot(t, F, interval, funLabel, xlabel="tempo [s]", ylabel="", figsize=Non
     :param interval: array of values of t where F should be evaluated [np.array]
     :funLabel: curve label be displayed in the plot [string].
     """
+    if xfactor is None:
+        xfactor = 1
+
+    if yfactor is None:
+        yfactor = 1
+
     if figsize is None:
         fig = plt.figure()
     else:
@@ -49,21 +55,21 @@ def symplot(t, F, interval, funLabel, xlabel="tempo [s]", ylabel="", figsize=Non
         for indLabel, f in enumerate(F):
             plotFunc(t, f, interval, funLabel[indLabel], xlabel, ylabel)
     else:
-        plotFunc(t, F, interval, funLabel, xlabel, ylabel)
+        plotFunc(t, F, interval, funLabel, xlabel, ylabel, xfactor, yfactor)
     plt.grid()
     plt.close()
     return fig
 
 
-def plotFunc(t, F, interval, funLabel, xlabel, ylabel):
+def plotFunc(t, F, interval, funLabel, xlabel, ylabel, xfactor, yfactor):
     func = lambdify(
         t, F, modules=["numpy", {"Heaviside": lambda t: np.heaviside(t, 0)}]
     )
     f_num = func(interval)
 
-    plt.plot(interval, f_num, label=funLabel)
+    plt.plot(interval/xfactor, f_num/yfactor, label=funLabel)
     plt.legend(loc="upper right")
-    plt.xlim([min(interval), max(interval)])
+    plt.xlim([min(interval/xfactor), max(interval/xfactor)])
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
 
