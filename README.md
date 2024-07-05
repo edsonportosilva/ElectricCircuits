@@ -41,7 +41,7 @@ Este repositório contém material de apoio (jupyter notebooks, simulações em 
 ```
 $ git clone https://github.com/edsonportosilva/ElectriCircuits.git
 $ cd ElectriCircuits
-$ python setup.py install
+$ pip install .
 ```
 ## Contato
 * e-mail: edson.silva@dee.ufcg.edu.br
