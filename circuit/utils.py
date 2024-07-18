@@ -7,7 +7,7 @@ from IPython.display import Math, display
 from sympy import lambdify
 from sympy.polys.partfrac import apart
 
-def symdisp(expr, var, unit=" "):
+def symdisp(expr, var=None, unit=" "):
     """
     Display sympy expressions in Latex style.
 
@@ -15,7 +15,10 @@ def symdisp(expr, var, unit=" "):
     :param var: sympy variable, function, expression.
     :param unit: string indicating unit of var [string]
     """
-    display(Math(expr + sp.latex(var) + "\;" + "\mathrm{"+unit+"}"))
+    if var is None:
+        display(Math(expr+ "\mathrm{"+unit+"}"))
+    else:
+        display(Math(expr + sp.latex(var) + "\;" + "\mathrm{"+unit+"}"))
 
 
 # função para arredondamento de floats em expressões simbólicas
