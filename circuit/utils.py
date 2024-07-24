@@ -7,7 +7,7 @@ from IPython.display import Math, display
 from sympy import lambdify
 from sympy.polys.partfrac import apart
 
-def symdisp(expr, var=None, unit=" "):
+def symdisp(expr, var=None, unit=None):
     """
     Display sympy expressions in Latex style.
 
@@ -15,6 +15,9 @@ def symdisp(expr, var=None, unit=" "):
     :param var: sympy variable, function, expression.
     :param unit: string indicating unit of var [string]
     """
+    if unit is None:
+        unit=" ";
+
     if var is None:
         display(Math(expr+ "\mathrm{"+unit+"}"))
     else:
