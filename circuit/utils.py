@@ -58,10 +58,15 @@ def symplot(t, F, interval, funLabel, xlabel=" tempo [s]", ylabel="", figsize=No
     else:
         fig = plt.figure(figsize=figsize)
     if type(F) == list:
-        for indLabel, f in enumerate(F):
-            plotFunc(t, f, interval, funLabel[indLabel], xlabel, ylabel)
+        if type(yfactor) == list:
+            for indLabel, f in enumerate(F):
+                plotFunc(t, f, interval, funLabel[indLabel], xlabel, ylabel, xfactor, yfactor[indLabel])
+        else:
+            for indLabel, f in enumerate(F):
+                plotFunc(t, f, interval, funLabel[indLabel], xlabel, ylabel, xfactor, yfactor)
     else:
         plotFunc(t, F, interval, funLabel, xlabel, ylabel, xfactor, yfactor)
+
     plt.grid()
     plt.close()
     return fig
