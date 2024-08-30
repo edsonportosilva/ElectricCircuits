@@ -7,7 +7,7 @@ from IPython.display import Math, display
 from sympy import lambdify
 from sympy.polys.partfrac import apart
 
-def symdisp(expr, var, unit=" "):
+def symdisp(expr, var=None, unit=None):
     """
     Display sympy expressions in Latex style.
 
@@ -15,7 +15,13 @@ def symdisp(expr, var, unit=" "):
     :param var: sympy variable, function, expression.
     :param unit: string indicating unit of var [string]
     """
-    display(Math(expr + sp.latex(var) + "\;" + "\mathrm{"+unit+"}"))
+    if unit is None:
+        unit=" ";
+
+    if var is None:
+        display(Math(expr+ "\mathrm{"+unit+"}"))
+    else:
+        display(Math(expr + sp.latex(var) + "\;" + "\mathrm{"+unit+"}"))
 
 
 # função para arredondamento de floats em expressões simbólicas
@@ -32,7 +38,7 @@ def round_expr(expr, numDig):
 
 
 # Função para plot de funções do sympy
-def symplot(t, F, interval, funLabel, xlabel="tempo [s]", ylabel=""):
+def symplot(t, F, interval, funLabel, xlabel=" tempo [s]", ylabel="", figsize=None, xfactor=None, yfactor=None):
     """
     Create plots of sympy symbolic functions.
 
@@ -41,26 +47,40 @@ def symplot(t, F, interval, funLabel, xlabel="tempo [s]", ylabel=""):
     :param interval: array of values of t where F should be evaluated [np.array]
     :funLabel: curve label be displayed in the plot [string].
     """
-    fig = plt.figure()
-    if type(F) == list:
-        for indLabel, f in enumerate(F):
-            plotFunc(t, f, interval, funLabel[indLabel], xlabel, ylabel)
+    if xfactor is None:
+        xfactor = 1
+
+    if yfactor is None:
+        yfactor = 1
+
+    if figsize is None:
+        fig = plt.figure()
     else:
-        plotFunc(t, F, interval, funLabel, xlabel, ylabel)
+        fig = plt.figure(figsize=figsize)
+    if type(F) == list:
+        if type(yfactor) == list:
+            for indLabel, f in enumerate(F):
+                plotFunc(t, f, interval, funLabel[indLabel], xlabel, ylabel, xfactor, yfactor[indLabel])
+        else:
+            for indLabel, f in enumerate(F):
+                plotFunc(t, f, interval, funLabel[indLabel], xlabel, ylabel, xfactor, yfactor)
+    else:
+        plotFunc(t, F, interval, funLabel, xlabel, ylabel, xfactor, yfactor)
+
     plt.grid()
     plt.close()
     return fig
 
 
-def plotFunc(t, F, interval, funLabel, xlabel, ylabel):
+def plotFunc(t, F, interval, funLabel, xlabel, ylabel, xfactor, yfactor):
     func = lambdify(
         t, F, modules=["numpy", {"Heaviside": lambda t: np.heaviside(t, 0)}]
     )
     f_num = func(interval)
 
-    plt.plot(interval, f_num, label=funLabel)
+    plt.plot(interval/xfactor, f_num/yfactor, label=funLabel)
     plt.legend(loc="upper right")
-    plt.xlim([min(interval), max(interval)])
+    plt.xlim([min(interval/xfactor), max(interval/xfactor)])
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
 

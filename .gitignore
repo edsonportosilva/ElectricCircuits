@@ -1,6 +1,7 @@
-
 *.pyc
 *.swp
 
+/Jupyter notebooks/.ipynb_checkpoints
+/Jupyter notebooks/Aulas/.ipynb_checkpoints
 /dist
 /CircuitPy.egg-info
