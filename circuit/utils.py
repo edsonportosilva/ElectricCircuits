@@ -19,11 +19,11 @@ def set_preferences():
     rc('font',**{'family':'serif','serif':['Times']})
     rc('text', usetex=True)
 
-    plt.rcParams['axes.facecolor'] = 'lightcyan'
-    plt.rcParams['figure.dpi'] = 200
+    plt.rcParams['axes.facecolor'] = 'whitesmoke'
+    plt.rcParams['figure.dpi'] = 220
     plt.rcParams['figure.figsize'] = (16/5,9/5)
 
-    plt.rcParams['axes.labelsize'] = 12
+    plt.rcParams['axes.labelsize'] = 9
     plt.rcParams['xtick.labelsize'] = 9
     plt.rcParams['ytick.labelsize'] = 9
     plt.rcParams['legend.fontsize'] = 10
@@ -124,7 +124,7 @@ def plotFunc(t, F, interval, funLabel, xlabel, ylabel, xfactor, yfactor):
     plt.plot(interval/xfactor, f_num/yfactor, label=funLabel)
     plt.legend()
     plt.xlim([min(interval/xfactor), max(interval/xfactor)])
-    plt.xlabel(xlabel)
+    plt.xlabel(f'${xlabel}$')
     plt.ylabel(ylabel)
 
 def genGIF(x, y, figName, xlabel=[], ylabel=[], title=[], plotcols=[], centralAxes=False, squareAxes=False, fram=200, inter=20):
