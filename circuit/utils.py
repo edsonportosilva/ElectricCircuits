@@ -19,18 +19,19 @@ def set_preferences():
     rc('font',**{'family':'serif','serif':['Times']})
     rc('text', usetex=True)
 
+    plt.rcParams['axes.facecolor'] = 'lightcyan'
     plt.rcParams['figure.dpi'] = 200
-    plt.rcParams['figure.figsize'] = (5,2.5)
+    plt.rcParams['figure.figsize'] = (16/5,9/5)
 
     plt.rcParams['axes.labelsize'] = 12
     plt.rcParams['xtick.labelsize'] = 9
     plt.rcParams['ytick.labelsize'] = 9
-    plt.rcParams['legend.fontsize'] = 12
+    plt.rcParams['legend.fontsize'] = 10
     plt.rcParams['font.size'] = 10
 
     plt.rcParams['axes.linewidth'] =  0.5
     plt.rcParams['grid.linewidth'] =  0.5
-    plt.rcParams['lines.linewidth'] =  0.5
+    plt.rcParams['lines.linewidth'] =  1
     plt.rcParams['lines.markersize'] =  2
                     
     # Grid lines
@@ -39,7 +40,7 @@ def set_preferences():
     plt.rcParams['grid.linestyle'] =  'dashed'
     plt.rcParams['grid.color'] =   'k'
     plt.rcParams['grid.alpha'] =   0.25
-    plt.rcParams['grid.linewidth'] =   0.5
+    plt.rcParams['grid.linewidth'] =   0.25
 
     # Legend
     plt.rcParams['legend.frameon'] =   False
@@ -121,7 +122,7 @@ def plotFunc(t, F, interval, funLabel, xlabel, ylabel, xfactor, yfactor):
     f_num = func(interval)
 
     plt.plot(interval/xfactor, f_num/yfactor, label=funLabel)
-    plt.legend(loc="upper right")
+    plt.legend()
     plt.xlim([min(interval/xfactor), max(interval/xfactor)])
     plt.xlabel(xlabel)
     plt.ylabel(ylabel)
