@@ -62,9 +62,9 @@ def symdisp(expr, var=None, unit=None):
         unit=" ";
 
     if var is None:
-        display(Math(expr+ "\mathrm{"+unit+"}"))
+        display(Math(expr+ "\\mathrm{"+unit+"}"))
     else:
-        display(Math(expr + sp.latex(var) + "\;" + "\mathrm{"+unit+"}"))
+        display(Math(expr + sp.latex(var) + "\\;" + "\\mathrm{"+unit+"}"))
 
 
 # função para arredondamento de floats em expressões simbólicas
