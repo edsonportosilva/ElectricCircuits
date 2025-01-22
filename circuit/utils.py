@@ -54,9 +54,19 @@ def symdisp(expr, var=None, unit=None):
     """
     Display sympy expressions in Latex style.
 
-    :param expr: expression in latex [string]
-    :param var: sympy variable, function, expression.
-    :param unit: string indicating unit of var [string]
+    Parameters
+    ----------
+    expr : str
+        Expression in latex format.
+    var : sympy.core.basic.Basic, optional
+        Sympy variable, function, or expression. Default is None.
+    unit : str, optional
+        String indicating the unit of `var`. Default is None.
+
+    Returns
+    -------
+    None
+        
     """
     if unit is None:
         unit=" ";
@@ -70,12 +80,20 @@ def symdisp(expr, var=None, unit=None):
 # função para arredondamento de floats em expressões simbólicas
 def round_expr(expr, numDig):
     """
-    Rounds numerical values in sympy expressions
+    Round numerical values in sympy expressions.
 
-    :param expr: sympy symbolic expression
-    :param numDig: number of rounding decimals
-
-    :return: rounded expression
+    Parameters
+    ----------
+    expr : sympy.core.basic.Basic
+        Sympy expression.
+    numDig : int
+        Number of decimal places.
+    
+    Returns
+    -------
+    sympy.core.basic.Basic
+        Expression with numerical values rounded to `numDig` decimal places.
+        
     """
     return expr.xreplace({n: round(n, numDig) for n in expr.atoms(sp.Number)})
 
@@ -83,12 +101,33 @@ def round_expr(expr, numDig):
 # Função para plot de funções do sympy
 def symplot(t, F, interval, funLabel, xlabel=" tempo [s]", ylabel="", figsize=None, xfactor=None, yfactor=None):
     """
-    Create plots of sympy symbolic functions.
+    Plot sympy expressions.
 
-    :param t: sympy variable
-    :param F: sympy function F(t)
-    :param interval: array of values of t where F should be evaluated [np.array]
-    :funLabel: curve label be displayed in the plot [string].
+    Parameters
+    ----------
+    t : sympy.core.symbol.Symbol
+        Time variable.
+    F : sympy.core.basic.Basic
+        Sympy expression.
+    interval : np.array
+        Time interval.
+    funLabel : str
+        Label for the function.
+    xlabel : str, optional
+        Label for the x-axis. Default is " tempo [s]".
+    ylabel : str, optional
+        Label for the y-axis. Default is "".
+    figsize : tuple, optional
+        Figure size. Default is None.
+    xfactor : float, optional
+        Factor to scale the x-axis. Default is None.
+    yfactor : float, optional
+        Factor to scale the y-axis. Default is None.
+
+    Returns 
+    -------
+    matplotlib.figure.Figure
+        Figure object.
     """
     if xfactor is None:
         xfactor = 1
@@ -116,6 +155,34 @@ def symplot(t, F, interval, funLabel, xlabel=" tempo [s]", ylabel="", figsize=No
 
 
 def plotFunc(t, F, interval, funLabel, xlabel, ylabel, xfactor, yfactor):
+    """
+    Plots a given function F over a specified interval.
+
+    Parameters
+    ----------
+
+    t : sympy.Symbol
+        The symbolic variable used in the function F.
+    F : sympy.Expr
+        The symbolic expression representing the function to be plotted.
+    interval : numpy.ndarray
+        The range of values over which to evaluate and plot the function.
+    funLabel : str
+        The label for the function to be used in the plot legend.
+    xlabel : str
+        The label for the x-axis of the plot.
+    ylabel : str
+        The label for the y-axis of the plot.
+    xfactor : float
+        The factor by which to scale the x-axis values.
+    yfactor : float
+        The factor by which to scale the y-axis values.
+    
+    Returns
+    -------
+    None
+
+    """    
     func = lambdify(
         t, F, modules=["numpy", {"Heaviside": lambda t: np.heaviside(t, 0)}]
     )
@@ -127,17 +194,38 @@ def plotFunc(t, F, interval, funLabel, xlabel, ylabel, xfactor, yfactor):
     plt.xlabel(f'${xlabel}$')
     plt.ylabel(ylabel)
 
-def genGIF(x, y, figName, xlabel=[], ylabel=[], title=[], plotcols=[], centralAxes=False, squareAxes=False, fram=200, inter=20):
+def genGIF(x, y, figName, xlabel=[], ylabel=[], title=[], plotcols=[], centralAxes=False, squareAxes=False, fram=200, inter=20):    
     """
-    Create and save a plot animation as GIF
+    Create and save a plot animation as GIF.
 
-    :param x: x-axis values [np array]
-    :param y: y-axis values [np array]
-    :param figName: figure file name w/ folder path [string]
-    :param xlabel: xlabel [string]
-    :param ylabel: ylabel [string]
-    :param fram: number of frames [int]
-    :param inter: time interval between frames [milliseconds]
+    Parameters
+    ----------
+    x : np.array
+        x-axis values.
+    y : np.array
+        y-axis values.
+    figName : str
+        Figure file name with folder path.
+    xlabel : str, optional
+        Label for the x-axis. Defaults to an empty list.
+    ylabel : str, optional
+        Label for the y-axis. Defaults to an empty list.
+    title : str, optional
+        Title of the plot. Defaults to an empty list.
+    plotcols : list, optional
+        List of colors for the plot lines. Defaults to an empty list.
+    centralAxes : bool, optional
+        If True, moves the axes to the center. Defaults to False.
+    squareAxes : bool, optional
+        If True, sets the axes to be square. Defaults to False.
+    fram : int, optional
+        Number of frames in the animation. Defaults to 200.
+    inter : int, optional
+        Time interval between frames in milliseconds. Defaults to 20.
+
+    Returns
+    -------
+    None
 
     """
     figAnin = plt.figure()
@@ -249,7 +337,7 @@ def genGIF(x, y, figName, xlabel=[], ylabel=[], title=[], plotcols=[], centralAx
     anim.save(figName, dpi=200, writer="imagemagick")
     plt.close()
 
-def genConvGIF(
+def genConvGIF(    
     x,
     h,
     t,
@@ -264,20 +352,39 @@ def genConvGIF(
     plotConv=False,
 ):
     """
-    Create and save a convolution plot animation as GIF
+    Generate a GIF animation of the convolution of two functions.
 
-    :param x: x(t) function [sympy expr]
-    :param h: h(t) function [sympy expr]
-    :param t: t time variable [sympy variable]
-    :param totalTime: array of time instants where the functions will be evaluated [nparray]
-    :param ti: time when animation starts [scalar]
-    :param tf: time when animation stops [scalar]
-    :param figName: figure file name w/ folder path [string]
-    :param xlabel: xlabel [string]
-    :param ylabel: ylabel [string]
-    :param fram: number of frames [int]
-    :param inter: time interval between frames [milliseconds]
-
+    Parameters
+    ----------
+    x : sympy.Expr
+        The first function to be convolved.
+    h : sympy.Expr
+        The second function to be convolved.
+    t : sympy.Symbol
+        The time variable.
+    totalTime : numpy.ndarray
+        Array of time values over which the functions are evaluated.
+    ti : float
+        Initial time for the animation.
+    tf : float
+        Final time for the animation.
+    figName : str
+        The name of the output GIF file.
+    xlabel : list, optional
+        List of labels for the x-axis (default is []).
+    ylabel : list, optional
+        List of labels for the y-axis (default is []).
+    fram : int, optional
+        Number of frames in the animation (default is 200).
+    inter : int, optional
+        Interval between frames in milliseconds (default is 20).
+    plotConv : bool, optional
+        Whether to plot the convolution result (default is False).
+    
+    Returns
+    -------
+    None
+    
     """
     x_func = lambdify(
         t, x, modules=["numpy", {"Heaviside": lambda t: np.heaviside(t, 0)}]
@@ -358,22 +465,34 @@ def genConvGIF(
     anim.save(figName, dpi=200, writer="imagemagick")
     plt.close()
 
-def responseRL(i_t0, i_inf, t0, R, L):
+def responseRL(i_t0, i_inf, t0, R, L):    
     """
-    Symbolically solves the transient response of an RL circuit
+    Calculate the current and voltage response of an RL circuit.
 
-    :param R: resistance.
-    :param L: inductance.
-    :param t0: initial time instant.
-    :param i_t0: inductor's current value at t0.
-    :param i_inf: inductor's current final value.
-    
-    :return iL(t): inductor's current.
-    :return vL(t): inductor's voltage.
-    :return τ: RL circuit time constant.
-    :return t: symbolic time variable.
-    
-    """
+    Parameters
+    ----------
+    i_t0 : float
+        Initial current through the inductor at time t0.
+    i_inf : float
+        Steady-state current through the inductor as time approaches infinity.
+    t0 : float
+        Initial time.
+    R : float
+        Resistance in ohms.
+    L : float
+        Inductance in henrys.
+
+    Returns
+    ------- 
+    iL : sympy.Expr
+        Current through the inductor as a function of time.
+    vL : sympy.Expr
+        Voltage across the the inductor as a function of time.
+    τ : float
+        Time constant of the RL circuit.
+    t : sympy.Symbol
+        Symbolic time variable.
+    """    
     t = sp.symbols("t", real=True)
     τ = L / R
 
@@ -392,19 +511,31 @@ def responseRL(i_t0, i_inf, t0, R, L):
 
 def responseRC(v_t0, v_inf, t0, R, C):
     """
-    Symbolically solves the transient response of an RC circuit
+    Symbolically solves the transient response of an RC circuit.
 
-    :param R: resistance.
-    :param C: capacitance.
-    :param t0: initial time instant.
-    :param v_t0: capacitor's voltage value at t0.
-    :param v_inf: capacitor's voltage final value.
-    
-    :return vC(t): capacitor's voltage.
-    :return iC(t): capacitor's current.
-    :return τ: RC circuit time constant.
-    :return t: symbolic time variable.
-    
+    Parameters
+    ----------
+    v_t0 : float
+        Initial voltage across the capacitor.
+    v_inf : float
+        Final voltage across the capacitor.
+    t0 : float
+        Initial time instant.
+    R : float
+        Resistance.
+    C : float
+        Capacitance.
+
+    Returns
+    -------
+    vC : sympy.Expr
+        Voltage across the capacitor as a function of time.
+    iC : sympy.Expr
+        Current through the capacitor as a function of time.
+    τ : float
+        Time constant of the RC circuit.
+    t : sympy.Symbol
+        Symbolic time variable.
     """
     t = sp.symbols("t", real=True)
     τ = R * C
@@ -425,21 +556,38 @@ def responseRC(v_t0, v_inf, t0, R, C):
 def responseRLCpar(vC_t0, iL_t0, iL_inf, t0, R, L, C):
     """
     Symbolically solves the transient response of a parallel RLC circuit
+  
+    Parameters
+    ----------
+    vC_t0 : float
+        Capacitor's voltage value at t0.
+    iL_t0 : float
+        Inductor's current value at t0.
+    iL_inf : float
+        Inductor's current final value.
+    t0 : float
+        Initial time instant.
+    R : float
+        Resistance.
+    L : float
+        Inductance.
+    C : float
+        Capacitance.
 
-    :param R: resistance.
-    :param L: inductance.
-    :param C: capacitance.
-    :param t0: initial time instant.
-    :param vC_t0: capacitor's voltage value at t0.
-    :param iL_t0: inductor's current value at t0.
-    :param i_inf: inductor's current final value.
-    
-    :return α: Neper's frequency.
-    :return ω0: resonant frequency.
-    :return iL(t): inductor's current.
-    :return vC(t): capacitor's voltage.
-    :return resp.: type of response.
-    
+    Returns
+    -------
+    α : float
+        Neper's frequency.
+    ω0 : float
+        Resonant frequency.
+    iL(t) : sympy.Expr
+        Inductor's current.
+    vC(t) : sympy.Expr
+        Capacitor's voltage.
+    resp : str
+        Type of response.
+    t : sympy.Symbol
+        Symbolic time variable.
     """
     α = 1 / (2 * R * C)
     ω0 = 1 / np.sqrt(L * C)
@@ -513,19 +661,37 @@ def responseRLCser(vC_t0, iL_t0, vC_inf, t0, R, L, C):
     """
     Symbolically solves the transient response of a series RLC circuit
 
-    :param R: resistance.
-    :param L: inductance.
-    :param C: capacitance.
-    :param t0: initial time instant.
-    :param vC_t0: capacitor's voltage value at t0.
-    :param iL_t0: inductor's current value at t0.
-    :param vC_inf: capacitor's voltage final value.
-    
-    :return vC(t): capacitor's voltage.
-    :return iL(t): inductor's current.
-    :return resp.: type of response. 
-    :return α: Neper's frequency.
-    :return ω0: resonant frequency.
+    Parameters
+    ----------
+    vC_t0 : float
+        Capacitor's voltage value at t0.
+    iL_t0 : float
+        Inductor's current value at t0.
+    vC_inf : float
+        Capacitor's voltage final value.
+    t0 : float
+        Initial time instant.
+    R : float
+        Resistance.
+    L : float
+        Inductance.
+    C : float
+        Capacitance.
+
+    Returns
+    -------
+    α : float
+        Neper's frequency.
+    ω0 : float
+        Resonant frequency.
+    iL(t) : sympy.Expr
+        Inductor's current.
+    vC(t) : sympy.Expr
+        Capacitor's voltage.
+    resp : str
+        Type of response.
+    t : sympy.Symbol
+        Symbolic time variable.
     
     """
     α = R / (2 * L)
@@ -598,23 +764,36 @@ def responseRLCser(vC_t0, iL_t0, vC_inf, t0, R, L, C):
 
 def responseRLCser_num(R, L, C, vC_t0, iL_t0, Vs, t):
     """
-    Numerically solves the transient response of a series RLC circuit
+    Numerically solves the transient response of a series RLC circuit.
 
-    :param R: resistance.
-    :param L: inductance.
-    :param C: capacitance.
-    :param vC_t0: capacitor's voltage value at t0.
-    :param iL_t0: inductor's current value at t0.
-    :param Vs: numpy array with the voltage source amplitude from t0 to t_final.
-    :param t: numpy array with time values from t0 to t_final.
+    Parameters
+    ----------
+    R : float
+        Resistance value.
+    L : float
+        Inductance value.
+    C : float
+        Capacitance value.
+    vC_t0 : float
+        Initial voltage across the capacitor.
+    iL_t0 : float
+        Initial current through the inductor.
+    Vs : np.array
+        Source voltage as a function of time.
+    t : np.array
+        Time array.
 
-    :return i(t):  numpy array with the circuit's current.
-    :return vR(t): numpy array with the resistor's voltage.
-    :return vL(t): numpy array with the inductor's voltage.
-    :return vC(t): numpy array with the capacitor's voltage.
-        
+    Returns
+    -------
+    i : np.array
+        Current through the circuit.
+    vR : np.array
+        Voltage across the resistor.
+    vL : np.array
+        Voltage across the inductor.
+    vC : np.array
+        Voltage across the capacitor.
     """
-
     vC = np.zeros(t.shape)
     x = np.zeros(t.shape)
 
@@ -642,7 +821,27 @@ def responseRLCser_num(R, L, C, vC_t0, iL_t0, Vs, t):
 
 
 def YΔ(R1, R2, R3):
+    """
+    Convert a Y network to a Δ network.
 
+    Parameters
+    ----------
+    R1 : float
+        Resistance of the first branch.
+    R2 : float
+        Resistance of the second branch.
+    R3 : float
+        Resistance of the third branch.
+
+    Returns
+    -------
+    Ra : float
+        Resistance of the first branch in the Δ network.
+    Rb : float
+        Resistance of the second branch in the Δ network.
+    Rc : float
+        Resistance of the third branch in the Δ network.
+    """
     x = R1 * R2 + R2 * R3 + R3 * R1
     Ra = x / R1
     Rb = x / R2
@@ -652,7 +851,27 @@ def YΔ(R1, R2, R3):
 
 
 def ΔY(Ra, Rb, Rc):
+    """
+    Convert a Δ network to a Y network.
 
+    Parameters
+    ----------
+    Ra : float
+        Resistance of the first branch in the Δ network.
+    Rb : float
+        Resistance of the second branch in the Δ network.
+    Rc : float
+        Resistance of the third branch in the Δ network.
+
+    Returns
+    -------
+    R1 : float
+        Resistance of the first branch.
+    R2 : float
+        Resistance of the second branch.
+    R3 : float
+        Resistance of the third branch.
+    """
     x = Ra + Rb + Rc
     R1 = (Rb * Rc) / x
     R2 = (Ra * Rc) / x
@@ -661,5 +880,18 @@ def ΔY(Ra, Rb, Rc):
     return R1, R2, R3
 
 def par(*R):
+    """
+    Calculate the equivalent resistance of resistors in parallel.
+
+    Parameters
+    ----------
+    R : float
+        Resistances in parallel.
+    
+    Returns
+    -------
+    float
+        Equivalent resistance.
+    """
     r = sum(1/u for u in R)
     return 1/r
