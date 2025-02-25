@@ -6,6 +6,7 @@ from matplotlib.animation import FuncAnimation
 from matplotlib import rc
 from IPython.display import Math, display
 from sympy import lambdify
+from scipy.signal import find_peaks
 
 def set_preferences():
     """
@@ -187,6 +188,11 @@ def plotFunc(t, F, interval, funLabel, xlabel, ylabel, xfactor, yfactor):
         t, F, modules=["numpy", {"Heaviside": lambda t: np.heaviside(t, 0)}]
     )
     f_num = func(interval)
+
+    # make sure discontinuities are not plotted
+    f_diff = np.abs(np.diff(f_num))   
+    peaks, _ = find_peaks(f_diff, width=[1,2],height=0)
+    f_num[peaks] = np.nan
 
     plt.plot(interval/xfactor, f_num/yfactor, label=funLabel)
     plt.legend()
