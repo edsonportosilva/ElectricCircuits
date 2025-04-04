@@ -191,7 +191,7 @@ def plotFunc(t, F, interval, funLabel, xlabel, ylabel, xfactor, yfactor):
 
     # make sure discontinuities are not plotted
     f_diff = np.abs(np.diff(f_num))   
-    peaks, _ = find_peaks(f_diff, width=[1,2],height=0)
+    peaks, _ = find_peaks(f_diff, width=[0,2],height=0)
     f_num[peaks] = np.nan
 
     plt.plot(interval/xfactor, f_num/yfactor, label=funLabel)
