@@ -12,16 +12,42 @@ def adjustCoeff(expr):
     return (coeff[0].cancel()/c0)/(coeff[1].cancel()/c0)
 
 def expandDenom(expr,  Ndigits):
+    """
+    Expands the denominator and numerator of a given symbolic expression into 
+    their factored forms based on the poles and zeros of the expression.
+
+    Parameters
+    ----------  
+    expr : sympy.Expr
+        The symbolic expression to be expanded. It is expected to be a 
+        rational function of a single variable (e.g., 's').
+    Ndigits : int
+        The number of significant digits to use when rounding the poles 
+        and zeros of the expression.
+
+    Returns
+    -------
+        Sympy expression
+        The expanded expression in terms of the poles and zeros of the
+        original expression.
+    """
     s = list(expr.free_symbols)[0]
     coeff = sp.N(adjustCoeff(expr), Ndigits).cancel().as_numer_denom()      
-    poles = sp.nroots(coeff[1])        
-        
+    poles = sp.nroots(coeff[1])
+    zeros = sp.nroots(coeff[0])        
+    b0 = sp.poly(coeff[0].cancel()).coeffs()[0]
+
     denom = 1
+    numerator = 1
+    for z in zeros:
+        r =  cp.round_expr(sp.N(z, Ndigits),  Ndigits)
+        numerator *= (s-r)
+
     for p in poles:
         r =  cp.round_expr(sp.N(p, Ndigits),  Ndigits)
         denom *= (s-r)
                     
-    return coeff[0]/denom
+    return b0*numerator/denom
 
 # def partFrac(expr, Ndigits):
 #     s = list(expr.free_symbols)[0]
