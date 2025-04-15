@@ -7,6 +7,22 @@ from sympy import oo as infty
 
 # funções para auxílio na expansão em frações parciais
 def adjustCoeff(expr):    
+    """
+    Adjusts the coefficients of a given symbolic expression to ensure that the
+    leading coefficient of the denominator is 1. This is useful for simplifying
+    the expression before performing operations like partial fraction decomposition.
+
+    Parameters
+    ----------
+    expr : sympy.Expr
+        The symbolic expression to be adjusted. It is expected to be a rational
+        function of a single variable (e.g., 's').
+    
+    Returns
+    -------
+    sympy.Expr
+        The adjusted expression with the leading coefficient of the denominator set to 1.
+    """
     coeff = expr.as_numer_denom() 
     try:
         c0 = sp.poly(coeff[1].cancel()).coeffs()[0]  
@@ -64,15 +80,6 @@ def expandDenom(expr,  Ndigits):
         denom *= (s-r)
                     
     return b0*numerator/denom
-
-# def partFrac(expr, Ndigits):
-#     s = list(expr.free_symbols)[0]
-#     expr = expr.cancel()
-#     expr = apart(adjustCoeff(expr), s, full=True).doit()
-#     # for f in expr.args:
-#     #     g = sum(adjustCoeff(f) )
-
-#     return sp.N(expr, Ndigits)
 
 def partFrac(F, roundPoles=5):
     """
@@ -139,11 +146,57 @@ sp.init_printing()
 
 # Laplace transform
 def laplaceT(f,t,s):
+    """
+    Computes the Laplace transform of a given function.
+
+    Parameters:
+    -----------
+    f : sympy.Expr
+        The function to be transformed.
+    t : sympy.Symbol
+        The time domain variable.
+    s : sympy.Symbol
+        The Laplace domain variable.
+    Returns:
+    --------
+    sympy.Expr
+        The Laplace-transformed function.    
+    """    
     return sp.laplace_transform(f, t, s, noconds=True)
 
 # Inverse Laplace transform (via partial fractions)
 def invLaplaceT(F, s, t, partialFractions=False, Ndigits=10):
-    
+    """
+    Computes the inverse Laplace transform of a given function.
+    Parameters:
+    -----------
+    F : sympy.Expr
+        The Laplace-transformed function to be inverted.
+    s : sympy.Symbol
+        The Laplace domain variable.
+    t : sympy.Symbol
+        The time domain variable.
+    partialFractions : bool, optional
+        If True, performs partial fraction decomposition on the input function
+        before computing the inverse Laplace transform. Default is False.
+    Ndigits : int, optional
+        The number of significant digits to round the result to. Default is 10.
+    Returns:
+    --------
+    sympy.Expr
+        The time-domain function obtained by applying the inverse Laplace transform.
+    Notes:
+    ------
+    - If `partialFractions` is True, the function applies partial fraction decomposition
+      and simplifies the coefficients before computing the inverse Laplace transform.
+    - If the inverse Laplace transform cannot be computed directly, the function attempts
+      to compute it with conditions.
+    - The result is rounded to the specified number of significant digits using `cp.round_expr`.
+    Raises:
+    -------
+    Exception
+        If the inverse Laplace transform computation fails.
+    """
     F = F.simplify()
 
     if partialFractions:
