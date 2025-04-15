@@ -7,8 +7,12 @@ from sympy import oo as infty
 
 # funções para auxílio na expansão em frações parciais
 def adjustCoeff(expr):    
-    coeff = expr.as_numer_denom()    
-    c0 = sp.poly(coeff[1].cancel()).coeffs()[0]  
+    coeff = expr.as_numer_denom() 
+    try:
+        c0 = sp.poly(coeff[1].cancel()).coeffs()[0]  
+    except:
+        c0 = coeff[1]
+        
     return (coeff[0].cancel()/c0)/(coeff[1].cancel()/c0)
 
 def expandDenom(expr,  Ndigits):
@@ -32,10 +36,22 @@ def expandDenom(expr,  Ndigits):
         original expression.
     """
     s = list(expr.free_symbols)[0]
-    coeff = sp.N(adjustCoeff(expr), Ndigits).cancel().as_numer_denom()      
-    poles = sp.nroots(coeff[1])
-    zeros = sp.nroots(coeff[0])        
-    b0 = sp.poly(coeff[0].cancel()).coeffs()[0]
+    coeff = sp.N(adjustCoeff(expr), Ndigits).cancel().as_numer_denom()
+
+    try:      
+        poles = sp.nroots(coeff[1])
+    except:
+        poles = []
+
+    try:
+        zeros = sp.nroots(coeff[0])        
+    except:
+        zeros = []
+
+    try:
+        b0 = sp.poly(coeff[0].cancel()).coeffs()[0]
+    except:
+        b0 = coeff[0]
 
     denom = 1
     numerator = 1
